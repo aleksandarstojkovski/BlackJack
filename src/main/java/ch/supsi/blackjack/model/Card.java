@@ -1,6 +1,7 @@
 package ch.supsi.blackjack.model;
 
 public class Card {
+
     private final Seed seed;
     private final Value value;
     Card(Seed seed, Value value){
@@ -22,4 +23,6 @@ public class Card {
                 ", value=" + value.label +
                 '}';
     }
+
+
 }

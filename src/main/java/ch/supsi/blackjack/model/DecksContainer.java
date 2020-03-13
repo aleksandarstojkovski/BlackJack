@@ -1,9 +1,6 @@
 package ch.supsi.blackjack.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class DecksContainer {
 
@@ -28,6 +25,22 @@ public class DecksContainer {
         Collections.shuffle(cards);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        DecksContainer that = (DecksContainer) o;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (that.cards.size() != this.cards.size()) return false;
+        for (int i=0;i<this.cards.size();i++){
+            if (this.cards.get(i)!=that.cards.get(i)){
+                return false;
+            }
+        }
+        return true;
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(numberOfDecks, cards);
+    }
 }
