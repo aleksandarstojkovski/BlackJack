@@ -6,10 +6,11 @@ import java.util.List;
 
 public class Deck {
 
+    public static final int DECK_SIZE=52;
+
     private Card[] cards;
 
     Deck(){
-
         List<Card> cardList = new ArrayList<>();
         for(Seed seed : EnumSet.allOf(Seed.class)) {
             for(Value value : EnumSet.allOf(Value.class)) {

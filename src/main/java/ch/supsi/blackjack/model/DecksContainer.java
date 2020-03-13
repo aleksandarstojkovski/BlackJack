@@ -7,22 +7,35 @@ public class DecksContainer {
     private static final int MIN_NUMBER_OF_DECKS=1;
     private static final int MAX_NUMBER_OF_DECKS=5;
     private int numberOfDecks;
-    private List<Card> cards = new ArrayList<>();
+    private List<Card> availableCards = new ArrayList<>();
+    private List<Card> removedCards = new ArrayList<>();
 
-    public DecksContainer(int numberOfDecks) throws InvalidDeckContainerSizeException {
+    public DecksContainer(int numberOfDecks) throws InvalidDecksContainerSizeException {
         if (numberOfDecks > MIN_NUMBER_OF_DECKS  && numberOfDecks < MAX_NUMBER_OF_DECKS){
             this.numberOfDecks=numberOfDecks;
             for (int i=0; i<numberOfDecks; i++){
                 Deck deck = new Deck();
-                cards.addAll(Arrays.asList(deck.getCards()));
+                availableCards.addAll(Arrays.asList(deck.getCards()));
             }
         } else {
-            throw new InvalidDeckContainerSizeException("Size of the Deck Container must be "+MAX_NUMBER_OF_DECKS+">"+"size"+">"+MIN_NUMBER_OF_DECKS+".");
+            throw new InvalidDecksContainerSizeException("Size of the Deck Container must be "+MAX_NUMBER_OF_DECKS+">"+"size"+">"+MIN_NUMBER_OF_DECKS+".");
         }
     }
 
     public void shuffle(){
-        Collections.shuffle(cards);
+        Collections.shuffle(availableCards);
+    }
+
+    public Card pop(){
+        Card c = availableCards.remove(0);
+        removedCards.add(c);
+        return c;
+    }
+
+    public void pushBackPoppedCards(){
+        if (removedCards.size()>0){
+            availableCards.addAll(removedCards);
+        }
     }
 
     @Override
@@ -30,9 +43,9 @@ public class DecksContainer {
         DecksContainer that = (DecksContainer) o;
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (that.cards.size() != this.cards.size()) return false;
-        for (int i=0;i<this.cards.size();i++){
-            if (this.cards.get(i)!=that.cards.get(i)){
+        if (that.availableCards.size() != this.availableCards.size()) return false;
+        for (int i = 0; i<this.availableCards.size(); i++){
+            if (! this.availableCards.get(i).equals(that.availableCards.get(i))){
                 return false;
             }
         }
@@ -41,6 +54,7 @@ public class DecksContainer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(numberOfDecks, cards);
+        return Objects.hash(numberOfDecks, availableCards);
     }
+
 }
