@@ -1,0 +1,16 @@
+.menu-icon {
+    -fx-icon-size: 20px;
+    -fx-icon-code: fa-ellipsis-v;
+}
+
+.start-icon {
+    -fx-icon-code: fa-play;
+}
+
+.exit-icon {
+    -fx-icon-code: fa-close;
+}
+
+.about-icon {
+    -fx-icon-code: fa-question;
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ch.supsi.blackjack.controller.MenuController"
+            prefHeight="18.0" prefWidth="600.0">
+    <ToolBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Button mnemonicParsing="false" text="%new_game" onAction="#startAction">
+            <graphic>
+                <FontIcon styleClass="start-icon"/>
+            </graphic>
+        </Button>
+
+        <Button mnemonicParsing="false" text="%exit" onAction="#exitAction">
+            <graphic>
+                <FontIcon styleClass="exit-icon"/>
+            </graphic>
+        </Button>
+
+    </ToolBar>
+</AnchorPane>
