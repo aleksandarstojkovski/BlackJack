@@ -15,9 +15,23 @@ public class Hand {
         return cardList;
     }
 
-    public int addCardToHand (Card card){
+    public void addCard(Card card){
         cardList.add(card);
-        return cardList.size();
     }
 
+    public int value(){
+        int currentHandValue = 0;
+        final int ASSO = 1;
+        for (Card card : cardList){
+            if(card.getValue().cardValue == ASSO && currentHandValue <= 11){
+                    currentHandValue = currentHandValue + 10;
+            }else{
+                currentHandValue = currentHandValue + card.getValue().cardValue;
+            }
+        }
+        return currentHandValue;
+    }
+    public void discardCards(){
+        this.cardList  = new ArrayList<>();
+    }
 }
