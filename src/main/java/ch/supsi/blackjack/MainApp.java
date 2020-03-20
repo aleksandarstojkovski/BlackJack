@@ -1,5 +1,6 @@
 package ch.supsi.blackjack;
 
+import ch.supsi.blackjack.controller.AbstractController;
 import ch.supsi.blackjack.controller.MainController;
 import ch.supsi.blackjack.model.AbstractModel;
 import ch.supsi.blackjack.model.Model;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.beans.PropertyChangeListener;
 import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
 
@@ -28,17 +30,19 @@ public class MainApp extends Application {
         fxmlLoader.setControllerFactory((Class<?> type) -> {
             try {
                 for (Constructor<?> c : type.getConstructors()) {
-                    if (c.getParameterCount() == 1 && c.getParameterTypes()[0] == AbstractModel.class) {
-                        return c.newInstance(model);
+                    if (c.getParameterCount() == 1 && c.getParameterTypes()[0] == Model.class) {
+                        PropertyChangeListener controller = (PropertyChangeListener)c.newInstance(model);
+                        model.addPropertyChangeListener(controller);
+                        return controller;
                     }
                 }
-                throw new Exception(type.toString() + " does not have proper Contructor");
+                throw new Exception(type.toString() + " does not have proper Constructor");
             } catch (Exception exc) {
                 throw new RuntimeException(exc);
             }
         });
 
-        Parent root =fxmlLoader.load();
+        Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/ch/supsi/blackjack/css/style.css");
 

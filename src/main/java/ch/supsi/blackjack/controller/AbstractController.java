@@ -2,7 +2,9 @@ package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.model.AbstractModel;
 
-abstract public class AbstractController {
+import java.beans.PropertyChangeListener;
+
+abstract public class AbstractController implements PropertyChangeListener {
 
     protected AbstractModel model;
 
