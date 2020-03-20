@@ -11,6 +11,15 @@
     -fx-icon-code: fa-sign-out;
 }
 
+.getcard-icon {
+    -fx-icon-code: fa-plus;
+}
+
+.stopcard-icon {
+    -fx-icon-code: fa-thumbs-o-up;
+}
+
 .about-icon {
     -fx-icon-code: fa-question;
 }
+

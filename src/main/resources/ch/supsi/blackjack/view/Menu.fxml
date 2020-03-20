@@ -14,6 +14,16 @@
                 <FontIcon styleClass="newgame-icon"/>
             </graphic>
         </Button>
+        <Button fx:id="getCardBtn" mnemonicParsing="false" text="%get_card" onAction="#getCardAction" >
+            <graphic>
+                <FontIcon styleClass="getcard-icon"/>
+            </graphic>
+        </Button>
+        <Button fx:id="stopCardBtn" mnemonicParsing="false" text="%stop_card" onAction="#stopCardAction" >
+            <graphic>
+                <FontIcon styleClass="stopcard-icon"/>
+            </graphic>
+        </Button>
 
         <Button fx:id="exitGameBtn" mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" >
             <graphic>

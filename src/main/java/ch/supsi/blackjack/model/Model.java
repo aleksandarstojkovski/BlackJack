@@ -2,7 +2,9 @@ package ch.supsi.blackjack.model;
 
 
 import ch.supsi.blackjack.event.ExitGameEvent;
+import ch.supsi.blackjack.event.NewCardEvent;
 import ch.supsi.blackjack.event.NewGameEvent;
+import ch.supsi.blackjack.event.StopCardEvent;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
@@ -10,6 +12,8 @@ public class Model extends AbstractModel {
 
     private static Model model;
     private DecksContainer decksContainer;
+    private Dealer dealer;
+    private Player player;
 
     protected Model() {
         super();
@@ -36,6 +40,8 @@ public class Model extends AbstractModel {
 
         try {
             decksContainer = new DecksContainer(3);
+            decksContainer.shuffle();
+
             pcs.firePropertyChange(new NewGameEvent(this));
         } catch (InvalidDecksContainerSizeException e) {
             e.printStackTrace();
@@ -45,8 +51,17 @@ public class Model extends AbstractModel {
     @Override
     public void exitGame() {
         gameRunning.set(false);
-
-        // finally notify listeners something was done
         pcs.firePropertyChange(new ExitGameEvent(this));
+    }
+
+    @Override
+    public void getCard() {
+        Card card = decksContainer.getCard();
+        pcs.firePropertyChange(new NewCardEvent(this, card));
+    }
+
+    @Override
+    public void stopCard() {
+        pcs.firePropertyChange(new StopCardEvent(this));
     }
 }
