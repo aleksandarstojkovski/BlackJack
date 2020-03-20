@@ -3,12 +3,12 @@
     -fx-icon-code: fa-ellipsis-v;
 }
 
-.start-icon {
+.newgame-icon {
     -fx-icon-code: fa-play;
 }
 
-.exit-icon {
-    -fx-icon-code: fa-close;
+.exitgame-icon {
+    -fx-icon-code: fa-sign-out;
 }
 
 .about-icon {

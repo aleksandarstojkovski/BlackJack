@@ -2,12 +2,16 @@
 
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.TextArea?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ch.supsi.blackjack.controller.ContentAreaController"
             prefHeight="400.0" prefWidth="600.0">
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <StackPane VBox.vgrow="SOMETIMES" >
+            <TextArea fx:id="textArea" >
+
+            </TextArea>
         </StackPane>
     </VBox>
 </AnchorPane>

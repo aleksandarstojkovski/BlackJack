@@ -3,7 +3,7 @@ package ch.supsi.blackjack.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-abstract public class AbstractModel implements DoerHandler {
+abstract public class AbstractModel implements GameHandler {
 
     protected PropertyChangeSupport pcs;
 

@@ -9,15 +9,15 @@
             fx:controller="ch.supsi.blackjack.controller.MenuController"
             prefHeight="18.0" prefWidth="600.0">
     <ToolBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Button mnemonicParsing="false" text="%new_game" onAction="#startAction">
+        <Button fx:id="newGameBtn" mnemonicParsing="false" text="%new_game" onAction="#newGameAction" >
             <graphic>
-                <FontIcon styleClass="start-icon"/>
+                <FontIcon styleClass="newgame-icon"/>
             </graphic>
         </Button>
 
-        <Button mnemonicParsing="false" text="%exit" onAction="#exitAction">
+        <Button fx:id="exitGameBtn" mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" >
             <graphic>
-                <FontIcon styleClass="exit-icon"/>
+                <FontIcon styleClass="exitgame-icon"/>
             </graphic>
         </Button>
 
