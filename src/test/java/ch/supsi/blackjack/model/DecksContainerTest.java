@@ -32,4 +32,18 @@ class DecksContainerTest {
         InvalidDecksContainerSizeException thrown = assertThrows(InvalidDecksContainerSizeException.class, ()->new DecksContainer(-1));
     }
 
+    @Test
+    public void getCard(){
+        DecksContainer dk = null;
+        try {
+            dk = new DecksContainer(3);
+        } catch (InvalidDecksContainerSizeException e) {
+            fail();
+        }
+        int initialSize= dk.getAvailableCardsCount();
+        dk.getCard();
+        dk.getCard();
+        assertEquals(initialSize-2,dk.getAvailableCardsCount());
+    }
+
 }
