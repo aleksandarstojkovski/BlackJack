@@ -9,7 +9,6 @@ public class NewHandEvent extends AbstractEvent {
             super(source);
             this.hand = hand;
         }
-
         public Hand getHand() {
             return hand;
         }

@@ -1,19 +1,22 @@
 package ch.supsi.blackjack.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
     private Dealer dealer;
-    private Player player;
+    private List<Player> playerList;
     /*ToDo: player deve diventare una arraylist di player per gestire il multiplayer*/
-    public Game(){
-        this.dealer = new Dealer();
-        this.player = new Player();
+    public Game(Dealer dealer, ArrayList<Player> playerList){
+        this.dealer = dealer;
+        this.playerList = playerList;
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return this.dealer;
     }
 
-    public Player getPlayer() {
-        return player;
+    public List<Player> getPlayerList() {
+        return this.playerList;
     }
 }

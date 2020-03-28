@@ -1,9 +1,9 @@
 package ch.supsi.blackjack.model;
 
-public class Dealer {
+public class Dealer extends Player{
     private DecksContainer decksContainer;
-    private Hand dealerHand;
     public Dealer() {
+        super("Delaer");
         try {
             decksContainer = new DecksContainer(3);
             // ToDo: rendere modificabile il numero di mazzi
@@ -11,7 +11,6 @@ public class Dealer {
             e.printStackTrace();
         }
         decksContainer.shuffle();
-        dealerHand = new Hand();
     }
     public Card giveCard(){
         return decksContainer.getCard();
