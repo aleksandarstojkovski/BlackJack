@@ -20,7 +20,8 @@ class HandTest {
         testHand.addCard(new Card(Seed.C,Value.ONE));
         assertEquals(20,testHand.value());
         testHand.addCard(new Card(Seed.C,Value.ONE));
-        assertEquals(21,testHand.value());
+        assertEquals(21
+                ,testHand.value());
     }
 
     @Test

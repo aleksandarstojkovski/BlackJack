@@ -34,4 +34,10 @@ public class Hand {
     public void discardCards(){
         this.cardList  = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+
+        return "Valore Mano = " + this.value();
+    }
 }
