@@ -1,11 +1,6 @@
 package ch.supsi.blackjack.model;
 
 public class Player {
-    //ToDo: inserire un boolean per gestire se il player è gestito dall'AI.
-    /*
-    private String name;
-    private String surname;
-    */
     private String nickname;
     private Hand hand;
 
@@ -21,4 +16,9 @@ public class Player {
     public Hand getHand() {
         return this.hand;
     }
+
+    public String getNickname() {
+        return nickname;
+    }
 }
+
