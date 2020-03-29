@@ -1,8 +1,5 @@
 package ch.supsi.blackjack;
 
-import ch.supsi.blackjack.controller.AbstractController;
-import ch.supsi.blackjack.controller.MainController;
-import ch.supsi.blackjack.model.AbstractModel;
 import ch.supsi.blackjack.model.Model;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +43,7 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/ch/supsi/blackjack/css/style.css");
 
-        Image appIcon = new Image(this.getClass().getResource("/ch/supsi/blackjack/icon/spades.png").toString());
+        Image appIcon = new Image(this.getClass().getResource("/ch/supsi/blackjack/images/spades.png").toString());
         primaryStage.setTitle("Black Jack");
         primaryStage.getIcons().add(appIcon);
         primaryStage.setScene(scene);

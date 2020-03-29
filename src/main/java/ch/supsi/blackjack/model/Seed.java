@@ -1,10 +1,10 @@
 package ch.supsi.blackjack.model;
 
 public enum Seed {
-    H("Cuori"),
-    D("Quadri"),
-    C("Fiori"),
-    S("Picche");
+    H("hearts"),
+    D("diamonds"),
+    C("clubs"),
+    S("spades");
 
     public final String label;
 

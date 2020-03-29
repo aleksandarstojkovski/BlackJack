@@ -21,9 +21,8 @@ public class Hand {
 
     public int value(){
         int currentHandValue = 0;
-        final int ASSO = 1;
         for (Card card : cardList){
-            if(card.getValue().cardValue == ASSO && currentHandValue <= 11){
+            if(card.getValue() == Value.ACE && currentHandValue <= 11){
                     currentHandValue = currentHandValue + 10;
             }else{
                 currentHandValue = currentHandValue + card.getValue().cardValue;

@@ -1,9 +1,14 @@
 package ch.supsi.blackjack.model;
 
+import javafx.scene.image.Image;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.Objects;
 
 public class Card {
-
+    private Image image;
     private final Seed seed;
     private final Value value;
 
@@ -42,4 +47,15 @@ public class Card {
         return Objects.hash(seed, value);
     }
 
+    public String getFileName() {
+        return String.format("/ch/supsi/blackjack/images/cards/%s_of_%s.png", value.label, seed.label);
+    }
+
+    public Image getImage() {
+        if(image == null) {
+            URL url = this.getClass().getResource(getFileName());
+            image = new Image(url.toString());
+        }
+        return image;
+    }
 }

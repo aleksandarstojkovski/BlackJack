@@ -14,12 +14,6 @@
 
         <fx:include source="Menu.fxml"/>
 
-        <fx:include source="ContentArea.fxml"/>
-
-        <ToolBar>
-            <Label />
-            <Pane HBox.hgrow="SOMETIMES"/>
-            <Label  />
-        </ToolBar>
+        <fx:include source="ContentArea.fxml" VBox.vgrow="ALWAYS"/>
     </VBox>
 </AnchorPane>
