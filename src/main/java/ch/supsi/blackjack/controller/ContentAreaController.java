@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class ContentAreaController extends AbstractController implements Initializable {
 
     @FXML public HBox dealerCards;
-    @FXML public Label betsCount;
+    @FXML public Label betsAmount;
     @FXML private HBox coins;
     @FXML private HBox playerCards;
     @FXML private TextArea textArea;
@@ -49,14 +49,15 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleNewBet(NewBetEvent event) {
-        int newAmout = event.getBetValue()+ Integer.parseInt(betsCount.getText());
-        betsCount.setText(String.valueOf(newAmout));
+        int newAmout = event.getBetValue()+ Integer.parseInt(betsAmount.getText());
+        betsAmount.setText(String.valueOf(newAmout));
     }
 
     private void handleExitGame(ExitGameEvent event) {
         playerCards.getChildren().clear();
         coins.getChildren().clear();
         dealerCards.getChildren().clear();
+        betsAmount.setText("0");
     }
 
     private void handleNewGame(NewGameEvent event) {

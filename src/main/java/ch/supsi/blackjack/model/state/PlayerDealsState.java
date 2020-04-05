@@ -20,12 +20,11 @@ public class PlayerDealsState implements GameState {
     //Business logic and state transition
     @Override
     public void updateState(Model model) {
-        if (model.getPlayerList().get(0).getHand().value()>21){
-            System.out.println("Il Player ha sballato");
-            model.setCurrentState(DealerDealsState.instance());
+        if (model.getPlayerList().get(0).getHand().value()<21){
+            // stay in this state until the user bursts or stands or makes blackjack
         } else {
-            System.out.println("Tocca al Dealer");
-            model.setCurrentState(DealerDealsState.instance());
+            System.out.println("Player burst!!!");
+            model.setCurrentState(PlayerBurstState.instance());
         }
     }
 }

@@ -26,20 +26,18 @@ public class SetupTableState implements GameState {
 
         public static SetupTableState instance() {
             System.out.println("Current state: " +instance.getClass().toString());
+
             return instance;
         }
 
         // business logic and state transition
         @Override
         public void updateState(Model model) {
-            // TODO:
-            // if (21){
-            //  TwentyOneState
-            // } else {
-            //  PlayerDealsState
-            // }
-            model.setCurrentState(BetState.instance());
-
+            if (model.getPlayerList().get(0).getHand().value() == 21){
+                model.setCurrentState(TwentyOneState.instance());
+            } else {
+                model.setCurrentState(PlayerDealsState.instance());
+            }
         }
 
 }

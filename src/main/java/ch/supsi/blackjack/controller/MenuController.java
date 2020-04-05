@@ -31,15 +31,21 @@ public class MenuController extends AbstractController implements Initializable 
         newGameBtn.disableProperty().bind(getModel().gameRunningProperty());
         exitGameBtn.disableProperty().bind(Bindings.not(getModel().gameRunningProperty()));
         getCardBtn.disableProperty().bind(
-                Bindings.and(
-                        Bindings.not(getModel().gameRunningProperty()),
-                        Bindings.not(getModel().dealsOpenProperty())
+                Bindings.or(
+                        getModel().gameRunningProperty().not(),
+                        getModel().dealsOpenProperty().not()
                 )
         );
         stopCardBtn.disableProperty().bind(
-                Bindings.and(
-                        Bindings.not(getModel().gameRunningProperty()),
-                        Bindings.not(getModel().dealsOpenProperty())
+                Bindings.or(
+                        getModel().gameRunningProperty().not(),
+                        getModel().dealsOpenProperty().not()
+                )
+        );
+        betBtn.disableProperty().bind(
+                Bindings.or(
+                        getModel().gameRunningProperty().not(),
+                        getModel().betsOpenProperty().not()
                 )
         );
     }
@@ -60,6 +66,7 @@ public class MenuController extends AbstractController implements Initializable 
     }
 
     private void handleNewGame(NewGameEvent event) {
+
     }
 
     @FXML
@@ -83,7 +90,6 @@ public class MenuController extends AbstractController implements Initializable 
     }
 
     @FXML
-    public void betAction(ActionEvent actionEvent) {
-    }
+    public void betAction(ActionEvent actionEvent) {model.confirmBet(); }
 
 }

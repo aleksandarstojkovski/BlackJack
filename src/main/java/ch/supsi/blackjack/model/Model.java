@@ -7,7 +7,6 @@ import ch.supsi.blackjack.model.state.GameState;
 import ch.supsi.blackjack.model.state.InitState;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,14 +63,15 @@ public class Model extends AbstractModel {
         // InitState to BetState
         currentState.updateState(this);
         pcs.firePropertyChange(new NewGameEvent(this));
-        // TODO: implementare il metodo per puntare
-        // currentState.updateState(this); // messo in attesa del metodo di puntare.
     }
 
     @Override
     public void exitGame() {
         gameRunning.set(false);
+        dealsOpen.set(false);
+        betsOpen.set(false);
         pcs.firePropertyChange(new ExitGameEvent(this));
+        currentState = InitState.instance();
     }
 
     @Override
@@ -80,9 +80,18 @@ public class Model extends AbstractModel {
         pcs.firePropertyChange(new NewCardEvent(this, card));
         game.getPlayerList().get(0).getHand().addCard(card);
         pcs.firePropertyChange(new NewHandEvent(this, game.getPlayerList().get(0).getHand()));
-        if (game.getPlayerList().get(0).getHand().value()>21){
-            currentState.updateState(this);
-        }
+    }
+
+    @Override
+    public void getCards(int quanitty) {
+        for (int i=0; i<quanitty;i++)
+            getCard();
+    }
+
+    @Override
+    public void tableSetupComplete() {
+        // SetupTableState to PlayerDealsState
+        currentState.updateState(this);
     }
 
     @Override
@@ -96,9 +105,19 @@ public class Model extends AbstractModel {
         try {
             playerList.get(0).bet(amount);
             pcs.firePropertyChange(new NewBetEvent(this, amount));
+            // TODO: maybe we need a new state that highlights that the user betted at least one time
+            model.betsOpenProperty().setValue(true);
         } catch (InsufficientCoinsException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void confirmBet() {
+        // BetState to SetupTableState
+        currentState.updateState(this);
+        // SetupTableState to PlayerDealsState
+        currentState.updateState(this);
     }
 
     @Override
@@ -110,7 +129,6 @@ public class Model extends AbstractModel {
     public BooleanProperty betsOpenProperty() {
         return betsOpen;
     }
-
 
     public BooleanProperty dealsOpenProperty() {
         return dealsOpen;

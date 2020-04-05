@@ -7,6 +7,9 @@ public interface GameHandler {
     void getCard();
     void stopCard();
     void bet(int betValue);
+    void confirmBet();
+    void getCards(int quanitty);
+    void tableSetupComplete();
     Coin[] getCoins();
 
 }
