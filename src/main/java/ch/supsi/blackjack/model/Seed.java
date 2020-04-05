@@ -1,6 +1,7 @@
 package ch.supsi.blackjack.model;
 
 public enum Seed {
+
     H("hearts"),
     D("diamonds"),
     C("clubs"),
@@ -11,4 +12,5 @@ public enum Seed {
     Seed(String label) {
         this.label = label;
     }
+
 }

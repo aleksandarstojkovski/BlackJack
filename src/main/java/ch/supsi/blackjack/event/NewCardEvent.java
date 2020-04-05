@@ -3,6 +3,7 @@ package ch.supsi.blackjack.event;
 import ch.supsi.blackjack.model.Card;
 
 public class NewCardEvent extends AbstractEvent {
+
     private Card card;
 
     public NewCardEvent(Object source, Card card) {
@@ -13,4 +14,5 @@ public class NewCardEvent extends AbstractEvent {
     public Card getCard() {
         return card;
     }
+
 }

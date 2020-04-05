@@ -7,30 +7,39 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Label?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ch.supsi.blackjack.controller.ContentAreaController"
-            prefHeight="400.0" prefWidth="600.0">
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.supsi.blackjack.controller.ContentAreaController" prefHeight="400.0" prefWidth="600.0">
+
     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" styleClass="cards-table">
 
-        <Label text="%player-score" />
-
-        <HBox fx:id="playerCards" styleClass="cards-view" VBox.vgrow="ALWAYS"
-                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        </HBox>
-
-        <Label text="%player-score" />
+        <Label text="%dealer" style="-fx-text-fill: white" />
 
         <HBox fx:id="dealerCards" styleClass="cards-view" VBox.vgrow="ALWAYS"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         </HBox>
 
+        <Label text="%player" style="-fx-text-fill: white" />
+
+        <HBox fx:id="playerCards" styleClass="cards-view" VBox.vgrow="ALWAYS"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        </HBox>
+
+        <Label text="%coins" style="-fx-text-fill: white" />
+
+        <Label fx:id="betsCount" text="0" style="-fx-text-fill: white" />
+
+        <HBox fx:id="coins" alignment="CENTER" styleClass="cards-view" VBox.vgrow="ALWAYS"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        </HBox>
+
         <StackPane VBox.vgrow="SOMETIMES" >
             <TextArea fx:id="textArea" >
-
             </TextArea>
         </StackPane>
+
     </VBox>
+
 </AnchorPane>

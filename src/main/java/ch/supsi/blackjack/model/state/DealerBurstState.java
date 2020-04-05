@@ -1,4 +1,7 @@
-package ch.supsi.blackjack.model;
+package ch.supsi.blackjack.model.state;
+
+import ch.supsi.blackjack.model.Model;
+
 //ToDo: Creare
 public class DealerBurstState implements GameState {
 
@@ -10,6 +13,7 @@ public class DealerBurstState implements GameState {
     }
 
     public static DealerBurstState instance() {
+        System.out.println("Current state: " +instance.getClass().toString());
         return instance;
     }
 

@@ -15,6 +15,10 @@
     -fx-icon-code: fa-plus;
 }
 
+.bet-icon {
+    -fx-icon-code: fa-check;
+}
+
 .stopcard-icon {
     -fx-icon-code: fa-thumbs-o-up;
 }

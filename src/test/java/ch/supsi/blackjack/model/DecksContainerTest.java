@@ -1,5 +1,6 @@
 package ch.supsi.blackjack.model;
 
+import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

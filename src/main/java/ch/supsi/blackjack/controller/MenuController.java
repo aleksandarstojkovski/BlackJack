@@ -1,5 +1,7 @@
 package ch.supsi.blackjack.controller;
 
+import ch.supsi.blackjack.event.ExitGameEvent;
+import ch.supsi.blackjack.event.NewGameEvent;
 import ch.supsi.blackjack.model.Model;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -12,6 +14,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuController extends AbstractController implements Initializable {
+
+    @FXML private Button betBtn;
     @FXML private Button newGameBtn;
     @FXML private Button exitGameBtn;
     @FXML private Button getCardBtn;
@@ -23,16 +27,39 @@ public class MenuController extends AbstractController implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // using events instead of property binding
         newGameBtn.disableProperty().bind(getModel().gameRunningProperty());
         exitGameBtn.disableProperty().bind(Bindings.not(getModel().gameRunningProperty()));
-        getCardBtn.disableProperty().bind(Bindings.not(getModel().gameRunningProperty()));
-        stopCardBtn.disableProperty().bind(Bindings.not(getModel().gameRunningProperty()));
+        getCardBtn.disableProperty().bind(
+                Bindings.and(
+                        Bindings.not(getModel().gameRunningProperty()),
+                        Bindings.not(getModel().dealsOpenProperty())
+                )
+        );
+        stopCardBtn.disableProperty().bind(
+                Bindings.and(
+                        Bindings.not(getModel().gameRunningProperty()),
+                        Bindings.not(getModel().dealsOpenProperty())
+                )
+        );
     }
 
     private Model getModel() { return (Model)model; }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
+        if (event instanceof NewGameEvent) {
+            handleNewGame((NewGameEvent) event);
+        }
+        if (event instanceof ExitGameEvent) {
+            handleExitGame((ExitGameEvent) event);
+        }
+    }
+
+    private void handleExitGame(ExitGameEvent event) {
+    }
+
+    private void handleNewGame(NewGameEvent event) {
     }
 
     @FXML
@@ -54,4 +81,9 @@ public class MenuController extends AbstractController implements Initializable 
     void stopCardAction(ActionEvent actionEvent) {
         model.stopCard();
     }
+
+    @FXML
+    public void betAction(ActionEvent actionEvent) {
+    }
+
 }

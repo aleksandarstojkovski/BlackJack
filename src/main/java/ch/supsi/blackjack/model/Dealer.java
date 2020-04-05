@@ -1,7 +1,11 @@
 package ch.supsi.blackjack.model;
 
+import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
+
 public class Dealer extends Player{
+
     private DecksContainer decksContainer;
+
     public Dealer() {
         super("Delaer");
         try {
@@ -12,6 +16,7 @@ public class Dealer extends Player{
         }
         decksContainer.shuffle();
     }
+
     public Card giveCard(){
         return decksContainer.getCard();
     }

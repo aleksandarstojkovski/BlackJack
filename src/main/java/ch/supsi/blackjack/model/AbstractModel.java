@@ -18,4 +18,5 @@ abstract public class AbstractModel implements GameHandler {
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         pcs.removePropertyChangeListener(pcl);
     }
+
 }

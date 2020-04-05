@@ -6,6 +6,7 @@ import java.util.List;
 public class Hand {
 
     private List<Card> cardList;
+    private int betValue;
 
     public Hand() {
         this.cardList = new ArrayList<>();
@@ -30,13 +31,18 @@ public class Hand {
         }
         return currentHandValue;
     }
+
     public void discardCards(){
         this.cardList  = new ArrayList<>();
     }
 
     @Override
     public String toString() {
-
         return "Valore Mano = " + this.value();
     }
+
+    public void addBet(int amount) {
+        this.betValue += amount;
+    }
+
 }

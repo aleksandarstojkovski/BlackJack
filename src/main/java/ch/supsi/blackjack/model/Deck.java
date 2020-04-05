@@ -7,7 +7,6 @@ import java.util.List;
 public class Deck {
 
     public static final int DECK_SIZE=52;
-
     private Card[] cards;
 
     Deck(){

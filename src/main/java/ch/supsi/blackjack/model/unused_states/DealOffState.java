@@ -1,4 +1,9 @@
-package ch.supsi.blackjack.model;
+package ch.supsi.blackjack.model.unused_states;
+
+import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.state.GameOverState;
+import ch.supsi.blackjack.model.state.GameState;
+
 //ToDo: Creare
 public class DealOffState implements GameState {
 

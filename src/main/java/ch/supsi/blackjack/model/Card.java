@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Objects;
 
 public class Card {
+
     private Image image;
     private final Seed seed;
     private final Value value;
@@ -58,4 +59,5 @@ public class Card {
         }
         return image;
     }
+
 }
