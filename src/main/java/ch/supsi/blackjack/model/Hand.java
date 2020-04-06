@@ -23,11 +23,7 @@ public class Hand {
     public int value(){
         int currentHandValue = 0;
         for (Card card : cardList){
-            if(card.getValue() == Value.ACE && currentHandValue <= 11){
-                    currentHandValue = currentHandValue + 10;
-            }else{
-                currentHandValue = currentHandValue + card.getValue().cardValue;
-            }
+            currentHandValue+=card.getValue().cardValue;
         }
         return currentHandValue;
     }

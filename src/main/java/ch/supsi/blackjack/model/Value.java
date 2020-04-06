@@ -2,7 +2,7 @@ package ch.supsi.blackjack.model;
 
 public enum Value {
 
-    ACE("ace", 1),
+    ACE("ace", 11),
     TWO("2",  2),
     THREE("3", 3),
     FOUR("4", 4),

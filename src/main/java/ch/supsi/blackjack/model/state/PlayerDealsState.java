@@ -1,5 +1,6 @@
 package ch.supsi.blackjack.model.state;
 
+import ch.supsi.blackjack.model.Dealer;
 import ch.supsi.blackjack.model.Model;
 
 //ToDo: Creare
@@ -20,10 +21,14 @@ public class PlayerDealsState implements GameState {
     //Business logic and state transition
     @Override
     public void updateState(Model model) {
+        if (model.playerStandProperty().get()){
+            model.setCurrentState(DealerDealsState.instance());
+        }
         if (model.getPlayerList().get(0).getHand().value()<21){
             // stay in this state until the user bursts or stands or makes blackjack
+            model.setCurrentState(PlayerDealsState.instance());
         } else {
-            System.out.println("Player burst!!!");
+            model.playerBurstedProperty().set(true);
             model.setCurrentState(PlayerBurstState.instance());
         }
     }

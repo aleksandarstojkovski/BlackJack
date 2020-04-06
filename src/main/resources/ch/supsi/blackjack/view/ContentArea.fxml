@@ -8,33 +8,29 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Label?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.supsi.blackjack.controller.ContentAreaController" prefHeight="800.0" prefWidth="800.0">
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.supsi.blackjack.controller.ContentAreaController" prefHeight="582.0" prefWidth="900.0">
 
-    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" styleClass="cards-table">
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" styleClass="cards-table" >
 
-        <!--TODO: use css class instead of in-line style -->
-        <Label text="%dealer" style="-fx-text-fill: white" />
+        <Label text="%dealer" styleClass="labels" />
 
         <HBox fx:id="dealerCards" styleClass="cards-view" VBox.vgrow="ALWAYS"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         </HBox>
 
-        <!--TODO: use css class instead of in-line style -->
-        <Label text="%player" style="-fx-text-fill: white" />
+        <Label text="%player" styleClass="labels" />
 
         <HBox fx:id="playerCards" styleClass="cards-view" VBox.vgrow="ALWAYS"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         </HBox>
 
-        <!--TODO: use css class instead of in-line style -->
-        <Label text="%coins" style="-fx-text-fill: white" />
+        <Label text="%coins" styleClass="labels" />
 
-        <!--TODO: use css class instead of in-line style -->
-        <Label fx:id="betsAmount" textAlignment="CENTER" text="0" style="-fx-text-fill: white; -fx-font-size: 16" />
+        <Label fx:id="betsAmount" styleClass="labels" />
 
-        <HBox fx:id="coins" alignment="CENTER" styleClass="cards-view" VBox.vgrow="ALWAYS"
+        <HBox fx:id="coins" alignment="CENTER_LEFT" styleClass="coins-view" VBox.vgrow="ALWAYS"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         </HBox>

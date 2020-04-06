@@ -4,6 +4,9 @@ import ch.supsi.blackjack.event.ExitGameEvent;
 import ch.supsi.blackjack.event.NewGameEvent;
 import ch.supsi.blackjack.model.Model;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,8 +21,8 @@ public class MenuController extends AbstractController implements Initializable 
     @FXML private Button betBtn;
     @FXML private Button newGameBtn;
     @FXML private Button exitGameBtn;
-    @FXML private Button getCardBtn;
-    @FXML private Button stopCardBtn;
+    @FXML private Button hitBtn;
+    @FXML private Button standBtn;
 
     public MenuController(Model model) {
         super(model);
@@ -28,26 +31,21 @@ public class MenuController extends AbstractController implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // using events instead of property binding
+        BooleanBinding disableHitAndStand = getModel().gameRunningProperty().not().or(
+                getModel().dealsOpenProperty().not().or(
+                        getModel().playerBurstedProperty().or(
+                                getModel().playerStandProperty()
+                        )
+                )
+        );
+        BooleanBinding disableBetBtn = getModel().gameRunningProperty().not().or(
+                getModel().betsOpenProperty().not()
+        );
         newGameBtn.disableProperty().bind(getModel().gameRunningProperty());
-        exitGameBtn.disableProperty().bind(Bindings.not(getModel().gameRunningProperty()));
-        getCardBtn.disableProperty().bind(
-                Bindings.or(
-                        getModel().gameRunningProperty().not(),
-                        getModel().dealsOpenProperty().not()
-                )
-        );
-        stopCardBtn.disableProperty().bind(
-                Bindings.or(
-                        getModel().gameRunningProperty().not(),
-                        getModel().dealsOpenProperty().not()
-                )
-        );
-        betBtn.disableProperty().bind(
-                Bindings.or(
-                        getModel().gameRunningProperty().not(),
-                        getModel().betsOpenProperty().not()
-                )
-        );
+        exitGameBtn.disableProperty().bind(getModel().gameRunningProperty().not());
+        hitBtn.disableProperty().bind(disableHitAndStand);
+        standBtn.disableProperty().bind(disableHitAndStand);
+        betBtn.disableProperty().bind(disableBetBtn);
     }
 
     private Model getModel() { return (Model)model; }
@@ -80,13 +78,13 @@ public class MenuController extends AbstractController implements Initializable 
     }
 
     @FXML
-    void getCardAction(ActionEvent actionEvent) {
-        model.getCard();
+    void hitAction(ActionEvent actionEvent) {
+        model.hit();
     }
 
     @FXML
-    void stopCardAction(ActionEvent actionEvent) {
-        model.stopCard();
+    void standAction(ActionEvent actionEvent) {
+        model.stand();
     }
 
     @FXML

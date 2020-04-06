@@ -33,6 +33,11 @@
     /*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
 }
 
+.labels {
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+}
+
 .cards-view
 {
     -fx-background-color: transparent;
@@ -40,4 +45,13 @@
     /*-fx-border-width: 1;*/
     /*-fx-padding: 5;*/
     -fx-spacing: 50;
+}
+
+.coins-view
+{
+    -fx-background-color: transparent;
+    /*-fx-border-color: black;*/
+    /*-fx-border-width: 1;*/
+    /*-fx-padding: 5;*/
+    -fx-spacing: 100;
 }

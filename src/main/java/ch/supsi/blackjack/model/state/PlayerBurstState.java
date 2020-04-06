@@ -20,7 +20,7 @@ public class PlayerBurstState implements GameState {
     //Business logic and state transition
     @Override
     public void updateState(Model model) {
-        System.out.println("Vittoria del banco");
-        model.setCurrentState(GameOverState.instance());
+        model.setCurrentState(UpdateTableState.instance());
     }
+
 }

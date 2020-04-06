@@ -7,6 +7,7 @@ import ch.supsi.blackjack.model.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -29,6 +30,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        betsAmount.setText("0");
     }
 
     @Override

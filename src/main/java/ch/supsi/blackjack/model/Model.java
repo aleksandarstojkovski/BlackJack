@@ -18,8 +18,18 @@ public class Model extends AbstractModel {
     private Dealer dealer;
     private List<Player> playerList;
     private final BooleanProperty gameRunning = new SimpleBooleanProperty(false);
+    // updated by the states
     private final BooleanProperty betsOpen = new SimpleBooleanProperty(false);
+    // updated by the states
     private final BooleanProperty dealsOpen = new SimpleBooleanProperty(false);
+    // updated by the states
+    private final BooleanProperty playerBursted = new SimpleBooleanProperty(false);
+    // updated by model
+    private final BooleanProperty atLeastOneCoinBet = new SimpleBooleanProperty(false);
+    // updated by model
+    private final BooleanProperty betConfirmed = new SimpleBooleanProperty(false);
+    // updated by model
+    private final BooleanProperty playerStand = new SimpleBooleanProperty(false);
     private Coin[] coins = {new Coin(1),new Coin(2),new Coin(5), new Coin(10),new Coin(15),new Coin(25),new Coin(50),new Coin(100)};
 
     protected Model() {
@@ -55,7 +65,6 @@ public class Model extends AbstractModel {
 
     @Override
     public void newGame() {
-        gameRunning.set(true);
         this.dealer = new Dealer();
         this.playerList = new ArrayList<Player>();
         playerList.add(new Player("Player 1"));
@@ -70,22 +79,32 @@ public class Model extends AbstractModel {
         gameRunning.set(false);
         dealsOpen.set(false);
         betsOpen.set(false);
-        pcs.firePropertyChange(new ExitGameEvent(this));
+        playerBursted.set(false);
+        betConfirmed.set(false);
+        atLeastOneCoinBet.set(false);
+        playerStand.set(false);
         currentState = InitState.instance();
+        pcs.firePropertyChange(new ExitGameEvent(this));
     }
 
     @Override
-    public void getCard() {
+    public void hit() {
+        hitInternal();
+        currentState.updateState(this);
+    }
+
+    @Override
+    public void hitTwice() {
+        for (int i=0; i<2;i++)
+            hitInternal();
+    }
+
+    private void hitInternal() {
         Card card = game.getDealer().giveCard();
         pcs.firePropertyChange(new NewCardEvent(this, card));
         game.getPlayerList().get(0).getHand().addCard(card);
         pcs.firePropertyChange(new NewHandEvent(this, game.getPlayerList().get(0).getHand()));
-    }
 
-    @Override
-    public void getCards(int quanitty) {
-        for (int i=0; i<quanitty;i++)
-            getCard();
     }
 
     @Override
@@ -95,7 +114,8 @@ public class Model extends AbstractModel {
     }
 
     @Override
-    public void stopCard() {
+    public void stand() {
+        playerStandProperty().set(true);
         currentState.updateState(this);
         pcs.firePropertyChange(new StopCardEvent(this));
     }
@@ -106,7 +126,8 @@ public class Model extends AbstractModel {
             playerList.get(0).bet(amount);
             pcs.firePropertyChange(new NewBetEvent(this, amount));
             // TODO: maybe we need a new state that highlights that the user betted at least one time
-            model.betsOpenProperty().setValue(true);
+            atLeastOneCoinBet.setValue(true);
+            currentState.updateState(this);
         } catch (InsufficientCoinsException e) {
             System.out.println(e.getMessage());
         }
@@ -114,9 +135,11 @@ public class Model extends AbstractModel {
 
     @Override
     public void confirmBet() {
+        // this will let BetState knwo that it can go to the next state
+        betConfirmedProperty().set(true);
         // BetState to SetupTableState
         currentState.updateState(this);
-        // SetupTableState to PlayerDealsState
+        // SetupTableState to ( PlayerDealsState or TwentyOne )
         currentState.updateState(this);
     }
 
@@ -134,4 +157,31 @@ public class Model extends AbstractModel {
         return dealsOpen;
     }
 
+    public BooleanProperty getAtLeastOneCoinBet() {
+        return atLeastOneCoinBet;
+    }
+
+    public boolean isBetConfirmed() {
+        return betConfirmed.get();
+    }
+
+    public BooleanProperty betConfirmedProperty() {
+        return betConfirmed;
+    }
+
+    public boolean isPlayerBursted() {
+        return playerBursted.get();
+    }
+
+    public BooleanProperty playerBurstedProperty() {
+        return playerBursted;
+    }
+
+    public boolean isPlayerStand() {
+        return playerStand.get();
+    }
+
+    public BooleanProperty playerStandProperty() {
+        return playerStand;
+    }
 }
