@@ -2,20 +2,6 @@ package ch.supsi.blackjack.model.state;
 
 import ch.supsi.blackjack.model.Model;
 
-/*
-
-Descrizione: il dealer provvede a dare le carte al giocatore, e a sé stesso.
-
-Cosa vede l’utente:
-•	Tutti i bottoni sono disabilitati eccetto <exit game>.
-•	Viene mostrata un’animazione del dealer che dà le carte a tutti i giocatori.
-
-Cosa deve accadere:
-•	Il Player riceve due carte (tutte e due scoperte).
-•	Il dealer riceve due carte (una coperta ed una scoperta)
-
-*/
-
 public class SetupTableState implements GameState {
 
         // singleton
@@ -34,7 +20,7 @@ public class SetupTableState implements GameState {
         @Override
         public void updateState(Model model) {
             if (model.getPlayerList().get(0).getHand().value() == 21){
-                model.setCurrentState(TwentyOneState.instance());
+                model.setCurrentState(BlackJackState.instance());
             } else {
                 model.setCurrentState(PlayerDealsState.instance());
             }

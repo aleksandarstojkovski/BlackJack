@@ -2,27 +2,6 @@ package ch.supsi.blackjack.model.state;
 
 import ch.supsi.blackjack.model.Model;
 
-// TODO: Creare
-
-/*
-
-Descrizione: il giocatore non ha ancora iniziato a giocare.
-
-Cosa vede l’utente
-•	Bottone <new game> - Iniziare una nuova partita.
-•	Bottone <exit game> - Uscire completamente dal gioco
-
-Cosa deve accadere:
-
-In caso di <new game>:
-•	Un nuovo Player deve essere creato.
-•	Il nuovo utente inizia con una quantità di soldi (fiche) stabilita <1000>.
-•	Aggiornamento al prossimo stato.
-In caso di <exit game>:
-•	Exit 0.
-
-*/
-
 public class UpdateTableState implements GameState {
 
     // singleton

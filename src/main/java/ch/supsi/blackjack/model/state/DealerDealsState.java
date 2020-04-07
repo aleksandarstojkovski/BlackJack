@@ -4,7 +4,7 @@ import ch.supsi.blackjack.model.Model;
 
 public class DealerDealsState implements GameState {
 
-    //Singleton
+    // singleton
     private static DealerDealsState instance = new DealerDealsState();
 
     private DealerDealsState() {}
@@ -14,12 +14,13 @@ public class DealerDealsState implements GameState {
         return instance;
     }
 
+    // business logic and state transition
     @Override
     public void updateState(Model model) {
         if(model.getDealer().getHand().value()>21){
             model.setCurrentState(DealerBurstState.instance());
         } else {
-
+            model.setCurrentState(UpdateTableState.instance());
         }
     }
 }

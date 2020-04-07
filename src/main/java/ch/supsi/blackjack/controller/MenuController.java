@@ -3,10 +3,7 @@ package ch.supsi.blackjack.controller;
 import ch.supsi.blackjack.event.ExitGameEvent;
 import ch.supsi.blackjack.event.NewGameEvent;
 import ch.supsi.blackjack.model.Model;
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,7 +30,7 @@ public class MenuController extends AbstractController implements Initializable 
         // using events instead of property binding
         BooleanBinding disableHitAndStand = getModel().gameRunningProperty().not().or(
                 getModel().dealsOpenProperty().not().or(
-                        getModel().playerBurstedProperty().or(
+                        getModel().playerBurstProperty().or(
                                 getModel().playerStandProperty()
                         )
                 )

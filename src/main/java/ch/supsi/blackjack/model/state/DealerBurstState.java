@@ -2,11 +2,10 @@ package ch.supsi.blackjack.model.state;
 
 import ch.supsi.blackjack.model.Model;
 
-//ToDo: Creare
 public class DealerBurstState implements GameState {
 
 
-    //Singleton
+    // singleton
     private static DealerBurstState instance = new DealerBurstState();
 
     private DealerBurstState() {
@@ -17,7 +16,7 @@ public class DealerBurstState implements GameState {
         return instance;
     }
 
-    //Business logic and state transition
+    // business logic and state transition
     @Override
     public void updateState(Model model) {
         System.out.println("Vittoria del Player");
