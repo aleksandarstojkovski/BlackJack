@@ -89,15 +89,29 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleNewCard(NewCardEvent event) {
-        Card card = event.getCard();
-        ImageView imageView = new ImageView();
-        imageView.setPreserveRatio(true);
-        imageView.fitHeightProperty().bind(playerCards.heightProperty());
-        imageView.setImage(card.getImage());
-        BorderPane pane = new BorderPane();
-        pane.getChildren().add(imageView);
-        playerCards.getChildren().add(pane);
-        textArea.appendText(card.toString() + "\n");
+        if (event.getPlayerId()==1) {
+            Card card = event.getCard();
+            ImageView imageView = new ImageView();
+            imageView.setPreserveRatio(true);
+            imageView.fitHeightProperty().bind(playerCards.heightProperty());
+            imageView.setImage(card.getImage());
+            BorderPane pane = new BorderPane();
+            pane.getChildren().add(imageView);
+            playerCards.getChildren().add(pane);
+            textArea.appendText(card.toString() + "\n");
+        }
+        if (event.getPlayerId()==0){
+            Card card = event.getCard();
+            ImageView imageView = new ImageView();
+            imageView.setPreserveRatio(true);
+            imageView.fitHeightProperty().bind(dealerCards.heightProperty());
+            imageView.setImage(card.getImage());
+            imageView.setRotate(180);
+            BorderPane pane = new BorderPane();
+            pane.getChildren().add(imageView);
+            dealerCards.getChildren().add(pane);
+            textArea.appendText(card.toString() + "\n");
+        }
     }
 
 }

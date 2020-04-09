@@ -14,7 +14,7 @@ public class Model extends AbstractModel {
 
     private static Model model;
     private GameState currentState;
-    private Game game;
+    private Round round;
     private Dealer dealer;
     private List<Player> playerList;
     private final BooleanProperty gameRunning = new SimpleBooleanProperty(false);
@@ -68,7 +68,7 @@ public class Model extends AbstractModel {
         this.dealer = new Dealer();
         this.playerList = new ArrayList<Player>();
         playerList.add(new Player("Player 1"));
-        game = new Game(dealer,(ArrayList<Player>) playerList);
+        round = new Round(dealer,(ArrayList<Player>) playerList);
         // calling updateState on InitState
         // case1: BetState (user can start to bet)
         currentState.updateState(this);
@@ -89,28 +89,48 @@ public class Model extends AbstractModel {
     }
 
     @Override
-    public void hit() {
-        hitInternal();
+    public void hit(int playerID) {
+        hitInternal(playerID);
         // calling updateState on PlayerDealsState
         // case1: PlayerDealsState (Player didn't burst)
         // case1: PlayerBurstState (Player has bursted)
         currentState.updateState(this);
     }
+    public void openRound() {
+        hitTwice(0);
+    }
 
     @Override
-    public void hitTwice() {
+    public void hitTwice(int playerID) {
         for (int i=0; i<2;i++)
-            hitInternal();
+            hitInternal(playerID);
     }
 
-    private void hitInternal() {
-        Card card = game.getDealer().giveCard();
-        pcs.firePropertyChange(new NewCardEvent(this, card));
-        game.getPlayerList().get(0).getHand().addCard(card);
-        pcs.firePropertyChange(new NewHandEvent(this, game.getPlayerList().get(0).getHand()));
+    private void hitInternal(int playerID) {
+        Card card = round.getDealer().giveCard();
+        pcs.firePropertyChange(new NewCardEvent(this, card,playerID));
+        if(playerID==0){
+            round.getDealer().getHand().addCard(card);
+            pcs.firePropertyChange(new NewHandEvent(this, round.getDealer().getHand()));
+        }else {
+            round.getPlayerList().get(0).getHand().addCard(card);  //todo: fix per chiata statica
+            pcs.firePropertyChange(new NewHandEvent(this, round.getPlayerList().get(0).getHand()));
+        }
     }
 
-    @Override
+    public void compute(int playerID){
+        if(playerID==0){
+            for(Card card:dealer.getAi().compute()){
+                System.out.println(card);
+                pcs.firePropertyChange(new NewCardEvent(this, card,playerID));
+                round.getDealer().getHand().addCard(card);
+                //pcs.firePropertyChange(new NewHandEvent(this, round.getDealer().getHand()));
+            }
+            currentState.updateState(this);
+        }
+    }
+
+            @Override
     public void tableSetupComplete() {
         // calling updateState on SetupTableState
         // case1: BlackJackState (Player made BlackJack)
@@ -126,6 +146,7 @@ public class Model extends AbstractModel {
         // case1: PlayerDealsState (Player didn't make BlackJack)
         currentState.updateState(this);
         pcs.firePropertyChange(new StandEvent(this));
+        //currentState.updateState(this);
     }
 
     @Override
@@ -184,5 +205,6 @@ public class Model extends AbstractModel {
     public BooleanProperty playerStandProperty() {
         return playerStand;
     }
+
 
 }

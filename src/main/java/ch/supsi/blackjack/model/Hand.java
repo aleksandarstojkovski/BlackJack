@@ -20,10 +20,15 @@ public class Hand {
         cardList.add(card);
     }
 
-    public int value(){
+    public int value() {
         int currentHandValue = 0;
-        for (Card card : cardList){
-            currentHandValue+=card.getValue().cardValue;
+        for (Card card : cardList) {
+            if (card.getValue().label.equals("ace")&&currentHandValue>10){
+                //ToDo: far scegliere il giocatore per attribuire il valore di asso.
+                currentHandValue += 1;
+            } else {
+                currentHandValue += card.getValue().cardValue;
+            }
         }
         return currentHandValue;
     }

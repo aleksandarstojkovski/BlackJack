@@ -6,13 +6,19 @@ public class Player {
 
     private static final int INITIAL_COINS=1000;
     private String nickname;
-    private Hand hand;
+    protected Hand hand;
     private int coins;
+    protected AI ai;
 
     Player(String nickname) {
         this.nickname = nickname;
         this.hand = new Hand();
         this.coins = INITIAL_COINS;
+        this.ai = new PlayerAI(this);
+    }
+
+    public AI getAi() {
+        return ai;
     }
 
     private void addCardToHand (Card newCard){
@@ -40,6 +46,8 @@ public class Player {
         }
     }
 
-
+    public int handValue() {
+        return getHand().value();
+    }
 }
 
