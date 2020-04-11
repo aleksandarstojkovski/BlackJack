@@ -11,9 +11,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="backend" target="1.13" />
+      <module name="backend" target="13" />
       <module name="BlackJack" target="1.13" />
-      <module name="frontend" target="1.13" />
+      <module name="frontend" target="13" />
     </bytecodeTargetLevel>
   </component>
 </project>
