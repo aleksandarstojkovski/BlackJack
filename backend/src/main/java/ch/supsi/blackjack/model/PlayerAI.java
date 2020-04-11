@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model;
 
-import ch.supsi.blackjack.model.AI;
-
 import java.util.List;
 
 public class PlayerAI implements AI {

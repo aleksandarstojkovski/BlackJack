@@ -1,7 +1,6 @@
 package ch.supsi.blackjack.model.state;
 
 import ch.supsi.blackjack.model.Model;
-import ch.supsi.blackjack.model.Player;
 
 public class DealerDealsState implements GameState {
 

@@ -2,8 +2,6 @@ package ch.supsi.blackjack.model;
 
 import javafx.scene.image.Image;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.Objects;
 

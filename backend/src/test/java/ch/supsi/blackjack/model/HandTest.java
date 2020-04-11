@@ -2,30 +2,32 @@ package ch.supsi.blackjack.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HandTest {
     @Test
-    void addCard() {
+    public void addCard() {
         Hand testHand = new Hand();
         testHand.addCard(new Card(Seed.C,Value.ACE));
         assertEquals(1,testHand.getCardList().size());
     }
 
     @Test
-    void value() {
+    public void value() {
         Hand testHand = new Hand();
+
         testHand.addCard(new Card(Seed.C,Value.ACE));
-        assertEquals(10,testHand.value());
+        assertEquals(11, testHand.value());
+
         testHand.addCard(new Card(Seed.C,Value.ACE));
-        assertEquals(20,testHand.value());
+        assertEquals(12, testHand.value());
+
         testHand.addCard(new Card(Seed.C,Value.ACE));
-        assertEquals(21
-                ,testHand.value());
+        assertEquals(13, testHand.value());
     }
 
     @Test
-    void discardCards() {
+    public void discardCards() {
         Hand testHand = new Hand();
         testHand.addCard(new Card(Seed.C,Value.ACE));
         testHand.discardCards();
