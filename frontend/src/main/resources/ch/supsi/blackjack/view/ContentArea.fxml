@@ -3,9 +3,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Label?>
 
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.supsi.blackjack.controller.ContentAreaController" prefHeight="582.0" prefWidth="900.0">
@@ -14,28 +12,28 @@
 
         <Label text="%dealer" styleClass="labels" />
 
-        <HBox fx:id="dealerCards" styleClass="cards-view" VBox.vgrow="ALWAYS"
+        <ListView fx:id="dealerCards" styleClass="cards-view" VBox.vgrow="ALWAYS" orientation="HORIZONTAL"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        </HBox>
+        </ListView>
 
         <Label text="%player" styleClass="labels" />
 
-        <HBox fx:id="playerCards" styleClass="cards-view" VBox.vgrow="ALWAYS"
+        <ListView fx:id="playerCards" styleClass="cards-view" VBox.vgrow="ALWAYS" orientation="HORIZONTAL"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        </HBox>
+        </ListView>
 
         <Label text="%coins" styleClass="labels" />
 
         <Label fx:id="betsAmount" styleClass="labels" />
 
-        <HBox fx:id="coins" alignment="CENTER_LEFT" styleClass="coins-view" VBox.vgrow="ALWAYS"
+        <ListView fx:id="coins" styleClass="coins-view" VBox.vgrow="NEVER" orientation="HORIZONTAL" prefHeight="300"
               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        </HBox>
+        </ListView>
 
-        <StackPane VBox.vgrow="SOMETIMES" >
+        <StackPane VBox.vgrow="NEVER" prefHeight="200" >
             <TextArea fx:id="textArea" >
             </TextArea>
         </StackPane>

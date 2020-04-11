@@ -44,7 +44,12 @@
     /*-fx-border-color: black;*/
     /*-fx-border-width: 1;*/
     /*-fx-padding: 5;*/
-    -fx-spacing: 50;
+    -fx-spacing: 5;
+    -fx-padding: 0;
+}
+
+.coin {
+    -fx-background-color: transparent;
 }
 
 .coins-view
@@ -53,5 +58,15 @@
     /*-fx-border-color: black;*/
     /*-fx-border-width: 1;*/
     /*-fx-padding: 5;*/
-    -fx-spacing: 100;
+    -fx-spacing: 5;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.list-view {
+    -fx-background-color: transparent;
 }

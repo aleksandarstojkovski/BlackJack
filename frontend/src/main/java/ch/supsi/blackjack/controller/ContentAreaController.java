@@ -4,12 +4,14 @@ import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.Card;
 import ch.supsi.blackjack.model.Coin;
 import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.view.CardImage;
+import ch.supsi.blackjack.view.CoinImage;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.util.Callback;
 
 import java.beans.PropertyChangeEvent;
 import java.net.URL;
@@ -17,10 +19,10 @@ import java.util.ResourceBundle;
 
 public class ContentAreaController extends AbstractController implements Initializable {
 
-    @FXML public HBox dealerCards;
+    @FXML public ListView<CardImage> dealerCards;
     @FXML public Label betsAmount;
-    @FXML private HBox coins;
-    @FXML private HBox playerCards;
+    @FXML private ListView<CoinImage> coins;
+    @FXML private ListView<CardImage> playerCards;
     @FXML private TextArea textArea;
 
     public ContentAreaController(Model model) {
@@ -30,6 +32,61 @@ public class ContentAreaController extends AbstractController implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         betsAmount.setText("0");
+
+        dealerCards.setCellFactory(getCardListCell(dealerCards.heightProperty()));
+        playerCards.setCellFactory(getCardListCell(playerCards.heightProperty()));
+        coins.setCellFactory(getCoinListCell(coins.heightProperty()));
+    }
+
+    private Callback<ListView<CardImage>, ListCell<CardImage>> getCardListCell(ReadOnlyDoubleProperty containerHeight) {
+        return param -> {
+            return new ListCell<>() {
+                @Override
+                public void updateItem(CardImage drawable, boolean empty) {
+                    super.updateItem(drawable, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        ImageView imageView = new ImageView();
+                        imageView.setPreserveRatio(true);
+                        imageView.fitHeightProperty().bind(containerHeight);
+                        imageView.setImage(drawable.getImage());
+
+                        setText(null);
+                        setGraphic(imageView);
+                    }
+                }
+            };
+        };
+    }
+
+    private Callback<ListView<CoinImage>, ListCell<CoinImage>> getCoinListCell(ReadOnlyDoubleProperty containerHeight) {
+        return param -> {
+            return new ListCell<>() {
+                @Override
+                public void updateItem(CoinImage coin, boolean empty) {
+                    super.updateItem(coin, empty);
+                    if (empty) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        Button button = new Button();
+                        button.getStyleClass().add("coin");
+                        ImageView imageView = new ImageView();
+                        imageView.fitHeightProperty().bind(containerHeight);
+                        imageView.setPreserveRatio(true);
+                        imageView.setImage(coin.getImage());
+
+                        button.setGraphic(imageView);
+                        button.setOnAction(e -> model.bet(coin.getValue()) );
+
+                        setText(null);
+                        setGraphic(button);
+                    }
+                }
+            };
+        };
     }
 
     @Override
@@ -55,31 +112,27 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleExitGame(ExitGameEvent event) {
-        playerCards.getChildren().clear();
-        coins.getChildren().clear();
-        dealerCards.getChildren().clear();
+        clearTable();
         betsAmount.setText("0");
+    }
+
+    private void clearTable() {
+        playerCards.getItems().clear();
+        coins.getItems().clear();
+        dealerCards.getItems().clear();
     }
 
     private void handleNewGame(NewGameEvent event) {
         // log
         textArea.appendText(event.getClass().getCanonicalName() + "\n");
+
         // clear
-        playerCards.getChildren().clear();
-        coins.getChildren().clear();
-        dealerCards.getChildren().clear();
+        clearTable();
+
         // show coins
         for (Coin c : model.getCoins()){
-            ImageView imageView = new ImageView(c.getImage());
-            imageView.setPreserveRatio(true);
-            imageView.fitHeightProperty().bind(coins.heightProperty());
-            imageView.setImage(c.getImage());
-            BorderPane pane = new BorderPane();
-            pane.getChildren().add(imageView);
-            pane.setOnMouseClicked(mouseEvent -> {
-                model.bet(c.getValue());
-            });
-            coins.getChildren().add(pane);
+            CoinImage img = new CoinImage(c);
+            coins.getItems().add(img);
         }
     }
 
@@ -88,29 +141,17 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleNewCard(NewCardEvent event) {
+        Card card = event.getCard();
+        CardImage img = new CardImage(card);
+
         if (event.getPlayerId()==1) {
-            Card card = event.getCard();
-            ImageView imageView = new ImageView();
-            imageView.setPreserveRatio(true);
-            imageView.fitHeightProperty().bind(playerCards.heightProperty());
-            imageView.setImage(card.getImage());
-            BorderPane pane = new BorderPane();
-            pane.getChildren().add(imageView);
-            playerCards.getChildren().add(pane);
-            textArea.appendText(card.toString() + "\n");
+            playerCards.getItems().add(img);
         }
         if (event.getPlayerId()==0){
-            Card card = event.getCard();
-            ImageView imageView = new ImageView();
-            imageView.setPreserveRatio(true);
-            imageView.fitHeightProperty().bind(dealerCards.heightProperty());
-            imageView.setImage(card.getImage());
-            imageView.setRotate(180);
-            BorderPane pane = new BorderPane();
-            pane.getChildren().add(imageView);
-            dealerCards.getChildren().add(pane);
-            textArea.appendText(card.toString() + "\n");
+            dealerCards.getItems().add(img);
+            //imageView.setRotate(180);
         }
     }
+
 
 }
