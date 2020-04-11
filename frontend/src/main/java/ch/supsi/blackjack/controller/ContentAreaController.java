@@ -21,6 +21,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     @FXML public ListView<CardImage> dealerCards;
     @FXML public Label betsAmount;
+    @FXML public Label playerHand;
     @FXML private ListView<CoinImage> coins;
     @FXML private ListView<CardImage> playerCards;
     @FXML private TextArea textArea;
@@ -137,7 +138,7 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleNewHand(NewHandEvent event) {
-        textArea.appendText(event.getHand().toString() + "\n");
+        playerHand.setText(String.valueOf(event.getHand().value()) );
     }
 
     private void handleNewCard(NewCardEvent event) {

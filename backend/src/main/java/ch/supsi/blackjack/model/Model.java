@@ -30,7 +30,7 @@ public class Model extends AbstractModel {
     private final BooleanProperty betConfirmed = new SimpleBooleanProperty(false);
     // updated by model  - indicates that the user chose to stand
     private final BooleanProperty playerStand = new SimpleBooleanProperty(false);
-    private Coin[] coins = {new Coin(1),new Coin(2),new Coin(5), new Coin(10),new Coin(15),new Coin(25),new Coin(50),new Coin(100)};
+    private Coin[] coins = {new Coin(100),new Coin(200),new Coin(300), new Coin(400),new Coin(500)};
 
     protected Model() {
         super();

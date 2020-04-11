@@ -27,25 +27,59 @@
     -fx-icon-code: fa-question;
 }
 
+.commands-area {
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-border-color: #cbcb2a;
+    -fx-alignment: center;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0 0 10 0;
+}
+
+.rules {
+    -fx-background-color: rgba(0,0,0,0.3);
+    -fx-border-color: #cbcb2a;
+    -fx-alignment: center;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.dealer-rule {
+    -fx-text-fill: black;
+    -fx-font-size: 15;
+}
+
+
 .cards-table {
-    -fx-padding: 5;
+    -fx-padding: 10;
+    -fx-spacing: 20;
     -fx-background-image: url("../images/table.png");
     /*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
 }
 
-.labels {
+.label {
     -fx-text-fill: white;
     -fx-font-size: 14;
 }
 
+.labelStrong {
+    -fx-text-fill: #cbcb2a;
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+}
+
+.player-info {
+    /*-fx-border-color: #cbcb2a;*/
+}
+
 .cards-view
 {
+    /*-fx-border-color: #cbcb2a;*/
     -fx-background-color: transparent;
     /*-fx-border-color: black;*/
     /*-fx-border-width: 1;*/
     /*-fx-padding: 5;*/
-    -fx-spacing: 5;
-    -fx-padding: 0;
+    /*-fx-spacing: 5;*/
 }
 
 .coin {
@@ -63,13 +97,10 @@
     /*-fx-padding: 5;*/
     -fx-spacing: 5;
     -fx-padding: 0;
+    -fx-alignment: center;
 }
 
 .list-cell {
     -fx-background-color: transparent;
-    -fx-padding: 0;
-}
-
-.list-view {
-    -fx-background-color: transparent;
+    -fx-spacing: 5;
 }

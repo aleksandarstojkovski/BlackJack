@@ -6,38 +6,42 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Label?>
 
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.supsi.blackjack.controller.ContentAreaController" prefHeight="582.0" prefWidth="900.0">
 
-    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" styleClass="cards-table" >
+    <VBox alignment="center" styleClass="cards-table"
+            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
+        <!-- DEALER -->
+        <HBox styleClass="player-info">
+            <VBox minWidth="100">
+                <Label text="%dealer" styleClass="label" />
+                <Label fx:id="dealerHand" styleClass="label" />
+            </VBox>
+            <ListView fx:id="dealerCards" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
+        </HBox>
 
-        <Label text="%dealer" styleClass="labels" />
+        <VBox styleClass="rules">
+            <Label text="Dealer must stand on 17 and must draw to 16" styleClass="dealer-rule" />
+            <Label text="INSURANCE PAY 2 TO 1" styleClass="labelStrong" />
+        </VBox>
 
-        <ListView fx:id="dealerCards" styleClass="cards-view" VBox.vgrow="ALWAYS" orientation="HORIZONTAL"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        </ListView>
+        <!-- PLAYER -->
+        <HBox styleClass="player-info">
+            <VBox minWidth="100">
+                <Label text="Bid" styleClass="label" />
+                <Label fx:id="betsAmount" styleClass="labelStrong" />
+                <Label text="%player" styleClass="label"/>
+                <Label fx:id="playerHand" styleClass="labelStrong"/>
+            </VBox>
+            <ListView fx:id="playerCards" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
+        </HBox>
 
-        <Label text="%player" styleClass="labels" />
+        <!-- COMMANDS -->
+        <VBox styleClass="commands-area">
+            <Label text="Place your bet" styleClass="labelStrong" />
+            <ListView fx:id="coins" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350" prefWidth="Infinity" />
+        </VBox>
 
-        <ListView fx:id="playerCards" styleClass="cards-view" VBox.vgrow="ALWAYS" orientation="HORIZONTAL"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        </ListView>
-
-        <Label text="%coins" styleClass="labels" />
-
-        <Label fx:id="betsAmount" styleClass="labels" />
-
-        <ListView fx:id="coins" styleClass="coins-view" VBox.vgrow="NEVER" orientation="HORIZONTAL" prefHeight="300"
-              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        </ListView>
-
-        <StackPane VBox.vgrow="NEVER" prefHeight="200" >
-            <TextArea fx:id="textArea" >
-            </TextArea>
-        </StackPane>
-
+        <TextArea fx:id="textArea" VBox.vgrow="NEVER" prefHeight="400" />
     </VBox>
-
 </AnchorPane>
