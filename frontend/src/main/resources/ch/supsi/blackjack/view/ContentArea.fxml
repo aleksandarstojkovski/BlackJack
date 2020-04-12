@@ -13,34 +13,41 @@
             AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >
         <!-- DEALER -->
         <HBox styleClass="player-info">
-            <VBox minWidth="100">
+            <VBox minWidth="100" styleClass="info-area">
                 <Label text="%dealer" styleClass="label" />
-                <Label fx:id="dealerHand" styleClass="label" />
+                <Label fx:id="dealerHand" styleClass="label-strong" />
             </VBox>
             <ListView fx:id="dealerCards" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
         </HBox>
 
-        <VBox styleClass="rules">
-            <Label text="Dealer must stand on 17 and must draw to 16" styleClass="dealer-rule" />
-            <Label text="INSURANCE PAY 2 TO 1" styleClass="labelStrong" />
+        <VBox styleClass="rule-area">
+            <Label text="Dealer must stand on 17 and must draw to 16" styleClass="label-rule" />
+            <Label text="INSURANCE PAY 2 TO 1" styleClass="label-strong" />
         </VBox>
 
         <!-- PLAYER -->
         <HBox styleClass="player-info">
-            <VBox minWidth="100">
-                <Label text="Bid" styleClass="label" />
-                <Label fx:id="betsAmount" styleClass="labelStrong" />
+            <VBox minWidth="100" styleClass="info-area">
                 <Label text="%player" styleClass="label"/>
-                <Label fx:id="playerHand" styleClass="labelStrong"/>
+                <Label fx:id="playerHand" styleClass="label-strong"/>
             </VBox>
             <ListView fx:id="playerCards" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
         </HBox>
 
-        <!-- COMMANDS -->
-        <VBox styleClass="commands-area">
-            <Label text="Place your bet" styleClass="labelStrong" />
-            <ListView fx:id="coins" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350" prefWidth="Infinity" />
-        </VBox>
+        <HBox styleClass="player-info">
+            <VBox minWidth="100" styleClass="info-area" HBox.hgrow="NEVER">
+                <Label text="Balance" styleClass="label" />
+                <Label fx:id="playerBalance" styleClass="label-strong" />
+                <Label text="Bid" styleClass="label" />
+                <Label fx:id="betsAmount" styleClass="label-strong"   />
+            </VBox>
+            <!-- COMMANDS -->
+            <VBox fx:id="betsArea" styleClass="commands-area" HBox.hgrow="ALWAYS" visible="false" >
+                <Label text="Place your bet" styleClass="label" />
+                <ListView fx:id="coins" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350"  />
+            </VBox>
+        </HBox>
+
 
         <TextArea fx:id="textArea" VBox.vgrow="NEVER" prefHeight="400" />
     </VBox>

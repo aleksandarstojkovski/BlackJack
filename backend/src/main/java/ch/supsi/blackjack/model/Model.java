@@ -111,10 +111,10 @@ public class Model extends AbstractModel {
         pcs.firePropertyChange(new NewCardEvent(this, card,playerID));
         if(playerID==0){
             round.getDealer().getHand().addCard(card);
-            pcs.firePropertyChange(new NewHandEvent(this, round.getDealer().getHand()));
+            pcs.firePropertyChange(new DealerHandUpdateEvent(this, round.getDealer().getHand().value()));
         }else {
             round.getPlayerList().get(0).getHand().addCard(card);  //todo: fix per chiata statica
-            pcs.firePropertyChange(new NewHandEvent(this, round.getPlayerList().get(0).getHand()));
+            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, round.getPlayerList().get(0).getHand().value()));
         }
     }
 

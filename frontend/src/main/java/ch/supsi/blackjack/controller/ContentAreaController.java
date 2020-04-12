@@ -6,11 +6,12 @@ import ch.supsi.blackjack.model.Coin;
 import ch.supsi.blackjack.model.Model;
 import ch.supsi.blackjack.view.CardImage;
 import ch.supsi.blackjack.view.CoinImage;
-import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import java.beans.PropertyChangeEvent;
@@ -19,12 +20,22 @@ import java.util.ResourceBundle;
 
 public class ContentAreaController extends AbstractController implements Initializable {
 
-    @FXML public ListView<CardImage> dealerCards;
-    @FXML public Label betsAmount;
-    @FXML public Label playerHand;
+    @FXML private Label dealerHand;
+    @FXML private Label playerBalance;
+    @FXML private Label playerHand;
+    @FXML private Label betsAmount;
+    @FXML private VBox betsArea;
+
     @FXML private ListView<CoinImage> coins;
     @FXML private ListView<CardImage> playerCards;
+    @FXML private ListView<CardImage> dealerCards;
+
     @FXML private TextArea textArea;
+
+    private final IntegerProperty playerHandProperty = new SimpleIntegerProperty(0);
+    private final IntegerProperty dealerHandProperty = new SimpleIntegerProperty(0);
+    private final IntegerProperty betsAmountProperty = new SimpleIntegerProperty(0);
+    private final IntegerProperty playerBalanceProperty = new SimpleIntegerProperty(0);
 
     public ContentAreaController(Model model) {
         super(model);
@@ -32,11 +43,14 @@ public class ContentAreaController extends AbstractController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        betsAmount.setText("0");
-
         dealerCards.setCellFactory(getCardListCell(dealerCards.heightProperty()));
         playerCards.setCellFactory(getCardListCell(playerCards.heightProperty()));
         coins.setCellFactory(getCoinListCell(coins.heightProperty()));
+
+        betsAmount.textProperty().bind(betsAmountProperty.asString());
+        playerBalance.textProperty().bind(playerBalanceProperty.asString());
+        playerHand.textProperty().bind(playerHandProperty.asString());
+        dealerHand.textProperty().bind(dealerHandProperty.asString());
     }
 
     private Callback<ListView<CardImage>, ListCell<CardImage>> getCardListCell(ReadOnlyDoubleProperty containerHeight) {
@@ -51,7 +65,7 @@ public class ContentAreaController extends AbstractController implements Initial
                     } else {
                         ImageView imageView = new ImageView();
                         imageView.setPreserveRatio(true);
-                        imageView.fitHeightProperty().bind(containerHeight);
+                        imageView.fitHeightProperty().bind(containerHeight.subtract(20));
                         imageView.setImage(drawable.getImage());
 
                         setText(null);
@@ -75,7 +89,7 @@ public class ContentAreaController extends AbstractController implements Initial
                         Button button = new Button();
                         button.getStyleClass().add("coin");
                         ImageView imageView = new ImageView();
-                        imageView.fitHeightProperty().bind(containerHeight);
+                        imageView.fitHeightProperty().bind(containerHeight.subtract(20));
                         imageView.setPreserveRatio(true);
                         imageView.setImage(coin.getImage());
 
@@ -94,65 +108,72 @@ public class ContentAreaController extends AbstractController implements Initial
     public void propertyChange(PropertyChangeEvent event) {
         if (event instanceof NewCardEvent) {
             handleNewCard((NewCardEvent) event);
-        } else if (event instanceof NewHandEvent) {
-            handleNewHand((NewHandEvent) event);
+        } else if (event instanceof DealerHandUpdateEvent) {
+            handleDealerHand((DealerHandUpdateEvent) event);
+        } else if (event instanceof PlayerHandUpdateEvent) {
+            handlePlayerHand((PlayerHandUpdateEvent) event);
         } else if (event instanceof NewGameEvent) {
             handleNewGame((NewGameEvent) event);
         } else if (event instanceof ExitGameEvent){
             handleExitGame((ExitGameEvent) event);
         } else if (event instanceof NewBetEvent) {
             handleNewBet((NewBetEvent) event);
-        } else{
-            textArea.appendText(event.getClass().getCanonicalName() + "\n");
         }
+
+        // log
+        textArea.appendText(event.getClass().getCanonicalName() + "\n");
     }
 
     private void handleNewBet(NewBetEvent event) {
-        int newAmout = event.getBetValue()+ Integer.parseInt(betsAmount.getText());
-        betsAmount.setText(String.valueOf(newAmout));
+        betsAmountProperty.set(betsAmountProperty.get() + event.getBetValue());
     }
 
     private void handleExitGame(ExitGameEvent event) {
         clearTable();
-        betsAmount.setText("0");
+        betsArea.setVisible(false);
     }
 
     private void clearTable() {
         playerCards.getItems().clear();
         coins.getItems().clear();
         dealerCards.getItems().clear();
+        betsAmountProperty.set(0);
     }
 
     private void handleNewGame(NewGameEvent event) {
-        // log
-        textArea.appendText(event.getClass().getCanonicalName() + "\n");
-
-        // clear
         clearTable();
+        loadAvailableCoins();
+        betsArea.setVisible(true);
+    }
 
-        // show coins
+    private void loadAvailableCoins() {
         for (Coin c : model.getCoins()){
             CoinImage img = new CoinImage(c);
             coins.getItems().add(img);
         }
     }
 
-    private void handleNewHand(NewHandEvent event) {
-        playerHand.setText(String.valueOf(event.getHand().value()) );
+    private void handlePlayerHand(PlayerHandUpdateEvent event) {
+        playerHandProperty.set(event.getValue());
+        betsArea.setVisible(false);
+    }
+
+    private void handleDealerHand(DealerHandUpdateEvent event) {
+        dealerHandProperty.set(event.getValue());
+        betsArea.setVisible(false);
     }
 
     private void handleNewCard(NewCardEvent event) {
         Card card = event.getCard();
         CardImage img = new CardImage(card);
 
+        //TODO: remove special codes 1,0 ... use different events
         if (event.getPlayerId()==1) {
             playerCards.getItems().add(img);
         }
         if (event.getPlayerId()==0){
             dealerCards.getItems().add(img);
-            //imageView.setRotate(180);
         }
     }
-
 
 }
