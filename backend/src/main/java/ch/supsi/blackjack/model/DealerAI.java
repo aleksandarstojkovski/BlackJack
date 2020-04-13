@@ -1,8 +1,5 @@
 package ch.supsi.blackjack.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DealerAI implements AI {
     private Dealer aiEntity;
     DealerAI(Dealer dealer){
@@ -10,14 +7,9 @@ public class DealerAI implements AI {
     }
 
     @Override
-    public List<Card> compute() {
-        List<Card> pickedCards = new ArrayList<Card>();
-        int currentHandValue = aiEntity.handValue();
-        while(currentHandValue<17){
-            Card currentCard = aiEntity.giveCard();
-            pickedCards.add(currentCard);
-            currentHandValue = currentHandValue + currentCard.getValue().cardValue;
+    public void compute(Model model) {
+        while(aiEntity.handValue()<17){
+            model.hitInternal(aiEntity);
         }
-        return pickedCards;
     }
 }

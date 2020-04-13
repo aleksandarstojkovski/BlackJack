@@ -15,7 +15,7 @@ public class PlayerAI implements AI {
     }
 
     @Override
-    public List<Card> compute() {
-    return null;
+    public void compute(Model model) {
+
     }
 }

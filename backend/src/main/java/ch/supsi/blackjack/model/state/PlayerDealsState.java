@@ -21,7 +21,7 @@ public class PlayerDealsState implements GameState {
         if (model.playerStandProperty().get()){
             //Order is important non scambiare l'ordine
             model.setCurrentState(DealerDealsState.instance());
-            model.compute(0);
+            model.compute(model.getDealer());
         } else {
             if (model.getPlayerList().get(0).getHand().value()<=21){
                 // stay in this state until the user bursts or stands or makes blackjack

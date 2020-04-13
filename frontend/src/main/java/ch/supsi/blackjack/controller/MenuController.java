@@ -76,7 +76,7 @@ public class MenuController extends AbstractController implements Initializable 
 
     @FXML
     void hitAction(ActionEvent actionEvent) {
-        model.hit(1);
+        model.playerHit();
     }
 
     @FXML

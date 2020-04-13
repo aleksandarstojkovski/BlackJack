@@ -7,7 +7,7 @@ public class Dealer extends Player{
     private DecksContainer decksContainer;
 
     public Dealer() {
-        super("Dealer");
+        super("Dealer",99);
         this.ai = new DealerAI(this);
         try {
             decksContainer = new DecksContainer(3);

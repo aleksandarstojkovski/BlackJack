@@ -1,22 +1,24 @@
 package ch.supsi.blackjack.event;
 
 import ch.supsi.blackjack.model.Card;
+import ch.supsi.blackjack.model.Player;
 
 public class NewCardEvent extends AbstractEvent {
-    private int playerId;
+    private Player player;
     private Card card;
 
-    public NewCardEvent(Object source, Card card, int playerId) {
+    public NewCardEvent(Object source, Card card, Player player) {
         super(source);
         this.card = card;
-        this.playerId=playerId;
+        this.player=player;
     }
 
     public Card getCard() {
         return card;
     }
-    public int getPlayerId(){
-        return playerId;
+
+    public Player getPlayer(){
+        return player;
     }
 
 }

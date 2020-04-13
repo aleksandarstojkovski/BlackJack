@@ -24,9 +24,6 @@ public class BetState implements GameState {
         }
         if (model.betConfirmedProperty().get()){
             model.openRound();
-            for (int i = 1;i<=model.getPlayerList().size();i++) {
-                model.hitTwice(i);
-            }
             model.betsOpenProperty().setValue(false);
             model.dealsOpenProperty().setValue(true);
             model.setCurrentState(SetupTableState.instance());

@@ -67,7 +67,7 @@ public class Model extends AbstractModel {
     public void newGame() {
         this.dealer = new Dealer();
         this.playerList = new ArrayList<Player>();
-        playerList.add(new Player("Player 1"));
+        playerList.add(new Player("Player 1",0));
         round = new Round(dealer,(ArrayList<Player>) playerList);
         // calling updateState on InitState
         // case1: BetState (user can start to bet)
@@ -89,24 +89,27 @@ public class Model extends AbstractModel {
     }
 
     @Override
-    public void hit(int playerID) {
-        hitInternal(playerID);
+    public void playerHit() {
+        hitInternal(this.playerList.get(0));
         // calling updateState on PlayerDealsState
         // case1: PlayerDealsState (Player didn't burst)
         // case1: PlayerBurstState (Player has bursted)
         currentState.updateState(this);
     }
     public void openRound() {
-        hitTwice(0);
+        hitTwice(dealer);//ToDo: miglioare l'apertura del gioco
+        for (Player player : model.getPlayerList()) {
+            model.hitTwice(player);
+        }
     }
 
     @Override
-    public void hitTwice(int playerID) {
+    public void hitTwice(Player player) {
         for (int i=0; i<2;i++)
-            hitInternal(playerID);
+            hitInternal(player);
     }
 
-    private void hitInternal(int playerID) {
+    /*private void hitInternal(int playerID) {
         Card card = round.getDealer().giveCard();
         pcs.firePropertyChange(new NewCardEvent(this, card,playerID));
         if(playerID==0){
@@ -116,17 +119,26 @@ public class Model extends AbstractModel {
             round.getPlayerList().get(0).getHand().addCard(card);  //todo: fix per chiata statica
             pcs.firePropertyChange(new PlayerHandUpdateEvent(this, round.getPlayerList().get(0).getHand().value()));
         }
+    }*/
+
+    public void hitInternal(Player currentPlayer) {
+        Card card = round.getDealer().giveCard();
+        pcs.firePropertyChange(new NewCardEvent(this, card,currentPlayer));
+        currentPlayer.getHand().addCard(card);
+        if(currentPlayer instanceof Dealer){
+            pcs.firePropertyChange(new DealerHandUpdateEvent(this, currentPlayer.getHand().value()));
+        }else {
+            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, currentPlayer.getHand().value()));
+        }
     }
 
-    public void compute(int playerID){
-        if(playerID==0){
-            for(Card card:dealer.getAi().compute()){
-                System.out.println(card);
-                pcs.firePropertyChange(new NewCardEvent(this, card,playerID));
-                round.getDealer().getHand().addCard(card);
-                //pcs.firePropertyChange(new NewHandEvent(this, round.getDealer().getHand()));
-            }
+    public void compute(Player player){
+        if(player instanceof Dealer){
+            dealer.getAi().compute(this);
             currentState.updateState(this);
+        } else if (player instanceof Player){
+            //ToDo: futura implementazione del PlayerAI
+            System.out.println("Questa è instanceof Player, Player ID = "+player.getPlayerID()); //Print diagnostico
         }
     }
 
