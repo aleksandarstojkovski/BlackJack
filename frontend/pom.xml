@@ -8,8 +8,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>ch.supsi.blackjack</groupId>
     <artifactId>frontend</artifactId>
 
     <properties>
@@ -142,6 +140,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <skip>false</skip>
                     <mainClass>ch.supsi.blackjack.Main</mainClass>
                 </configuration>
             </plugin>
