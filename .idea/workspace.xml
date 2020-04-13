@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5aa9ca9-e8aa-4aa9-97f7-917fb849800e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/dependency-reduced-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d5aa9ca9-e8aa-4aa9-97f7-917fb849800e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,20 +64,7 @@
       <recent name="ch.supsi.blackjack.model" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.Compile Test Exec">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="ch.supsi.blackjack.Main" />
-      <module name="frontend" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ch.supsi.blackjack.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="Compile Test Exec" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -110,15 +92,6 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Maven.Compile Test Exec" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -184,10 +157,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="515" y="385" key="#com.intellij.codeInsight.i18n.I18nizeQuickFixDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586097016110" />
-    <state x="-163" y="1143" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586780719268">
+    <state x="-163" y="1143" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586780932955">
       <screen x="-265" y="1080" width="1368" height="892" />
     </state>
-    <state x="-163" y="1143" key="#com.intellij.execution.impl.EditConfigurationsDialog/-265.1080.1368.892/0.0.1920.1040@-265.1080.1368.892" timestamp="1586780719268" />
+    <state x="-163" y="1143" key="#com.intellij.execution.impl.EditConfigurationsDialog/-265.1080.1368.892/0.0.1920.1040@-265.1080.1368.892" timestamp="1586780932955" />
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1586778916008" />
     <state x="93" y="93" width="1350" height="638" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1584120500914">
       <screen x="0" y="0" width="1536" height="824" />
