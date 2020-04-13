@@ -7,6 +7,10 @@
     -fx-icon-code: fa-play;
 }
 
+.nextround-icon {
+    -fx-icon-code: fa-mail-forward;
+}
+
 .exitgame-icon {
     -fx-icon-code: fa-sign-out;
 }

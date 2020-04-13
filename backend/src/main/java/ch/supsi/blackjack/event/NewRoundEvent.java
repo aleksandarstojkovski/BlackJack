@@ -4,11 +4,11 @@ import ch.supsi.blackjack.model.Player;
 
 import java.util.List;
 
-public class NewGameEvent extends AbstractEvent {
+public class NewRoundEvent extends AbstractEvent {
 
     private List<Player> playerList;
 
-    public NewGameEvent(Object source, List<Player> playerList) {
+    public NewRoundEvent(Object source, List<Player> playerList) {
         super(source);
         this.playerList=playerList;
     }

@@ -14,6 +14,11 @@
                 <FontIcon styleClass="newgame-icon"/>
             </graphic>
         </Button>
+        <Button fx:id="nextRoundBtn" mnemonicParsing="false" text="%next_round" onAction="#nextRoundAction" >
+            <graphic>
+                <FontIcon styleClass="nextround-icon"/>
+            </graphic>
+        </Button>
         <Button fx:id="betBtn" mnemonicParsing="false" text="%bet" onAction="#betAction" >
             <graphic>
                 <FontIcon styleClass="bet-icon"/>

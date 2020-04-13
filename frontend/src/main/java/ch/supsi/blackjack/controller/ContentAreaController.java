@@ -46,7 +46,6 @@ public class ContentAreaController extends AbstractController implements Initial
         dealerCards.setCellFactory(getCardListCell(dealerCards.heightProperty()));
         playerCards.setCellFactory(getCardListCell(playerCards.heightProperty()));
         coins.setCellFactory(getCoinListCell(coins.heightProperty()));
-
         betsAmount.textProperty().bind(betsAmountProperty.asString());
         playerBalance.textProperty().bind(playerBalanceProperty.asString());
         playerHand.textProperty().bind(playerHandProperty.asString());
@@ -106,6 +105,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
+        
         if (event instanceof NewCardEvent) {
             handleNewCard((NewCardEvent) event);
         } else if (event instanceof DealerHandUpdateEvent) {
@@ -118,10 +118,22 @@ public class ContentAreaController extends AbstractController implements Initial
             handleExitGame((ExitGameEvent) event);
         } else if (event instanceof NewBetEvent) {
             handleNewBet((NewBetEvent) event);
+        } else if (event instanceof NewRoundEvent){
+            handleNewRound((NewRoundEvent) event);
         }
 
         // log
         textArea.appendText(event.getClass().getCanonicalName() + "\n");
+        
+    }
+
+    private void handleNewRound(NewRoundEvent event) {
+        clearTable();
+        playerHandProperty.setValue(0);
+        dealerHandProperty.setValue(0);
+        loadAvailableCoins();
+        playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
+        betsArea.setVisible(true);
     }
 
     private void handleNewBet(NewBetEvent event) {
@@ -138,11 +150,14 @@ public class ContentAreaController extends AbstractController implements Initial
         coins.getItems().clear();
         dealerCards.getItems().clear();
         betsAmountProperty.set(0);
+        playerHandProperty.setValue(0);
+        dealerHandProperty.setValue(0);
     }
 
     private void handleNewGame(NewGameEvent event) {
         clearTable();
         loadAvailableCoins();
+        playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
         betsArea.setVisible(true);
     }
 

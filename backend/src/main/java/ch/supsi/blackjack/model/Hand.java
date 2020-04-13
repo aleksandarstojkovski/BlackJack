@@ -46,4 +46,12 @@ public class Hand {
         this.betValue += amount;
     }
 
+    public int takeBets(){
+        int bettedCoins=betValue;
+        betValue=0;
+        // TODO: manage in better way do not clear array
+        cardList.clear();
+        return bettedCoins;
+    }
+
 }

@@ -19,7 +19,8 @@ public class DealerBurstState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
-        System.out.println("Vittoria del Player");
-        model.setCurrentState(GameOverState.instance());
+        model.setCurrentState(UpdateTableState.instance());
+        model.nextState();
     }
+
 }

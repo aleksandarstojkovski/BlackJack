@@ -12,7 +12,6 @@ public class SetupTableState implements GameState {
 
         public static SetupTableState instance() {
             System.out.println("Current state: " +instance.getClass().toString());
-
             return instance;
         }
 
@@ -21,6 +20,7 @@ public class SetupTableState implements GameState {
         public void updateState(Model model) {
             if (model.getPlayerList().get(0).getHand().value() == 21){
                 model.setCurrentState(BlackJackState.instance());
+                model.nextState();
             } else {
                 model.setCurrentState(PlayerDealsState.instance());
             }

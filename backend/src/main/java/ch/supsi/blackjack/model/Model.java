@@ -3,20 +3,26 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
+import ch.supsi.blackjack.model.state.BetState;
 import ch.supsi.blackjack.model.state.GameState;
 import ch.supsi.blackjack.model.state.InitState;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends AbstractModel {
 
     private static Model model;
+    private Stage primaryStage;
     private GameState currentState;
     private Round round;
     private Dealer dealer;
     private List<Player> playerList;
+    // updated by the states - activates/deactivates nextRound button
+    private final BooleanProperty nextRound = new SimpleBooleanProperty(false);
     private final BooleanProperty gameRunning = new SimpleBooleanProperty(false);
     // updated by the states - indicates that users can start to bet
     private final BooleanProperty betsOpen = new SimpleBooleanProperty(false);
@@ -72,7 +78,7 @@ public class Model extends AbstractModel {
         // calling updateState on InitState
         // case1: BetState (user can start to bet)
         currentState.updateState(this);
-        pcs.firePropertyChange(new NewGameEvent(this));
+        pcs.firePropertyChange(new NewGameEvent(this, playerList));
     }
 
     @Override
@@ -89,13 +95,23 @@ public class Model extends AbstractModel {
     }
 
     @Override
-    public void playerHit() {
+    public void nextRound() {
+        // calling updateState on InitState
+        // case1: BetState (user can start to bet)
+        currentState.updateState(this);
+        nextRound.set(false);
+        pcs.firePropertyChange(new NewRoundEvent(this,playerList));
+    }
+
+    @Override
+    public void hit() {
         hitInternal(this.playerList.get(0));
         // calling updateState on PlayerDealsState
         // case1: PlayerDealsState (Player didn't burst)
         // case1: PlayerBurstState (Player has bursted)
         currentState.updateState(this);
     }
+
     public void openRound() {
         hitTwice(dealer);//ToDo: miglioare l'apertura del gioco
         for (Player player : model.getPlayerList()) {
@@ -105,26 +121,15 @@ public class Model extends AbstractModel {
 
     @Override
     public void hitTwice(Player player) {
-        for (int i=0; i<2;i++)
+        for (int i=0;i<2;i++)
             hitInternal(player);
     }
-
-    /*private void hitInternal(int playerID) {
-        Card card = round.getDealer().giveCard();
-        pcs.firePropertyChange(new NewCardEvent(this, card,playerID));
-        if(playerID==0){
-            round.getDealer().getHand().addCard(card);
-            pcs.firePropertyChange(new DealerHandUpdateEvent(this, round.getDealer().getHand().value()));
-        }else {
-            round.getPlayerList().get(0).getHand().addCard(card);  //todo: fix per chiata statica
-            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, round.getPlayerList().get(0).getHand().value()));
-        }
-    }*/
 
     public void hitInternal(Player currentPlayer) {
         Card card = round.getDealer().giveCard();
         pcs.firePropertyChange(new NewCardEvent(this, card,currentPlayer));
         currentPlayer.getHand().addCard(card);
+        // if(playerID==0)
         if(currentPlayer instanceof Dealer){
             pcs.firePropertyChange(new DealerHandUpdateEvent(this, currentPlayer.getHand().value()));
         }else {
@@ -140,14 +145,6 @@ public class Model extends AbstractModel {
             //ToDo: futura implementazione del PlayerAI
             System.out.println("Questa è instanceof Player, Player ID = "+player.getPlayerID()); //Print diagnostico
         }
-    }
-
-            @Override
-    public void tableSetupComplete() {
-        // calling updateState on SetupTableState
-        // case1: BlackJackState (Player made BlackJack)
-        // case1: PlayerDealsState (Player didn't make BlackJack)
-        currentState.updateState(this);
     }
 
     @Override
@@ -218,5 +215,20 @@ public class Model extends AbstractModel {
         return playerStand;
     }
 
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public BooleanProperty nextRoundProperty() {
+        return nextRound;
+    }
+
+    public void nextState(){
+        currentState.updateState(this);
+    }
 
 }

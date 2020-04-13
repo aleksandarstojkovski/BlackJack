@@ -42,6 +42,10 @@ public class Player {
         return coins;
     }
 
+    public void giveCoins(int amount) {
+        coins+=amount;
+    }
+
     public void bet(int amount) throws InsufficientCoinsException{
         if (coins>=amount){
             coins-=amount;

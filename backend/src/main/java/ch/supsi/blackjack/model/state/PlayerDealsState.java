@@ -23,12 +23,17 @@ public class PlayerDealsState implements GameState {
             model.setCurrentState(DealerDealsState.instance());
             model.compute(model.getDealer());
         } else {
-            if (model.getPlayerList().get(0).getHand().value()<=21){
+            int playerValue = model.getPlayerList().get(0).getHand().value();
+            if (playerValue<21){
                 // stay in this state until the user bursts or stands or makes blackjack
                 model.setCurrentState(PlayerDealsState.instance());
+            } else if (playerValue == 21) {
+                model.setCurrentState(TwenrtyOneState.instance());
+                model.nextState();
             } else {
                 model.playerBurstProperty().set(true);
                 model.setCurrentState(PlayerBurstState.instance());
+                model.nextState();
             }
         }
     }

@@ -18,7 +18,9 @@ public class BlackJackState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
-        model.setCurrentState(BetState.instance());
+        model.nextRoundProperty().set(true);
+        model.setCurrentState(UpdateTableState.instance());
+        model.nextState();
     }
 
 }

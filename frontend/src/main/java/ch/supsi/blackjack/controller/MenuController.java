@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 public class MenuController extends AbstractController implements Initializable {
 
+    @FXML public Button nextRoundBtn;
     @FXML private Button betBtn;
     @FXML private Button newGameBtn;
     @FXML private Button exitGameBtn;
@@ -27,7 +28,6 @@ public class MenuController extends AbstractController implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // using events instead of property binding
         BooleanBinding disableHitAndStand = getModel().gameRunningProperty().not().or(
                 getModel().dealsOpenProperty().not().or(
                         getModel().playerBurstProperty().or(
@@ -43,6 +43,7 @@ public class MenuController extends AbstractController implements Initializable 
         hitBtn.disableProperty().bind(disableHitAndStand);
         standBtn.disableProperty().bind(disableHitAndStand);
         betBtn.disableProperty().bind(disableBetBtn);
+        nextRoundBtn.disableProperty().bind(getModel().nextRoundProperty().not());
     }
 
     private Model getModel() { return (Model)model; }
@@ -76,7 +77,7 @@ public class MenuController extends AbstractController implements Initializable 
 
     @FXML
     void hitAction(ActionEvent actionEvent) {
-        model.playerHit();
+        model.hit();
     }
 
     @FXML
@@ -86,5 +87,9 @@ public class MenuController extends AbstractController implements Initializable 
 
     @FXML
     public void betAction(ActionEvent actionEvent) {model.confirmBet(); }
+
+    public void nextRoundAction(ActionEvent actionEvent) {
+        model.nextRound();
+    }
 
 }

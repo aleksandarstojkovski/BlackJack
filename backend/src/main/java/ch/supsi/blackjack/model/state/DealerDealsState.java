@@ -17,10 +17,12 @@ public class DealerDealsState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
+        model.nextRoundProperty().setValue(true);
         if(model.getDealer().getHand().value()>21){
             model.setCurrentState(DealerBurstState.instance());
         } else {
             model.setCurrentState(UpdateTableState.instance());
         }
+        model.nextState();
     }
 }

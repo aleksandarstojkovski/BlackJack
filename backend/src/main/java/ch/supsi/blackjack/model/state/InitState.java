@@ -19,6 +19,7 @@ public class InitState implements GameState {
     @Override
     public void updateState(Model model) {
         model.gameRunningProperty().setValue(true);
+        model.nextRoundProperty().setValue(false);
         model.setCurrentState(BetState.instance());
     }
 
