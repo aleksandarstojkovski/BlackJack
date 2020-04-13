@@ -4,11 +4,11 @@ public interface GameHandler {
 
     void newGame();
     void exitGame();
-    void hit(int playerID);
+    void playerHit();
     void stand();
     void bet(int betValue);
     void confirmBet();
-    void hitTwice(int playerID);
+    void hitTwice(Player player);
     void tableSetupComplete();
     Coin[] getCoins();
 

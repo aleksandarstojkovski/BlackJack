@@ -168,10 +168,10 @@ public class ContentAreaController extends AbstractController implements Initial
         CardImage img = new CardImage(card);
 
         //TODO: remove special codes 1,0 ... use different events
-        if (event.getPlayerId()==1) {
+        if (event.getPlayer().getPlayerID()==0) {
             playerCards.getItems().add(img);
         }
-        if (event.getPlayerId()==0){
+        if (event.getPlayer().getPlayerID()==99){
             dealerCards.getItems().add(img);
         }
     }
