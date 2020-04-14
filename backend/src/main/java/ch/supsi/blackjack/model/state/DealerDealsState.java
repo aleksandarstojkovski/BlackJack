@@ -19,7 +19,7 @@ public class DealerDealsState implements GameState {
     public void updateState(Model model) {
         model.nextRoundProperty().setValue(true);
         if(model.getDealer().getHand().value()>21){
-            model.setCurrentState(DealerBurstState.instance());
+            model.setCurrentState(DealerBustState.instance());
         } else {
             model.setCurrentState(UpdateTableState.instance());
         }

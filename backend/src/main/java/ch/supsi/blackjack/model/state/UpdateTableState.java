@@ -27,7 +27,7 @@ public class UpdateTableState implements GameState {
         int delaerValue = model.getDealer().getHand().value();
         int playerValue = model.getPlayerList().get(0).getHand().value();
 
-        if (model.playerBurstProperty().get()){
+        if (model.playerBustedProperty().get()){
             alert.setTitle("Bust");
             alert.setHeaderText("You busted.");
             // dealer wins
@@ -36,9 +36,9 @@ public class UpdateTableState implements GameState {
             }
         }
 
-        if (model.dealerBurstProperty().get()){
-            alert.setTitle("Win");
-            alert.setHeaderText("You win.");
+        if (model.dealerBustedProperty().get()){
+            alert.setTitle("Bust");
+            alert.setHeaderText("Dealer busted.");
             // player wins
             int bettedCoins;
             for (Player p : model.getPlayerList()){
@@ -48,14 +48,14 @@ public class UpdateTableState implements GameState {
         }
 
         // no-one busted
-        if (delaerValue > playerValue){
+        if (delaerValue > playerValue && ! model.dealerBustedProperty().get()){
             alert.setTitle("Lose");
             alert.setHeaderText("You lose.");
             // dealer wins
             for (Player p : model.getPlayerList() ){
                 p.getHand().takeBets();
             }
-        } else if (delaerValue < playerValue) {
+        } else if (delaerValue < playerValue && ! model.playerBustedProperty().get()) {
             alert.setTitle("Win");
             alert.setHeaderText("You win.");
             // player wins
@@ -64,7 +64,7 @@ public class UpdateTableState implements GameState {
                 bettedCoins=p.getHand().takeBets();
                 p.giveCoins(bettedCoins*2);
             }
-        } else {
+        } else if (delaerValue == playerValue) {
             alert.setTitle("Draw");
             alert.setHeaderText("Draw.");
             int bettedCoins;
@@ -79,11 +79,11 @@ public class UpdateTableState implements GameState {
 
         model.dealsOpenProperty().set(false);
         model.betsOpenProperty().set(false);
-        model.playerBurstProperty().set(false);
+        model.playerBustedProperty().set(false);
         model.betConfirmedProperty().set(false);
         model.getAtLeastOneCoinBet().set(false);
         model.playerStandProperty().set(false);
-        model.dealerBurstProperty().set(false);
+        model.dealerBustedProperty().set(false);
 
         alert.showAndWait();
 

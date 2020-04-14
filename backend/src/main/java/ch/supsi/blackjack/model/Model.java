@@ -3,7 +3,6 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
-import ch.supsi.blackjack.model.state.BetState;
 import ch.supsi.blackjack.model.state.GameState;
 import ch.supsi.blackjack.model.state.InitState;
 import javafx.beans.property.BooleanProperty;
@@ -23,15 +22,16 @@ public class Model extends AbstractModel {
     private List<Player> playerList;
     // updated by the states - activates/deactivates nextRound button
     private final BooleanProperty nextRound = new SimpleBooleanProperty(false);
+    // updated by the states - game running boolean
     private final BooleanProperty gameRunning = new SimpleBooleanProperty(false);
     // updated by the states - indicates that users can start to bet
     private final BooleanProperty betsOpen = new SimpleBooleanProperty(false);
     // updated by the states - indicates that users can start to deal
     private final BooleanProperty dealsOpen = new SimpleBooleanProperty(false);
-    // updated by the states  - indicates that the user burst
-    private final BooleanProperty playerBurst = new SimpleBooleanProperty(false);
-    // updated by the states  - indicates that the user burst
-    private final BooleanProperty dealerBurst = new SimpleBooleanProperty(false);
+    // updated by the states  - indicates that the user busted
+    private final BooleanProperty playerBusted = new SimpleBooleanProperty(false);
+    // updated by the states  - indicates that the dealer busted
+    private final BooleanProperty dealerBusted = new SimpleBooleanProperty(false);
     // updated by model  - indicates that the user bet at least one coin
     private final BooleanProperty atLeastOneCoinBet = new SimpleBooleanProperty(false);
     // updated by model  - indicates that user confirmed the bte
@@ -88,11 +88,11 @@ public class Model extends AbstractModel {
         gameRunning.set(false);
         dealsOpen.set(false);
         betsOpen.set(false);
-        playerBurst.set(false);
+        playerBusted.set(false);
         betConfirmed.set(false);
         atLeastOneCoinBet.set(false);
         playerStand.set(false);
-        dealerBurst.set(false);
+        dealerBusted.set(false);
         currentState = InitState.instance();
         pcs.firePropertyChange(new ExitGameEvent(this));
     }
@@ -110,8 +110,8 @@ public class Model extends AbstractModel {
     public void hit() {
         hitInternal(this.playerList.get(0));
         // calling updateState on PlayerDealsState
-        // case1: PlayerDealsState (Player didn't burst)
-        // case1: PlayerBurstState (Player has bursted)
+        // case1: PlayerDealsState (Player didn't bust)
+        // case1: PlayerBustState (Player has busted)
         currentState.updateState(this);
     }
 
@@ -154,7 +154,7 @@ public class Model extends AbstractModel {
     public void stand() {
         playerStandProperty().set(true);
         // calling updateState on PlayerDealsState
-        // case1: PlayerBurstState (Player made BlackJack)
+        // case1: PlayerBustState (Player made BlackJack)
         // case1: PlayerDealsState (Player didn't make BlackJack)
         currentState.updateState(this);
         pcs.firePropertyChange(new StandEvent(this));
@@ -210,8 +210,8 @@ public class Model extends AbstractModel {
         return betConfirmed;
     }
 
-    public BooleanProperty playerBurstProperty() {
-        return playerBurst;
+    public BooleanProperty playerBustedProperty() {
+        return playerBusted;
     }
 
     public BooleanProperty playerStandProperty() {
@@ -234,8 +234,8 @@ public class Model extends AbstractModel {
         currentState.updateState(this);
     }
 
-    public BooleanProperty dealerBurstProperty() {
-        return dealerBurst;
+    public BooleanProperty dealerBustedProperty() {
+        return dealerBusted;
     }
 
 }

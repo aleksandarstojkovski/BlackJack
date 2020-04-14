@@ -18,6 +18,7 @@ public class BlackJackState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
+        // player made blackjack within first two cards
         model.nextRoundProperty().set(true);
         model.setCurrentState(UpdateTableState.instance());
         model.nextState();

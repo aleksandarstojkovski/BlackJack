@@ -30,7 +30,7 @@ public class MenuController extends AbstractController implements Initializable 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         BooleanBinding disableHitAndStand = getModel().gameRunningProperty().not().or(
                 getModel().dealsOpenProperty().not().or(
-                        getModel().playerBurstProperty().or(
+                        getModel().playerBustedProperty().or(
                                 getModel().playerStandProperty()
                         )
                 )

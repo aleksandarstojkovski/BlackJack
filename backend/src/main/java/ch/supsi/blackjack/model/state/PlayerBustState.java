@@ -2,16 +2,16 @@ package ch.supsi.blackjack.model.state;
 
 import ch.supsi.blackjack.model.Model;
 
-public class PlayerBurstState implements GameState {
+public class PlayerBustState implements GameState {
 
 
     // singleton
-    private static PlayerBurstState instance = new PlayerBurstState();
+    private static PlayerBustState instance = new PlayerBustState();
 
-    private PlayerBurstState() {
+    private PlayerBustState() {
     }
 
-    public static PlayerBurstState instance() {
+    public static PlayerBustState instance() {
         System.out.println("Current state: " +instance.getClass().toString());
         return instance;
     }
@@ -20,7 +20,7 @@ public class PlayerBurstState implements GameState {
     @Override
     public void updateState(Model model) {
         model.nextRoundProperty().setValue(true);
-        model.playerBurstProperty().set(true);
+        model.playerBustedProperty().setValue(true);
         model.setCurrentState(UpdateTableState.instance());
         model.nextState();
     }

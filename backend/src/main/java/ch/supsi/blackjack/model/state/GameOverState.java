@@ -24,14 +24,13 @@ public class GameOverState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
-
         // TODO: temp dialog
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText("Ouch! You've lost every penny.");
         alert.setContentText("Don't worry, you can play again :-).");
         alert.showAndWait();
-
+        
         model.exitGame();
     }
 
