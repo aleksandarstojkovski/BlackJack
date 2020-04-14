@@ -20,6 +20,7 @@ public class PlayerBurstState implements GameState {
     @Override
     public void updateState(Model model) {
         model.nextRoundProperty().setValue(true);
+        model.playerBurstProperty().set(true);
         model.setCurrentState(UpdateTableState.instance());
         model.nextState();
     }

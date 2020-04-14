@@ -30,6 +30,8 @@ public class Model extends AbstractModel {
     private final BooleanProperty dealsOpen = new SimpleBooleanProperty(false);
     // updated by the states  - indicates that the user burst
     private final BooleanProperty playerBurst = new SimpleBooleanProperty(false);
+    // updated by the states  - indicates that the user burst
+    private final BooleanProperty dealerBurst = new SimpleBooleanProperty(false);
     // updated by model  - indicates that the user bet at least one coin
     private final BooleanProperty atLeastOneCoinBet = new SimpleBooleanProperty(false);
     // updated by model  - indicates that user confirmed the bte
@@ -90,6 +92,7 @@ public class Model extends AbstractModel {
         betConfirmed.set(false);
         atLeastOneCoinBet.set(false);
         playerStand.set(false);
+        dealerBurst.set(false);
         currentState = InitState.instance();
         pcs.firePropertyChange(new ExitGameEvent(this));
     }
@@ -229,6 +232,10 @@ public class Model extends AbstractModel {
 
     public void nextState(){
         currentState.updateState(this);
+    }
+
+    public BooleanProperty dealerBurstProperty() {
+        return dealerBurst;
     }
 
 }
