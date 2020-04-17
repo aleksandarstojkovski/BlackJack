@@ -18,17 +18,17 @@ public class PlayerDealsState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
-        if (model.playerStandProperty().get()){
+        if (model.isPlayerStand()){
             //Order is important non scambiare l'ordine
             model.setCurrentState(DealerDealsState.instance());
-            model.compute(model.getDealer());
+            model.computeDealer();
         } else {
-            int playerValue = model.getPlayerList().get(0).getHand().value();
-            if (playerValue<21){
+            int playerValue = model.getPlayerHandValue();
+            if (playerValue < 21){
                 // stay in this state until the user busted or stands or makes blackjack
                 model.setCurrentState(PlayerDealsState.instance());
             } else if (playerValue == 21) {
-                model.setCurrentState(TwenrtyOneState.instance());
+                model.setCurrentState(TwentyOneState.instance());
                 model.nextState();
             } else {
                 model.setCurrentState(PlayerBustState.instance());

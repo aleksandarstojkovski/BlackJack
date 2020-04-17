@@ -20,7 +20,7 @@ public class DealerBustState implements GameState {
     @Override
     public void updateState(Model model) {
         // dealer bust property
-        model.dealerBustedProperty().set(true);
+        model.setDealerBusted();
         model.setCurrentState(UpdateTableState.instance());
         model.nextState();
     }

@@ -20,77 +20,14 @@ public class UpdateTableState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
+        model.setRoundCompleted();
 
-        // TODO: temp dialog
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-        int delaerValue = model.getDealer().getHand().value();
-        int playerValue = model.getPlayerList().get(0).getHand().value();
-
-        if (model.playerBustedProperty().get()){
-            alert.setTitle("Bust");
-            alert.setHeaderText("You busted.");
-            // dealer wins
-            for (Player p : model.getPlayerList() ){
-                p.getHand().takeBets();
-            }
-        }
-
-        if (model.dealerBustedProperty().get()){
-            alert.setTitle("Bust");
-            alert.setHeaderText("Dealer busted.");
-            // player wins
-            int bettedCoins;
-            for (Player p : model.getPlayerList()){
-                bettedCoins=p.getHand().takeBets();
-                p.giveCoins(bettedCoins*2);
-            }
-        }
-
-        // no-one busted
-        if (delaerValue > playerValue && ! model.dealerBustedProperty().get()){
-            alert.setTitle("Lose");
-            alert.setHeaderText("You lose.");
-            // dealer wins
-            for (Player p : model.getPlayerList() ){
-                p.getHand().takeBets();
-            }
-        } else if (delaerValue < playerValue && ! model.playerBustedProperty().get()) {
-            alert.setTitle("Win");
-            alert.setHeaderText("You win.");
-            // player wins
-            int bettedCoins;
-            for (Player p : model.getPlayerList()){
-                bettedCoins=p.getHand().takeBets();
-                p.giveCoins(bettedCoins*2);
-            }
-        } else if (delaerValue == playerValue) {
-            alert.setTitle("Draw");
-            alert.setHeaderText("Draw.");
-            int bettedCoins;
-            for (Player p : model.getPlayerList()){
-                bettedCoins=p.getHand().takeBets();
-                p.giveCoins(bettedCoins);
-            }
-        }
-
-        // removes bets from the dealer
-        model.getDealer().getHand().takeBets();
-
-        model.dealsOpenProperty().set(false);
-        model.betsOpenProperty().set(false);
-        model.playerBustedProperty().set(false);
-        model.betConfirmedProperty().set(false);
-        model.getAtLeastOneCoinBet().set(false);
-        model.playerStandProperty().set(false);
-        model.dealerBustedProperty().set(false);
-
-        alert.showAndWait();
-
-        if (model.getPlayerList().get(0).getCoins()!=0){
+        if (model.hasPlayerMoney()){
             model.setCurrentState(BetState.instance());
+
+            //model.nextRoundProperty().set(true);
         } else {
-            model.nextRoundProperty().set(false);
+            //model.nextRoundProperty().set(false);
             model.setCurrentState(GameOverState.instance());
             model.nextState();
         }

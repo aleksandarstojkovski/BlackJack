@@ -58,5 +58,9 @@ public class Player {
     public int handValue() {
         return getHand().value();
     }
+
+    public int getBettedCoins() {
+        return hand.takeBets();
+    }
 }
 

@@ -1,68 +1,105 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.event.ExitGameEvent;
-import ch.supsi.blackjack.event.NewGameEvent;
+import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.Model;
-import javafx.beans.binding.BooleanBinding;
+import ch.supsi.blackjack.model.state.BetState;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 
 import java.beans.PropertyChangeEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuController extends AbstractController implements Initializable {
-
-    @FXML public Button nextRoundBtn;
-    @FXML private Button betBtn;
-    @FXML private Button newGameBtn;
-    @FXML private Button exitGameBtn;
-    @FXML private Button hitBtn;
-    @FXML private Button standBtn;
-
     public MenuController(Model model) {
         super(model);
     }
 
+    private final BooleanProperty disableNextRound = new SimpleBooleanProperty(true);
+    public BooleanProperty disableNextRoundProperty() {
+        return disableNextRound;
+    } // required for FXML binding
+    public boolean getDisableNextRound()
+    {
+        return disableNextRound.get();
+    }
+
+    private final BooleanProperty disableHitAndStand = new SimpleBooleanProperty(true);
+    public BooleanProperty disableHitAndStandProperty() {
+        return disableHitAndStand;
+    } // required for FXML binding
+    public boolean getDisableHitAndStand()
+    {
+        return disableHitAndStand.get();
+    }
+
+    private final BooleanProperty disableBet = new SimpleBooleanProperty(true);
+    public BooleanProperty disableBetProperty() {
+        return disableBet;
+    } // required for FXML binding
+    public boolean getDisableBet()
+    {
+        return disableBet.get();
+    }
+
+    private final BooleanProperty disableExitGame = new SimpleBooleanProperty(false);
+    public BooleanProperty disableExitGameProperty() {
+        return disableExitGame;
+    } // required for FXML binding
+    public boolean getDisableExitGame()
+    {
+        return disableExitGame.get();
+    }
+
+    private final BooleanProperty disableNewGame = new SimpleBooleanProperty(false);
+    public BooleanProperty disableNewGameProperty() {
+        return disableNewGame;
+    } // required for FXML binding
+    public boolean getDisableNewGame()
+    {
+        return disableNewGame.get();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        BooleanBinding disableHitAndStand = getModel().gameRunningProperty().not().or(
-                getModel().dealsOpenProperty().not().or(
-                        getModel().playerBustedProperty().or(
-                                getModel().playerStandProperty()
-                        )
-                )
-        );
-        BooleanBinding disableBetBtn = getModel().gameRunningProperty().not().or(
-                getModel().betsOpenProperty().not()
-        );
-        newGameBtn.disableProperty().bind(getModel().gameRunningProperty());
-        exitGameBtn.disableProperty().bind(getModel().gameRunningProperty().not());
-        hitBtn.disableProperty().bind(disableHitAndStand);
-        standBtn.disableProperty().bind(disableHitAndStand);
-        betBtn.disableProperty().bind(disableBetBtn);
-        nextRoundBtn.disableProperty().bind(getModel().nextRoundProperty().not());
+//        BooleanBinding disableHitAndStand = getModel().gameRunningProperty().not().or(
+//                getModel().dealsOpenProperty().not().or(
+//                        getModel().playerBustedProperty().or(
+//                                getModel().playerStandProperty()
+//                        )
+//                )
+//        );
     }
 
     private Model getModel() { return (Model)model; }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-        if (event instanceof NewGameEvent) {
-            handleNewGame((NewGameEvent) event);
+        if (event instanceof GameStartedEvent) {
+            disableNewGame.set(true);
+            disableExitGame.set(false);
+            disableHitAndStand.set(true);
+            disableBet.set(true);
+        } else if (event instanceof GameFinishedEvent) {
+            disableNewGame.set(false);
+            disableExitGame.set(true);
+        } else if (event instanceof NewRoundEvent) {
+            disableNextRound.set(true);
+        } else if (event instanceof NewBetEvent) {
+            disableBet.set(false);
+        } else if (event instanceof BetConfirmedEvent) {
+            disableBet.set(true);
+            disableHitAndStand.set(false);
+        } else if (event instanceof StandEvent) {
+            disableHitAndStand.set(true);
+        } else if (event instanceof PlayerBustedEvent) {
+            disableHitAndStand.set(true);
+        } else if (event instanceof RoundCompletedEvent) {
+            disableNextRound.set(false);
         }
-        if (event instanceof ExitGameEvent) {
-            handleExitGame((ExitGameEvent) event);
-        }
-    }
-
-    private void handleExitGame(ExitGameEvent event) {
-    }
-
-    private void handleNewGame(NewGameEvent event) {
-
     }
 
     @FXML

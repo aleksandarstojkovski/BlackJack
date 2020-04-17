@@ -9,33 +9,33 @@
             fx:controller="ch.supsi.blackjack.controller.MenuController"
             prefHeight="18.0" prefWidth="900.0">
     <ToolBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Button fx:id="newGameBtn" mnemonicParsing="false" text="%new_game" onAction="#newGameAction" >
+        <Button mnemonicParsing="false" text="%new_game" onAction="#newGameAction" disable="${controller.disableNewGame}" >
             <graphic>
                 <FontIcon styleClass="newgame-icon"/>
             </graphic>
         </Button>
-        <Button fx:id="nextRoundBtn" mnemonicParsing="false" text="%next_round" onAction="#nextRoundAction" >
+        <Button mnemonicParsing="false" text="%next_round" onAction="#nextRoundAction" disable="${controller.disableNextRound}" >
             <graphic>
                 <FontIcon styleClass="nextround-icon"/>
             </graphic>
         </Button>
-        <Button fx:id="betBtn" mnemonicParsing="false" text="%bet" onAction="#betAction" >
+        <Button fx:id="betBtn" mnemonicParsing="false" text="%bet" onAction="#betAction" disable="${controller.disableBet}" >
             <graphic>
                 <FontIcon styleClass="bet-icon"/>
             </graphic>
         </Button>
-        <Button fx:id="hitBtn" mnemonicParsing="false" text="%get_card" onAction="#hitAction" >
+        <Button mnemonicParsing="false" text="%get_card" onAction="#hitAction" disable="${controller.disableHitAndStand}" >
             <graphic>
                 <FontIcon styleClass="getcard-icon"/>
             </graphic>
         </Button>
-        <Button fx:id="standBtn" mnemonicParsing="false" text="%stop_card" onAction="#standAction" >
+        <Button mnemonicParsing="false" text="%stop_card" onAction="#standAction" disable="${controller.disableHitAndStand}" >
             <graphic>
                 <FontIcon styleClass="stopcard-icon"/>
             </graphic>
         </Button>
 
-        <Button fx:id="exitGameBtn" mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" >
+        <Button mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" disable="${controller.disableExitGame}" >
             <graphic>
                 <FontIcon styleClass="exitgame-icon"/>
             </graphic>

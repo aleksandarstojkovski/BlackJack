@@ -9,7 +9,7 @@ public class Round {
     private List<Player> playerList;
 
     /*ToDo: player deve diventare una arraylist di player per gestire il multiplayer*/
-    public Round(Dealer dealer, ArrayList<Player> playerList){
+    public Round(Dealer dealer, List<Player> playerList){
         this.dealer = dealer;
         this.playerList = playerList;
     }

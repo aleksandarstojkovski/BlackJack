@@ -5,40 +5,36 @@ import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 import ch.supsi.blackjack.model.state.GameState;
 import ch.supsi.blackjack.model.state.InitState;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model extends AbstractModel {
+    // singleton
+    private static Model instance;
 
-    private static Model model;
     private Stage primaryStage;
     private GameState currentState;
     private Round round;
     private Dealer dealer;
     private List<Player> playerList;
-    // updated by the states - activates/deactivates nextRound button
-    private final BooleanProperty nextRound = new SimpleBooleanProperty(false);
-    // updated by the states - game running boolean
-    private final BooleanProperty gameRunning = new SimpleBooleanProperty(false);
+
     // updated by the states - indicates that users can start to bet
-    private final BooleanProperty betsOpen = new SimpleBooleanProperty(false);
+    private boolean betsOpen = false;
     // updated by the states - indicates that users can start to deal
-    private final BooleanProperty dealsOpen = new SimpleBooleanProperty(false);
+    private boolean dealsOpen = false;
     // updated by the states  - indicates that the user busted
-    private final BooleanProperty playerBusted = new SimpleBooleanProperty(false);
+    private boolean playerBusted = false;
     // updated by the states  - indicates that the dealer busted
-    private final BooleanProperty dealerBusted = new SimpleBooleanProperty(false);
-    // updated by model  - indicates that the user bet at least one coin
-    private final BooleanProperty atLeastOneCoinBet = new SimpleBooleanProperty(false);
+    private boolean dealerBusted = false;
     // updated by model  - indicates that user confirmed the bte
-    private final BooleanProperty betConfirmed = new SimpleBooleanProperty(false);
+    private boolean betConfirmed = false;
     // updated by model  - indicates that the user chose to stand
-    private final BooleanProperty playerStand = new SimpleBooleanProperty(false);
-    private Coin[] coins = {new Coin(100),new Coin(200),new Coin(300), new Coin(400),new Coin(500)};
+    private boolean playerStand = false;
+
+
+    private final Coin[] coins = {new Coin(100),new Coin(200),new Coin(300), new Coin(400),new Coin(500)};
 
     protected Model() {
         super();
@@ -48,23 +44,11 @@ public class Model extends AbstractModel {
 
     // singleton
     public static Model instance() {
-        if (model == null) {
-            model = new Model();
+        if (instance == null) {
+            instance = new Model();
         }
 
-        return model;
-    }
-
-    public BooleanProperty gameRunningProperty() {
-        return gameRunning;
-    }
-
-    public Dealer getDealer(){
-        return dealer;
-    }
-
-    public List<Player> getPlayerList(){
-        return playerList;
+        return instance;
     }
 
     public void setCurrentState(GameState currentState) {
@@ -73,28 +57,27 @@ public class Model extends AbstractModel {
 
     @Override
     public void newGame() {
+        dealsOpen = false;
+        betsOpen = false;
+        playerBusted = false;
+        dealerBusted = false;
+        betConfirmed = false;
+
         this.dealer = new Dealer();
-        this.playerList = new ArrayList<Player>();
+        this.playerList = new ArrayList<>();
         playerList.add(new Player("Player 1",0));
-        round = new Round(dealer,(ArrayList<Player>) playerList);
+        round = new Round(dealer, playerList);
+
         // calling updateState on InitState
         // case1: BetState (user can start to bet)
         currentState.updateState(this);
-        pcs.firePropertyChange(new NewGameEvent(this, playerList));
+        pcs.firePropertyChange(new GameStartedEvent(this, playerList));
     }
 
     @Override
     public void exitGame() {
-        gameRunning.set(false);
-        dealsOpen.set(false);
-        betsOpen.set(false);
-        playerBusted.set(false);
-        betConfirmed.set(false);
-        atLeastOneCoinBet.set(false);
-        playerStand.set(false);
-        dealerBusted.set(false);
         currentState = InitState.instance();
-        pcs.firePropertyChange(new ExitGameEvent(this));
+        pcs.firePropertyChange(new GameFinishedEvent(this));
     }
 
     @Override
@@ -102,7 +85,6 @@ public class Model extends AbstractModel {
         // calling updateState on InitState
         // case1: BetState (user can start to bet)
         currentState.updateState(this);
-        nextRound.set(false);
         pcs.firePropertyChange(new NewRoundEvent(this,playerList));
     }
 
@@ -116,9 +98,12 @@ public class Model extends AbstractModel {
     }
 
     public void openRound() {
+        betsOpen = false;
+        dealsOpen = true;
+
         hitTwice(dealer);//ToDo: miglioare l'apertura del gioco
-        for (Player player : model.getPlayerList()) {
-            model.hitTwice(player);
+        for (Player player : playerList) {
+            hitTwice(player);
         }
     }
 
@@ -144,7 +129,7 @@ public class Model extends AbstractModel {
         if(player instanceof Dealer){
             dealer.getAi().compute(this);
             currentState.updateState(this);
-        } else if (player instanceof Player){
+        } else {
             //ToDo: futura implementazione del PlayerAI
             System.out.println("Questa è instanceof Player, Player ID = "+player.getPlayerID()); //Print diagnostico
         }
@@ -152,7 +137,7 @@ public class Model extends AbstractModel {
 
     @Override
     public void stand() {
-        playerStandProperty().set(true);
+        playerStand = true;
         // calling updateState on PlayerDealsState
         // case1: PlayerBustState (Player made BlackJack)
         // case1: PlayerDealsState (Player didn't make BlackJack)
@@ -166,8 +151,10 @@ public class Model extends AbstractModel {
         try {
             playerList.get(0).bet(amount);
             pcs.firePropertyChange(new NewBetEvent(this, amount));
-            // enables confirmBetBtn (user can confirm the bet only after at least one coin has been bet)
-            atLeastOneCoinBet.setValue(true);
+
+            // user can confirm the bet only after at least one coin has been bet
+            betsOpen = true;
+
             // calling updateState on BetState
             // case1: remain in BetState (until user confirms the bet)
             currentState.updateState(this);
@@ -178,8 +165,10 @@ public class Model extends AbstractModel {
 
     @Override
     public void confirmBet() {
-        // this will let BetState knwo that it can go to the next state
-        betConfirmedProperty().set(true);
+        // this will let BetState know that it can go to the next state
+        betConfirmed = true;
+        pcs.firePropertyChange(new BetConfirmedEvent(this));
+
         // calling updateState on BetState
         // case1: SetupTableState (Player confirmed the bet)
         currentState.updateState(this);
@@ -194,48 +183,101 @@ public class Model extends AbstractModel {
         return coins;
     }
 
-    public BooleanProperty betsOpenProperty() {
-        return betsOpen;
-    }
-
-    public BooleanProperty dealsOpenProperty() {
-        return dealsOpen;
-    }
-
-    public BooleanProperty getAtLeastOneCoinBet() {
-        return atLeastOneCoinBet;
-    }
-
-    public BooleanProperty betConfirmedProperty() {
-        return betConfirmed;
-    }
-
-    public BooleanProperty playerBustedProperty() {
-        return playerBusted;
-    }
-
-    public BooleanProperty playerStandProperty() {
-        return playerStand;
-    }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    public BooleanProperty nextRoundProperty() {
-        return nextRound;
-    }
-
     public void nextState(){
         currentState.updateState(this);
     }
 
-    public BooleanProperty dealerBustedProperty() {
-        return dealerBusted;
+    public void setPlayerBusted() {
+        playerBusted = true;
+        pcs.firePropertyChange(new PlayerBustedEvent(this));
     }
 
+    public void setPlayerBlackjack() {
+//        nextRoundProperty().set(true);
+        pcs.firePropertyChange(new PlayerBlackjackEvent(this));
+    }
+
+    public void setPlayerTwentyone() {
+        pcs.firePropertyChange(new PlayerTwentyoneEvent(this));
+    }
+
+    public void setRoundCompleted() {
+
+        int dealerValue = dealer.getHand().value();
+        int playerValue = playerList.get(0).getHand().value();
+
+        if (playerBusted){
+            // dealer wins
+            for (Player p : playerList ){
+                p.getHand().takeBets();
+            }
+        }
+
+        if (dealerBusted){
+            // player wins
+            for (Player p : playerList){
+                int bettedCoins = p.getBettedCoins();
+                p.giveCoins(bettedCoins * 2);
+            }
+        }
+
+        // no-one busted
+        if (dealerValue > playerValue && !dealerBusted){
+//            alert.setTitle("Lose");
+//            alert.setHeaderText("You lose.");
+            // dealer wins
+            for (Player p : playerList ){
+                p.getHand().takeBets();
+            }
+        } else if (dealerValue < playerValue && !playerBusted) {
+//            alert.setTitle("Win");
+//            alert.setHeaderText("You win.");
+            // player wins
+            for (Player p : playerList){
+                int bettedCoins=p.getHand().takeBets();
+                p.giveCoins(bettedCoins*2);
+            }
+        } else if (dealerValue == playerValue) {
+//            alert.setTitle("Draw");
+//            alert.setHeaderText("Draw.");
+            int bettedCoins;
+            for (Player p : playerList){
+                bettedCoins=p.getHand().takeBets();
+                p.giveCoins(bettedCoins);
+            }
+        }
+        // removes bets from the dealer
+        dealer.getHand().takeBets();
+
+        pcs.firePropertyChange(new RoundCompletedEvent(this));
+    }
+
+    public void setDealerBusted() {
+        dealerBusted = true;
+        pcs.firePropertyChange(new DealerBustedEvent(this));
+    }
+
+    public boolean isBetConfirmed() {
+        return betConfirmed;
+    }
+
+    public boolean hasPlayerMoney() {
+        return playerList.get(0).getCoins() > 0;
+    }
+
+    public boolean isPlayerStand() {
+        return playerStand;
+    }
+
+    public void computeDealer() {
+        compute(dealer);
+    }
+
+    public int getPlayerHandValue() {
+        return playerList.get(0).getHand().value();
+    }
+
+    public int getDealerHandValue() {
+        return dealer.getHand().value();
+    }
 }

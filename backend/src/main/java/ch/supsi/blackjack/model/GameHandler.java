@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model;
 
-import javafx.stage.Stage;
-
 public interface GameHandler {
 
     void newGame();
@@ -12,8 +10,7 @@ public interface GameHandler {
     void confirmBet();
     void hitTwice(Player player);
     void nextRound();
-    Stage getPrimaryStage();
-    public void nextState();
+    void nextState();
     Coin[] getCoins();
 
 }

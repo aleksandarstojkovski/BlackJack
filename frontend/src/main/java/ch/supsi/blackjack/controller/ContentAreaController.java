@@ -112,20 +112,51 @@ public class ContentAreaController extends AbstractController implements Initial
             handleDealerHand((DealerHandUpdateEvent) event);
         } else if (event instanceof PlayerHandUpdateEvent) {
             handlePlayerHand((PlayerHandUpdateEvent) event);
-        } else if (event instanceof NewGameEvent) {
-            handleNewGame((NewGameEvent) event);
-        } else if (event instanceof ExitGameEvent){
-            handleExitGame((ExitGameEvent) event);
+        } else if (event instanceof GameStartedEvent) {
+            handleNewGame((GameStartedEvent) event);
+        } else if (event instanceof GameFinishedEvent){
+            handleExitGame((GameFinishedEvent) event);
         } else if (event instanceof NewBetEvent) {
             handleNewBet((NewBetEvent) event);
         } else if (event instanceof NewRoundEvent){
             handleNewRound((NewRoundEvent) event);
+        } else if (event instanceof PlayerBustedEvent){
+            handlePlayerBusted((PlayerBustedEvent) event);
+        } else if (event instanceof PlayerBlackjackEvent){
+            handlePlayerBlackjack((PlayerBlackjackEvent) event);
+        } else if (event instanceof RoundCompletedEvent){
+            handleRoundCompleted((RoundCompletedEvent) event);
+        } else if (event instanceof DealerBustedEvent){
+            handleDealerBusted((DealerBustedEvent) event);
         }
 
         // log
         textArea.appendText(event.getClass().getCanonicalName() + "\n");
-        
     }
+
+    private void handleRoundCompleted(RoundCompletedEvent event) {
+    }
+
+    private void handlePlayerBlackjack(PlayerBlackjackEvent event) {
+        // TODO: temp dialog
+        showAlert("Blackjack", "You made Blackjack!");
+    }
+    private void handlePlayerBusted(PlayerBustedEvent event) {
+        // TODO: temp dialog
+        showAlert("Bust", "You busted.");
+    }
+
+    private void handleDealerBusted(DealerBustedEvent event) {
+        showAlert("Bust", "Dealer busted.");
+    }
+
+    private void showAlert(String title, String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(text);
+        alert.showAndWait();
+    }
+
 
     private void handleNewRound(NewRoundEvent event) {
         clearTable();
@@ -140,7 +171,7 @@ public class ContentAreaController extends AbstractController implements Initial
         betsAmountProperty.set(betsAmountProperty.get() + event.getBetValue());
     }
 
-    private void handleExitGame(ExitGameEvent event) {
+    private void handleExitGame(GameFinishedEvent event) {
         clearTable();
         betsArea.setVisible(false);
     }
@@ -154,7 +185,7 @@ public class ContentAreaController extends AbstractController implements Initial
         dealerHandProperty.setValue(0);
     }
 
-    private void handleNewGame(NewGameEvent event) {
+    private void handleNewGame(GameStartedEvent event) {
         clearTable();
         loadAvailableCoins();
         playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());

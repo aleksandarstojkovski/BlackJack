@@ -23,7 +23,6 @@ public class MainApp extends Application {
 
         // MVC scaffolding
         Model model = Model.instance();
-        model.setPrimaryStage(primaryStage);
 //        MainController controller = new MainController(model);
         fxmlLoader.setControllerFactory((Class<?> type) -> {
             try {

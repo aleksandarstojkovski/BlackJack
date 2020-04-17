@@ -18,15 +18,9 @@ public class BetState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(Model model) {
-        // at least one bet - no confirmation yet
-        if (model.getAtLeastOneCoinBet().get()){
-            model.betsOpenProperty().set(true);
-        }
         // bet confirmed
-        if (model.betConfirmedProperty().get()){
+        if (model.isBetConfirmed()){
             model.openRound();
-            model.betsOpenProperty().setValue(false);
-            model.dealsOpenProperty().setValue(true);
             model.setCurrentState(SetupTableState.instance());
         }
     }
