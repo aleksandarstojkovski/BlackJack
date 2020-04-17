@@ -1,12 +1,11 @@
 package ch.supsi.blackjack.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Round {
 
-    private Dealer dealer;
-    private List<Player> playerList;
+    private final Dealer dealer;
+    private final List<Player> playerList;
 
     /*ToDo: player deve diventare una arraylist di player per gestire il multiplayer*/
     public Round(Dealer dealer, List<Player> playerList){

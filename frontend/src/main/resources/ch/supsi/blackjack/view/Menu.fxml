@@ -19,7 +19,7 @@
                 <FontIcon styleClass="nextround-icon"/>
             </graphic>
         </Button>
-        <Button fx:id="betBtn" mnemonicParsing="false" text="%bet" onAction="#betAction" disable="${controller.disableBet}" >
+        <Button mnemonicParsing="false" text="%bet" onAction="#betAction" disable="${controller.disableBet}" >
             <graphic>
                 <FontIcon styleClass="bet-icon"/>
             </graphic>

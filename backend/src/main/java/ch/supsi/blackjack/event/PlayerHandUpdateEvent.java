@@ -2,7 +2,7 @@ package ch.supsi.blackjack.event;
 
 public class PlayerHandUpdateEvent extends AbstractEvent {
 
-        private int handValue;
+        private final int handValue;
 
         public PlayerHandUpdateEvent(Object source, int handValue) {
             super(source);

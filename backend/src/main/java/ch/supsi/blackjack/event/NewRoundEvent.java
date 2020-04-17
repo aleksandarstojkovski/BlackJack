@@ -6,7 +6,7 @@ import java.util.List;
 
 public class NewRoundEvent extends AbstractEvent {
 
-    private List<Player> playerList;
+    private final List<Player> playerList;
 
     public NewRoundEvent(Object source, List<Player> playerList) {
         super(source);

@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 
 abstract public class AbstractController implements PropertyChangeListener {
 
-    protected AbstractModel model;
+    protected final AbstractModel model;
 
     public AbstractController(AbstractModel model) {
         this.model = model;

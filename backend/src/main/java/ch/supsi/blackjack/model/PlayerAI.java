@@ -1,10 +1,8 @@
 package ch.supsi.blackjack.model;
 
-import java.util.List;
-
 public class PlayerAI implements AI {
     protected int aiType=0;
-    private Player aiEntity;
+    private final Player aiEntity;
 
     PlayerAI(Player player){
         this.aiEntity=player;

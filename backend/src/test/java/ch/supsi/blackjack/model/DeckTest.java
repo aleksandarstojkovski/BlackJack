@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
-    Deck testDeck = new Deck();
+    final Deck testDeck = new Deck();
 
     @Test
     void deckValidation(){

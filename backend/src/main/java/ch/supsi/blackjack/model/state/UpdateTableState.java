@@ -1,13 +1,11 @@
 package ch.supsi.blackjack.model.state;
 
 import ch.supsi.blackjack.model.Model;
-import ch.supsi.blackjack.model.Player;
-import javafx.scene.control.Alert;
 
 public class UpdateTableState implements GameState {
 
     // singleton
-    private static UpdateTableState instance = new UpdateTableState();
+    private static final UpdateTableState instance = new UpdateTableState();
 
     private UpdateTableState() {
     }

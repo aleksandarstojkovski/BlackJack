@@ -6,7 +6,7 @@ public class DealerBustState implements GameState {
 
 
     // singleton
-    private static DealerBustState instance = new DealerBustState();
+    private static final DealerBustState instance = new DealerBustState();
 
     private DealerBustState() {
     }

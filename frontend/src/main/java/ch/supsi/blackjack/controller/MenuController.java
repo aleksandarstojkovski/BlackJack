@@ -2,7 +2,6 @@ package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.Model;
-import ch.supsi.blackjack.model.state.BetState;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;

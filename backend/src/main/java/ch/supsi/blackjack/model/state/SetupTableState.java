@@ -5,7 +5,7 @@ import ch.supsi.blackjack.model.Model;
 public class SetupTableState implements GameState {
 
         // singleton
-        private static SetupTableState instance = new SetupTableState();
+        private static final SetupTableState instance = new SetupTableState();
 
         private SetupTableState() {
         }

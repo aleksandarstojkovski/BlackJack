@@ -3,11 +3,8 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
-import ch.supsi.blackjack.model.state.GameOverState;
 import ch.supsi.blackjack.model.state.GameState;
 import ch.supsi.blackjack.model.state.InitState;
-import javafx.scene.control.Alert;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,6 @@ public class Model extends AbstractModel {
     // singleton
     private static Model instance;
 
-    private Stage primaryStage;
     private GameState currentState;
     private Round round;
     private Dealer dealer;
@@ -106,8 +102,7 @@ public class Model extends AbstractModel {
         }
     }
 
-    @Override
-    public void hitTwice(Player player) {
+    private void hitTwice(Player player) {
         for (int i=0;i<2;i++)
             hitInternal(player);
     }
@@ -115,12 +110,12 @@ public class Model extends AbstractModel {
     public void hitInternal(Player currentPlayer) {
         Card card = round.getDealer().giveCard();
         pcs.firePropertyChange(new NewCardEvent(this, card,currentPlayer));
-        currentPlayer.getHand().addCard(card);
+        currentPlayer.addCard(card);
         // if(playerID==0)
         if(currentPlayer instanceof Dealer){
-            pcs.firePropertyChange(new DealerHandUpdateEvent(this, currentPlayer.getHand().value()));
+            pcs.firePropertyChange(new DealerHandUpdateEvent(this, currentPlayer.getHandValue()));
         }else {
-            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, currentPlayer.getHand().value()));
+            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, currentPlayer.getHandValue()));
         }
     }
 
@@ -201,21 +196,21 @@ public class Model extends AbstractModel {
 
     public void setRoundCompleted() {
 
-        int dealerValue = dealer.getHand().value();
-        int playerValue = playerList.get(0).getHand().value();
+        int dealerValue = dealer.getHandValue();
+        int playerValue = playerList.get(0).getHandValue();
 
-        RoundStatus roundStatus = RoundStatus.DRAW;
+        RoundStatus roundStatus;
 
         if (playerBusted){
             // dealer wins
             for (Player p : playerList ){
-                p.getHand().takeBets();
+                p.takeBets();
             }
             roundStatus = RoundStatus.LOOSE;
         } else if (dealerBusted){
             // player wins
             for (Player p : playerList){
-                int bettedCoins = p.getBettedCoins();
+                int bettedCoins = p.takeBets();
                 p.giveCoins(bettedCoins * 2);
             }
             roundStatus = RoundStatus.WIN;
@@ -223,13 +218,13 @@ public class Model extends AbstractModel {
             // no-one busted
             // dealer wins
             for (Player p : playerList ){
-                p.getHand().takeBets();
+                p.takeBets();
             }
             roundStatus = RoundStatus.LOOSE;
         } else if (dealerValue < playerValue) {
             // player wins
             for (Player p : playerList){
-                int bettedCoins=p.getHand().takeBets();
+                int bettedCoins=p.takeBets();
                 p.giveCoins(bettedCoins*2);
             }
             roundStatus = RoundStatus.WIN;
@@ -237,13 +232,13 @@ public class Model extends AbstractModel {
             //dealerValue == playerValue
             int bettedCoins;
             for (Player p : playerList){
-                bettedCoins=p.getHand().takeBets();
+                bettedCoins=p.takeBets();
                 p.giveCoins(bettedCoins);
             }
             roundStatus = RoundStatus.WIN;
         }
         // removes bets from the dealer
-        dealer.getHand().takeBets();
+        dealer.takeBets();
 
         pcs.firePropertyChange(new RoundCompletedEvent(this, roundStatus));
 
@@ -281,11 +276,11 @@ public class Model extends AbstractModel {
     }
 
     public int getPlayerHandValue() {
-        return playerList.get(0).getHand().value();
+        return playerList.get(0).getHandValue();
     }
 
     public int getDealerHandValue() {
-        return dealer.getHand().value();
+        return dealer.getHandValue();
     }
 
     public void setGameOver() {

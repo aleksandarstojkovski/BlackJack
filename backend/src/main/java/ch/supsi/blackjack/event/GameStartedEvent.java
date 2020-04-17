@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GameStartedEvent extends AbstractEvent {
 
-    private List<Player> playerList;
+    private final List<Player> playerList;
 
     public GameStartedEvent(Object source, List<Player> playerList) {
         super(source);

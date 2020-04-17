@@ -5,7 +5,7 @@ import ch.supsi.blackjack.model.Model;
 public class DealerDealsState implements GameState {
 
     // singleton
-    private static DealerDealsState instance = new DealerDealsState();
+    private static final DealerDealsState instance = new DealerDealsState();
 
     private DealerDealsState() {}
 

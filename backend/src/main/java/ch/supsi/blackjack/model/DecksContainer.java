@@ -10,10 +10,10 @@ public class DecksContainer {
     private static final int MIN_NUMBER_OF_DECKS=1;
     private static final int MAX_NUMBER_OF_DECKS=5;
 
-    private int numberOfDecks;
+    private final int numberOfDecks;
 
-    private List<Card> availableCards = new ArrayList<>();
-    private List<Card> usedCards = new ArrayList<>();
+    private final List<Card> availableCards = new ArrayList<>();
+    private final List<Card> usedCards = new ArrayList<>();
 
     public DecksContainer(int numberOfDecks) throws InvalidDecksContainerSizeException {
         if (numberOfDecks > MIN_NUMBER_OF_DECKS  && numberOfDecks < MAX_NUMBER_OF_DECKS){

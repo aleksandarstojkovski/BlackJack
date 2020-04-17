@@ -1,14 +1,12 @@
 package ch.supsi.blackjack.view;
 
-import ch.supsi.blackjack.model.Card;
 import ch.supsi.blackjack.model.Coin;
-import ch.supsi.blackjack.model.Seed;
-import ch.supsi.blackjack.model.Value;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CoinImageTest {
     @Test

@@ -4,8 +4,8 @@ import ch.supsi.blackjack.model.Card;
 import ch.supsi.blackjack.model.Player;
 
 public class NewCardEvent extends AbstractEvent {
-    private Player player;
-    private Card card;
+    private final Player player;
+    private final Card card;
 
     public NewCardEvent(Object source, Card card, Player player) {
         super(source);
