@@ -19,45 +19,50 @@ public class MenuController extends AbstractController implements Initializable 
     }
 
     private final BooleanProperty disableNextRound = new SimpleBooleanProperty(true);
+    // required for FXML binding
     public BooleanProperty disableNextRoundProperty() {
         return disableNextRound;
-    } // required for FXML binding
+    }
     public boolean getDisableNextRound()
     {
         return disableNextRound.get();
     }
 
     private final BooleanProperty disableHitAndStand = new SimpleBooleanProperty(true);
+    // required for FXML binding
     public BooleanProperty disableHitAndStandProperty() {
         return disableHitAndStand;
-    } // required for FXML binding
+    }
     public boolean getDisableHitAndStand()
     {
         return disableHitAndStand.get();
     }
 
     private final BooleanProperty disableBet = new SimpleBooleanProperty(true);
+    // required for FXML binding
     public BooleanProperty disableBetProperty() {
         return disableBet;
-    } // required for FXML binding
+    }
     public boolean getDisableBet()
     {
         return disableBet.get();
     }
 
     private final BooleanProperty disableExitGame = new SimpleBooleanProperty(false);
+    // required for FXML binding
     public BooleanProperty disableExitGameProperty() {
         return disableExitGame;
-    } // required for FXML binding
+    }
     public boolean getDisableExitGame()
     {
         return disableExitGame.get();
     }
 
     private final BooleanProperty disableNewGame = new SimpleBooleanProperty(false);
+    // required for FXML binding
     public BooleanProperty disableNewGameProperty() {
         return disableNewGame;
-    } // required for FXML binding
+    }
     public boolean getDisableNewGame()
     {
         return disableNewGame.get();
@@ -73,8 +78,6 @@ public class MenuController extends AbstractController implements Initializable 
 //                )
 //        );
     }
-
-    private Model getModel() { return (Model)model; }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
@@ -102,16 +105,20 @@ public class MenuController extends AbstractController implements Initializable 
             disableHitAndStand.set(true);
         } else if (event instanceof RoundCompletedEvent) {
             disableNextRound.set(false);
+        } else if (event instanceof PlayerBlackjackEvent) {
+            disableHitAndStand.set(true);
+            disableBet.set(true);
+            disableNextRound.set(true);
         }
     }
 
     @FXML
-    void newGameAction(ActionEvent e) {
+    void newGameAction(ActionEvent actionEvent) {
         model.newGame();
     }
 
     @FXML
-    void exitGameAction(ActionEvent e) {
+    void exitGameAction(ActionEvent actionEvent) {
         model.exitGame();
     }
 
