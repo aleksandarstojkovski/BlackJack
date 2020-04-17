@@ -3,8 +3,10 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
+import ch.supsi.blackjack.model.state.GameOverState;
 import ch.supsi.blackjack.model.state.GameState;
 import ch.supsi.blackjack.model.state.InitState;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -57,11 +59,8 @@ public class Model extends AbstractModel {
 
     @Override
     public void newGame() {
-        dealsOpen = false;
-        betsOpen = false;
-        playerBusted = false;
-        dealerBusted = false;
-        betConfirmed = false;
+        // TODO: move flags in round class?
+        clearRound();
 
         this.dealer = new Dealer();
         this.playerList = new ArrayList<>();
@@ -193,7 +192,6 @@ public class Model extends AbstractModel {
     }
 
     public void setPlayerBlackjack() {
-//        nextRoundProperty().set(true);
         pcs.firePropertyChange(new PlayerBlackjackEvent(this));
     }
 
@@ -206,50 +204,59 @@ public class Model extends AbstractModel {
         int dealerValue = dealer.getHand().value();
         int playerValue = playerList.get(0).getHand().value();
 
+        RoundStatus roundStatus = RoundStatus.DRAW;
+
         if (playerBusted){
             // dealer wins
             for (Player p : playerList ){
                 p.getHand().takeBets();
             }
-        }
-
-        if (dealerBusted){
+            roundStatus = RoundStatus.LOOSE;
+        } else if (dealerBusted){
             // player wins
             for (Player p : playerList){
                 int bettedCoins = p.getBettedCoins();
                 p.giveCoins(bettedCoins * 2);
             }
-        }
-
-        // no-one busted
-        if (dealerValue > playerValue && !dealerBusted){
-//            alert.setTitle("Lose");
-//            alert.setHeaderText("You lose.");
+            roundStatus = RoundStatus.WIN;
+        } else if (dealerValue > playerValue){
+            // no-one busted
             // dealer wins
             for (Player p : playerList ){
                 p.getHand().takeBets();
             }
-        } else if (dealerValue < playerValue && !playerBusted) {
-//            alert.setTitle("Win");
-//            alert.setHeaderText("You win.");
+            roundStatus = RoundStatus.LOOSE;
+        } else if (dealerValue < playerValue) {
             // player wins
             for (Player p : playerList){
                 int bettedCoins=p.getHand().takeBets();
                 p.giveCoins(bettedCoins*2);
             }
-        } else if (dealerValue == playerValue) {
-//            alert.setTitle("Draw");
-//            alert.setHeaderText("Draw.");
+            roundStatus = RoundStatus.WIN;
+        } else {
+            //dealerValue == playerValue
             int bettedCoins;
             for (Player p : playerList){
                 bettedCoins=p.getHand().takeBets();
                 p.giveCoins(bettedCoins);
             }
+            roundStatus = RoundStatus.WIN;
         }
         // removes bets from the dealer
         dealer.getHand().takeBets();
 
-        pcs.firePropertyChange(new RoundCompletedEvent(this));
+        pcs.firePropertyChange(new RoundCompletedEvent(this, roundStatus));
+
+        clearRound();
+    }
+
+    private void clearRound() {
+        dealsOpen = false;
+        betsOpen = false;
+        playerBusted = false;
+        betConfirmed = false;
+        playerStand = false;
+        dealerBusted = false;
     }
 
     public void setDealerBusted() {
@@ -279,5 +286,10 @@ public class Model extends AbstractModel {
 
     public int getDealerHandValue() {
         return dealer.getHand().value();
+    }
+
+    public void setGameOver() {
+        //model.nextRoundProperty().set(false);
+        pcs.firePropertyChange(new GameOverEvent(this));
     }
 }

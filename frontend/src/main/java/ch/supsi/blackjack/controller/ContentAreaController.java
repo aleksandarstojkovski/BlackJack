@@ -128,13 +128,36 @@ public class ContentAreaController extends AbstractController implements Initial
             handleRoundCompleted((RoundCompletedEvent) event);
         } else if (event instanceof DealerBustedEvent){
             handleDealerBusted((DealerBustedEvent) event);
+        } else if (event instanceof GameOverEvent) {
+            handleGameOver();
         }
 
         // log
         textArea.appendText(event.getClass().getCanonicalName() + "\n");
     }
 
+    private void handleGameOver() {
+        // TODO: temp dialog
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Over");
+        alert.setHeaderText("Ouch! You've lost every penny.");
+        alert.setContentText("Don't worry, you can play again :-).");
+        alert.showAndWait();
+    }
+
     private void handleRoundCompleted(RoundCompletedEvent event) {
+        switch (event.getRoundStatus()) {
+            case WIN:
+                showAlert("Win", "You win.");
+                break;
+            case DRAW:
+                showAlert("Draw", "You draw");
+                break;
+            case LOOSE:
+                showAlert("Loose", "You loose");
+                break;
+        }
+
     }
 
     private void handlePlayerBlackjack(PlayerBlackjackEvent event) {

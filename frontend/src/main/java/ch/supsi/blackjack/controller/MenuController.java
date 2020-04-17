@@ -86,6 +86,9 @@ public class MenuController extends AbstractController implements Initializable 
         } else if (event instanceof GameFinishedEvent) {
             disableNewGame.set(false);
             disableExitGame.set(true);
+            disableHitAndStand.set(true);
+            disableBet.set(true);
+            disableNextRound.set(true);
         } else if (event instanceof NewRoundEvent) {
             disableNextRound.set(true);
         } else if (event instanceof NewBetEvent) {

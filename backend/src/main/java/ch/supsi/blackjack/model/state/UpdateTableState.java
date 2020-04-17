@@ -24,10 +24,8 @@ public class UpdateTableState implements GameState {
 
         if (model.hasPlayerMoney()){
             model.setCurrentState(BetState.instance());
-
-            //model.nextRoundProperty().set(true);
         } else {
-            //model.nextRoundProperty().set(false);
+            model.setGameOver();
             model.setCurrentState(GameOverState.instance());
             model.nextState();
         }
