@@ -20,7 +20,7 @@ public class UpdateTableState implements GameState {
     public void updateState(Model model) {
         model.setRoundCompleted();
 
-        if (model.hasPlayerMoney()){
+        if (model.isPlayerWithMoney()){
             model.setCurrentState(BetState.instance());
         } else {
             model.setGameOver();

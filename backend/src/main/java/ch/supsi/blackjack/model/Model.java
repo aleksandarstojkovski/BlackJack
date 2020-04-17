@@ -263,7 +263,7 @@ public class Model extends AbstractModel {
         return betConfirmed;
     }
 
-    public boolean hasPlayerMoney() {
+    public boolean isPlayerWithMoney() {
         return playerList.get(0).getCoins() > 0;
     }
 
