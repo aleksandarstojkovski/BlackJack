@@ -1,5 +1,6 @@
 package ch.supsi.blackjack.model.state;
 
+import ch.supsi.blackjack.event.DealerStartEvent;
 import ch.supsi.blackjack.model.Model;
 
 public class PlayerDealsState implements GameState {
@@ -21,6 +22,7 @@ public class PlayerDealsState implements GameState {
         if (model.isPlayerStand()){
             //Order is important non scambiare l'ordine
             model.setCurrentState(DealerDealsState.instance());
+            model.updateDealer();
             model.computeDealer();
         } else {
             int playerValue = model.getPlayerHandValue();
@@ -29,9 +31,11 @@ public class PlayerDealsState implements GameState {
                 model.setCurrentState(PlayerDealsState.instance());
             } else if (playerValue == 21) {
                 model.setCurrentState(TwentyOneState.instance());
+                model.updateDealer();
                 model.nextState();
             } else {
                 model.setCurrentState(PlayerBustState.instance());
+                model.updateDealer();
                 model.nextState();
             }
         }
