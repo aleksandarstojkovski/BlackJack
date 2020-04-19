@@ -16,8 +16,6 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <maven.compiler.plugin>11</maven.compiler.plugin>
-        <maven.compiler.source>1.13</maven.compiler.source>
-        <maven.compiler.target>1.13</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

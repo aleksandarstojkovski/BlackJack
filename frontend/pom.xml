@@ -49,12 +49,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>13</version>
+            <version>11</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-swing</artifactId>
-            <version>13</version>
+            <version>11</version>
         </dependency>
 
 
@@ -108,8 +108,6 @@
                 <version>3.8.1</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
-                    <source>${maven.compiler.plugin}</source>
-                    <target>${maven.compiler.plugin}</target>
                 </configuration>
             </plugin>
 
@@ -168,6 +166,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
