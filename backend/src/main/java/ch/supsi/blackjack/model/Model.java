@@ -113,7 +113,7 @@ public class Model extends AbstractModel {
         currentPlayer.addCard(card);
         // if(playerID==0)
         if(currentPlayer instanceof Dealer){
-            pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand));
+            pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.currentState));
         }else {
             pcs.firePropertyChange(new PlayerHandUpdateEvent(this, currentPlayer.getHandValue()));
         }
@@ -270,9 +270,11 @@ public class Model extends AbstractModel {
     public boolean isPlayerStand() {
         return playerStand;
     }
-
-    public void computeDealer() {
+    public void updateDealer(){
         pcs.firePropertyChange(new DealerStartEvent(this,dealer));
+        pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.currentState));
+    }
+    public void computeDealer() {
         compute(dealer);
     }
 

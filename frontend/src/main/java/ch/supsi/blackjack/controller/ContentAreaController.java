@@ -2,6 +2,8 @@ package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.*;
+import ch.supsi.blackjack.model.state.BetState;
+import ch.supsi.blackjack.model.state.PlayerDealsState;
 import ch.supsi.blackjack.view.CardImage;
 import ch.supsi.blackjack.view.CoinImage;
 import javafx.beans.property.*;
@@ -228,7 +230,7 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleDealerHand(DealerHandUpdateEvent event) {
-        if(event.getHandSize()==2){
+        if(event.getHandSize()==2&&((event.getCurrentState() instanceof PlayerDealsState)||(event.getCurrentState() instanceof BetState))){
             dealerHandProperty.set(event.getValue()-event.getLastCardValue());
         }else {
             dealerHandProperty.set(event.getValue());
@@ -254,6 +256,8 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void showCoveredCard(DealerStartEvent event){
         dealerCards.getItems().get(1).flipCard();
+        dealerCards.refresh();
+
     }
 
 }
