@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="backend" target="13" />
-      <module name="BlackJack" target="1.13" />
+      <module name="blackjack" target="1.13" />
       <module name="frontend" target="13" />
     </bytecodeTargetLevel>
   </component>

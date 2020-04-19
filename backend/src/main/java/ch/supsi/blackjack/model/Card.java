@@ -1,15 +1,18 @@
 package ch.supsi.blackjack.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Card {
+public class Card implements Serializable {
 
     private final Seed seed;
     private final Value value;
+    private final String back;
 
-    public Card(Seed seed, Value value){
+    public Card(Seed seed, Value value, String back){
         this.seed = seed;
         this.value = value;
+        this.back = back;
     }
 
     public Seed getSeed() {
@@ -20,6 +23,9 @@ public class Card {
         return value;
     }
 
+    public String getBack(){
+        return back;
+    }
     @Override
     public String toString() {
         return "Card{" +
@@ -34,7 +40,8 @@ public class Card {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
         return seed == card.seed &&
-                value == card.value;
+                value == card.value &&
+                back == card.back;
     }
 
     @Override

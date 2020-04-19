@@ -2,10 +2,10 @@ package ch.supsi.blackjack.event;
 
 import ch.supsi.blackjack.model.Player;
 
-public class StandEvent extends AbstractEvent {
+public class DealerStartEvent extends AbstractEvent {
     private final Player player;
 
-    public StandEvent(Object source, Player player) {
+    public DealerStartEvent(Object source, Player player) {
         super(source);
         this.player = player;
     }

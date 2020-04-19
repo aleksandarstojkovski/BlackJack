@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CardImageTest {
     @Test
     void getFileName() {
-        Card card = new Card(Seed.D, Value.ACE);
-        CardImage cardImage = new CardImage(card);
+        Card card = new Card(Seed.D, Value.ACE,"blu");
+        CardImage cardImage = new CardImage(card,false);
 
         String fileName = cardImage.getFileName();
         assertEquals("/ch/supsi/blackjack/images/cards/ace_of_diamonds.png", fileName);

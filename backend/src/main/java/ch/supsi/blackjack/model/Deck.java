@@ -11,9 +11,15 @@ public class Deck {
 
     Deck(){
         List<Card> cardList = new ArrayList<>();
+        String back;
+        if(Math.random() < 0.5){
+            back="red";
+        }else{
+            back="blu";
+        }
         for(Seed seed : EnumSet.allOf(Seed.class)) {
             for(Value value : EnumSet.allOf(Value.class)) {
-                cardList.add(new Card(seed, value));
+                cardList.add(new Card(seed, value, back));
             }
         }
         cards = new Card[cardList.size()];

@@ -113,7 +113,7 @@ public class Model extends AbstractModel {
         currentPlayer.addCard(card);
         // if(playerID==0)
         if(currentPlayer instanceof Dealer){
-            pcs.firePropertyChange(new DealerHandUpdateEvent(this, currentPlayer.getHandValue()));
+            pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand));
         }else {
             pcs.firePropertyChange(new PlayerHandUpdateEvent(this, currentPlayer.getHandValue()));
         }
@@ -136,7 +136,7 @@ public class Model extends AbstractModel {
         // case1: PlayerBustState (Player made BlackJack)
         // case1: PlayerDealsState (Player didn't make BlackJack)
         currentState.updateState(this);
-        pcs.firePropertyChange(new StandEvent(this));
+        pcs.firePropertyChange(new StandEvent(this,dealer));
         //currentState.updateState(this);
     }
 
@@ -272,6 +272,7 @@ public class Model extends AbstractModel {
     }
 
     public void computeDealer() {
+        pcs.firePropertyChange(new DealerStartEvent(this,dealer));
         compute(dealer);
     }
 

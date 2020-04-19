@@ -2,6 +2,8 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 
+import java.util.List;
+
 public class Player {
     private final int playerID;
     private static final int INITIAL_COINS=1000;
@@ -50,7 +52,9 @@ public class Player {
             throw new InsufficientCoinsException(nickname + " has " + coins + " coins and tries to bet " + amount + " coins.");
         }
     }
-
+    public List<Card> getCardList(){
+        return hand.getCardList();
+    }
     public int getHandValue() {
         return hand.value();
     }

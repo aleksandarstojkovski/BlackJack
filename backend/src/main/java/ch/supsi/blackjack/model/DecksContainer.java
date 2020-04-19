@@ -3,9 +3,10 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class DecksContainer {
+public class DecksContainer implements Serializable {
 
     private static final int MIN_NUMBER_OF_DECKS=1;
     private static final int MAX_NUMBER_OF_DECKS=5;
@@ -51,11 +52,15 @@ public class DecksContainer {
     @Override
     public boolean equals(Object o) {
         DecksContainer that = (DecksContainer) o;
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (that.availableCards.size() != this.availableCards.size()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (that.availableCards.size() != this.availableCards.size())
+            return false;
         for (int i = 0; i<this.availableCards.size(); i++){
             if (! this.availableCards.get(i).equals(that.availableCards.get(i))){
+                //ToDo: non ha senso da quando è stato introdotto il retro della carta
                 return false;
             }
         }

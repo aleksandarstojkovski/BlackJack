@@ -1,9 +1,7 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
-import ch.supsi.blackjack.model.Card;
-import ch.supsi.blackjack.model.Coin;
-import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.*;
 import ch.supsi.blackjack.view.CardImage;
 import ch.supsi.blackjack.view.CoinImage;
 import javafx.beans.property.*;
@@ -130,6 +128,8 @@ public class ContentAreaController extends AbstractController implements Initial
             handleDealerBusted((DealerBustedEvent) event);
         } else if (event instanceof GameOverEvent) {
             handleGameOver();
+        } else if (event instanceof DealerStartEvent) {
+            showCoveredCard((DealerStartEvent) event);
         }
 
         // log
@@ -228,21 +228,32 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleDealerHand(DealerHandUpdateEvent event) {
-        dealerHandProperty.set(event.getValue());
+        if(event.getHandSize()==2){
+            dealerHandProperty.set(event.getValue()-event.getLastCardValue());
+        }else {
+            dealerHandProperty.set(event.getValue());
+        }
         betsArea.setVisible(false);
     }
 
     private void handleNewCard(NewCardEvent event) {
         Card card = event.getCard();
-        CardImage img = new CardImage(card);
-
-        //TODO: remove special codes 1,0 ... use different events
-        if (event.getPlayer().getPlayerID()==0) {
+        CardImage img;
+        if (event.getPlayer() instanceof Dealer){
+            if (dealerCards.getItems().size()==1) {
+                img = new CardImage(card,true);
+            }else{
+                img = new CardImage(card);
+            }
+            dealerCards.getItems().add(img);
+        } else {
+            img = new CardImage(card);
             playerCards.getItems().add(img);
         }
-        if (event.getPlayer().getPlayerID()==99){
-            dealerCards.getItems().add(img);
-        }
+    }
+
+    private void showCoveredCard(DealerStartEvent event){
+        dealerCards.getItems().get(1).flipCard();
     }
 
 }
