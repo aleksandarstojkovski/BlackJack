@@ -14,7 +14,8 @@
     </modules>
 
     <properties>
-        <maven.compiler.plugin>13</maven.compiler.plugin>
+        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.plugin>11</maven.compiler.plugin>
         <maven.compiler.source>1.13</maven.compiler.source>
         <maven.compiler.target>1.13</maven.compiler.target>
 
