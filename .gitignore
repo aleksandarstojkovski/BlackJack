@@ -25,3 +25,6 @@ hs_err_pid*
 # IntellJ project files
 .idea/
 target/
+/backend/backend.iml
+/frontend/frontend.iml
+/blackjack.iml
