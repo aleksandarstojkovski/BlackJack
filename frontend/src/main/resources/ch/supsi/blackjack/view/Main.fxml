@@ -9,8 +9,8 @@
            AnchorPane.rightAnchor="0.0"
            AnchorPane.topAnchor="0.0">
 
-        <fx:include source="Menu.fxml"/>
-
         <fx:include source="ContentArea.fxml" VBox.vgrow="ALWAYS"/>
+        <fx:include source="Menu.fxml"/>
+        <fx:include source="Log.fxml"/>
     </VBox>
 </AnchorPane>

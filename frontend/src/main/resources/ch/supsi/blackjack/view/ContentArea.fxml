@@ -42,8 +42,5 @@
                 <ListView fx:id="coinsListView" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350"  />
             </VBox>
         </HBox>
-
-
-        <TextArea fx:id="textArea" VBox.vgrow="NEVER" prefHeight="400" />
     </VBox>
 </AnchorPane>

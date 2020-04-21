@@ -27,7 +27,6 @@ public class ContentAreaController extends AbstractController implements Initial
     @FXML private Label playerHand;
     @FXML private Label betsAmount;
     @FXML private VBox betsArea;
-
     @FXML private ListView<CoinImage> coinsListView;
     @FXML private ListView<CardImage> playerCardListView;
     @FXML private ListView<CardImage> dealerCardListView;
@@ -37,12 +36,12 @@ public class ContentAreaController extends AbstractController implements Initial
     private final ObservableList<CardImage> playerCards = FXCollections.observableArrayList();
     private final ObservableList<CardImage> dealerCards = FXCollections.observableArrayList();
 
-    @FXML private TextArea textArea;
-
     private final IntegerProperty playerHandProperty = new SimpleIntegerProperty(0);
     private final IntegerProperty dealerHandProperty = new SimpleIntegerProperty(0);
     private final IntegerProperty betsAmountProperty = new SimpleIntegerProperty(0);
     private final IntegerProperty playerBalanceProperty = new SimpleIntegerProperty(0);
+
+    private final BooleanProperty betsAreaVisible = new SimpleBooleanProperty(false);
 
     public ContentAreaController(Model model) {
         super(model);
@@ -96,8 +95,6 @@ public class ContentAreaController extends AbstractController implements Initial
             showCoveredCard((DealerStartEvent) event);
         }
 
-        // log
-        textArea.appendText(event.getClass().getCanonicalName() + "\n");
     }
 
     private void handleGameOver() {
@@ -147,8 +144,6 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void handleNewRound(NewRoundEvent event) {
         clearTable();
-        playerHandProperty.setValue(0);
-        dealerHandProperty.setValue(0);
         loadAvailableCoins();
         playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
         betsArea.setVisible(true);
