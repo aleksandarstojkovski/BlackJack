@@ -1,19 +1,27 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
-import ch.supsi.blackjack.model.*;
+import ch.supsi.blackjack.model.Card;
+import ch.supsi.blackjack.model.Coin;
+import ch.supsi.blackjack.model.Dealer;
+import ch.supsi.blackjack.model.Model;
 import ch.supsi.blackjack.model.state.BetState;
 import ch.supsi.blackjack.model.state.PlayerDealsState;
 import ch.supsi.blackjack.view.CardImage;
 import ch.supsi.blackjack.view.CardImageCell;
 import ch.supsi.blackjack.view.CoinImage;
 import ch.supsi.blackjack.view.CoinImageCell;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 import java.beans.PropertyChangeEvent;
@@ -21,12 +29,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ContentAreaController extends AbstractController implements Initializable {
-
+    @FXML public VBox betsArea;
     @FXML private Label dealerHand;
     @FXML private Label playerBalance;
     @FXML private Label playerHand;
     @FXML private Label betsAmount;
-    @FXML private VBox betsArea;
     @FXML private ListView<CoinImage> coinsListView;
     @FXML private ListView<CardImage> playerCardListView;
     @FXML private ListView<CardImage> dealerCardListView;
@@ -49,6 +56,8 @@ public class ContentAreaController extends AbstractController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        betsArea.visibleProperty().bind(betsAreaVisible);
+
         dealerCardListView.setCellFactory(c -> new CardImageCell(model));
         dealerCardListView.setItems(dealerCards);
 
@@ -146,7 +155,7 @@ public class ContentAreaController extends AbstractController implements Initial
         clearTable();
         loadAvailableCoins();
         playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
-        betsArea.setVisible(true);
+        betsAreaVisible.set(true);
     }
 
     private void handleNewBet(NewBetEvent event) {
@@ -155,7 +164,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void handleExitGame(GameFinishedEvent event) {
         clearTable();
-        betsArea.setVisible(false);
+        betsAreaVisible.set(false);
     }
 
     private void clearTable() {
@@ -172,7 +181,7 @@ public class ContentAreaController extends AbstractController implements Initial
         clearTable();
         loadAvailableCoins();
         playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
-        betsArea.setVisible(true);
+        betsAreaVisible.set(true);
     }
 
     private void loadAvailableCoins() {
@@ -184,7 +193,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void handlePlayerHand(PlayerHandUpdateEvent event) {
         playerHandProperty.set(event.getValue());
-        betsArea.setVisible(false);
+        betsAreaVisible.set(false);
     }
 
     private void handleDealerHand(DealerHandUpdateEvent event) {
@@ -193,7 +202,7 @@ public class ContentAreaController extends AbstractController implements Initial
         }else {
             dealerHandProperty.set(event.getValue());
         }
-        betsArea.setVisible(false);
+        betsAreaVisible.set(false);
     }
 
     private void handleNewCard(NewCardEvent event) {
