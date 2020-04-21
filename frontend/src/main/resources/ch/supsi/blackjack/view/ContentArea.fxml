@@ -12,7 +12,7 @@
                 <Label text="%dealer" styleClass="label" />
                 <Label fx:id="dealerHand" styleClass="label-strong" />
             </VBox>
-            <ListView fx:id="dealerCards" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
+            <ListView fx:id="dealerCardListView" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
         </HBox>
 
         <VBox styleClass="rule-area">
@@ -26,7 +26,7 @@
                 <Label text="%player" styleClass="label"/>
                 <Label fx:id="playerHand" styleClass="label-strong"/>
             </VBox>
-            <ListView fx:id="playerCards" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
+            <ListView fx:id="playerCardListView" styleClass="cards-view" orientation="HORIZONTAL" HBox.hgrow="ALWAYS" />
         </HBox>
 
         <HBox styleClass="player-info">

@@ -29,10 +29,13 @@ public class ContentAreaController extends AbstractController implements Initial
     @FXML private VBox betsArea;
 
     @FXML private ListView<CoinImage> coinsListView;
-    @FXML private ListView<CardImage> playerCards;
-    @FXML private ListView<CardImage> dealerCards;
+    @FXML private ListView<CardImage> playerCardListView;
+    @FXML private ListView<CardImage> dealerCardListView;
 
+    //TODO: test controller through observables and events
     private final ObservableList<CoinImage> coins = FXCollections.observableArrayList();
+    private final ObservableList<CardImage> playerCards = FXCollections.observableArrayList();
+    private final ObservableList<CardImage> dealerCards = FXCollections.observableArrayList();
 
     @FXML private TextArea textArea;
 
@@ -47,8 +50,11 @@ public class ContentAreaController extends AbstractController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dealerCards.setCellFactory(c -> new CardImageCell(model));
-        playerCards.setCellFactory(c -> new CardImageCell(model));
+        dealerCardListView.setCellFactory(c -> new CardImageCell(model));
+        dealerCardListView.setItems(dealerCards);
+
+        playerCardListView.setCellFactory(c -> new CardImageCell(model));
+        playerCardListView.setItems(playerCards);
 
         coinsListView.setCellFactory(c -> new CoinImageCell(model));
         coinsListView.setItems(coins);
@@ -158,10 +164,10 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void clearTable() {
-        playerCards.getItems().clear();
+        playerCards.clear();
         coins.clear();
-//        coinsListView.getItems().clear();
-        dealerCards.getItems().clear();
+        dealerCards.clear();
+
         betsAmountProperty.set(0);
         playerHandProperty.setValue(0);
         dealerHandProperty.setValue(0);
@@ -178,7 +184,6 @@ public class ContentAreaController extends AbstractController implements Initial
         for (Coin c : model.getCoins()){
             CoinImage img = new CoinImage(c);
             coins.add(img);
-            //coinsListView.getItems().add(img);
         }
     }
 
@@ -188,7 +193,7 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleDealerHand(DealerHandUpdateEvent event) {
-        if(event.getHandSize()==2&&((event.getCurrentState() instanceof PlayerDealsState)||(event.getCurrentState() instanceof BetState))){
+        if(event.getHandSize()==2 && ((event.getCurrentState() instanceof PlayerDealsState) || (event.getCurrentState() instanceof BetState))){
             dealerHandProperty.set(event.getValue()-event.getLastCardValue());
         }else {
             dealerHandProperty.set(event.getValue());
@@ -200,22 +205,20 @@ public class ContentAreaController extends AbstractController implements Initial
         Card card = event.getCard();
         CardImage img;
         if (event.getPlayer() instanceof Dealer){
-            if (dealerCards.getItems().size()==1) {
+            if (dealerCards.size()==1) {
                 img = new CardImage(card,true);
             }else{
                 img = new CardImage(card);
             }
-            dealerCards.getItems().add(img);
+            dealerCards.add(img);
         } else {
             img = new CardImage(card);
-            playerCards.getItems().add(img);
+            playerCards.add(img);
         }
     }
 
     private void showCoveredCard(DealerStartEvent event){
-        dealerCards.getItems().get(1).flipCard();
-        dealerCards.refresh();
-
+        dealerCards.get(1).flipCard();
     }
 
 }
