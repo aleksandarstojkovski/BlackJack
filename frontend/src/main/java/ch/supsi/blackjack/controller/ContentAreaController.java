@@ -5,14 +5,16 @@ import ch.supsi.blackjack.model.*;
 import ch.supsi.blackjack.model.state.BetState;
 import ch.supsi.blackjack.model.state.PlayerDealsState;
 import ch.supsi.blackjack.view.CardImage;
+import ch.supsi.blackjack.view.CardImageCell;
 import ch.supsi.blackjack.view.CoinImage;
+import ch.supsi.blackjack.view.CoinImageCell;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 import java.beans.PropertyChangeEvent;
 import java.net.URL;
@@ -26,9 +28,11 @@ public class ContentAreaController extends AbstractController implements Initial
     @FXML private Label betsAmount;
     @FXML private VBox betsArea;
 
-    @FXML private ListView<CoinImage> coins;
+    @FXML private ListView<CoinImage> coinsListView;
     @FXML private ListView<CardImage> playerCards;
     @FXML private ListView<CardImage> dealerCards;
+
+    private final ObservableList<CoinImage> coins = FXCollections.observableArrayList();
 
     @FXML private TextArea textArea;
 
@@ -43,64 +47,16 @@ public class ContentAreaController extends AbstractController implements Initial
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dealerCards.setCellFactory(getCardListCell(dealerCards.heightProperty()));
-        playerCards.setCellFactory(getCardListCell(playerCards.heightProperty()));
-        coins.setCellFactory(getCoinListCell(coins.heightProperty()));
+        dealerCards.setCellFactory(c -> new CardImageCell(model));
+        playerCards.setCellFactory(c -> new CardImageCell(model));
+
+        coinsListView.setCellFactory(c -> new CoinImageCell(model));
+        coinsListView.setItems(coins);
+
         betsAmount.textProperty().bind(betsAmountProperty.asString());
         playerBalance.textProperty().bind(playerBalanceProperty.asString());
         playerHand.textProperty().bind(playerHandProperty.asString());
         dealerHand.textProperty().bind(dealerHandProperty.asString());
-    }
-
-    private Callback<ListView<CardImage>, ListCell<CardImage>> getCardListCell(ReadOnlyDoubleProperty containerHeight) {
-        return param -> {
-            return new ListCell<>() {
-                @Override
-                public void updateItem(CardImage drawable, boolean empty) {
-                    super.updateItem(drawable, empty);
-                    if (empty) {
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        ImageView imageView = new ImageView();
-                        imageView.setPreserveRatio(true);
-                        imageView.fitHeightProperty().bind(containerHeight.subtract(20));
-                        imageView.setImage(drawable.getImage());
-
-                        setText(null);
-                        setGraphic(imageView);
-                    }
-                }
-            };
-        };
-    }
-
-    private Callback<ListView<CoinImage>, ListCell<CoinImage>> getCoinListCell(ReadOnlyDoubleProperty containerHeight) {
-        return param -> {
-            return new ListCell<>() {
-                @Override
-                public void updateItem(CoinImage coin, boolean empty) {
-                    super.updateItem(coin, empty);
-                    if (empty) {
-                        setText(null);
-                        setGraphic(null);
-                    } else {
-                        Button button = new Button();
-                        button.getStyleClass().add("coin");
-                        ImageView imageView = new ImageView();
-                        imageView.fitHeightProperty().bind(containerHeight.subtract(20));
-                        imageView.setPreserveRatio(true);
-                        imageView.setImage(coin.getImage());
-
-                        button.setGraphic(imageView);
-                        button.setOnAction(e -> model.bet(coin.getValue()) );
-
-                        setText(null);
-                        setGraphic(button);
-                    }
-                }
-            };
-        };
     }
 
     @Override
@@ -203,7 +159,8 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void clearTable() {
         playerCards.getItems().clear();
-        coins.getItems().clear();
+        coins.clear();
+//        coinsListView.getItems().clear();
         dealerCards.getItems().clear();
         betsAmountProperty.set(0);
         playerHandProperty.setValue(0);
@@ -220,7 +177,8 @@ public class ContentAreaController extends AbstractController implements Initial
     private void loadAvailableCoins() {
         for (Coin c : model.getCoins()){
             CoinImage img = new CoinImage(c);
-            coins.getItems().add(img);
+            coins.add(img);
+            //coinsListView.getItems().add(img);
         }
     }
 

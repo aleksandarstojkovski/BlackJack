@@ -39,7 +39,7 @@
             <!-- COMMANDS -->
             <VBox fx:id="betsArea" styleClass="commands-area" HBox.hgrow="ALWAYS" visible="false" >
                 <Label text="Place your bet" styleClass="label" />
-                <ListView fx:id="coins" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350"  />
+                <ListView fx:id="coinsListView" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350"  />
             </VBox>
         </HBox>
 
