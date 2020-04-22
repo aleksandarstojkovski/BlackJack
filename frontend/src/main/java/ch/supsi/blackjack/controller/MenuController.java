@@ -104,6 +104,7 @@ public class MenuController extends AbstractController implements Initializable 
             disableHitAndStand.set(true);
         } else if (event instanceof RoundCompletedEvent) {
             disableNextRound.set(false);
+            disableHitAndStand.set(true);
         } else if (event instanceof PlayerBlackjackEvent) {
             disableHitAndStand.set(true);
             disableBet.set(true);

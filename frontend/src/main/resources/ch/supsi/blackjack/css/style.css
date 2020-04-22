@@ -33,13 +33,27 @@
 
 .info-area,
 .commands-area,
-.rule-area {
+.rule-area,
+.notification-area {
     -fx-background-color: rgba(0,0,0,0.3);
     -fx-border-color: rgba(0,255,0,0.6);
     -fx-alignment: top-center;
     -fx-border-radius: 10;
     -fx-border-width: 1;
     -fx-background-radius: 10;
+}
+
+.info {
+    -fx-border-color: rgba(0,255,0,0.6);
+}
+.loose {
+    -fx-border-color: rgba(255,0,0,0.6);
+}
+.draw {
+    -fx-border-color: rgba(0,0,255,0.6);
+}
+.win {
+    -fx-border-color: rgba(255,255,0,0.6);
 }
 
 .commands-area {

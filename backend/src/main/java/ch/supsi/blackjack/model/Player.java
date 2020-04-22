@@ -52,13 +52,10 @@ public class Player {
             throw new InsufficientCoinsException(nickname + " has " + coins + " coins and tries to bet " + amount + " coins.");
         }
     }
-    public List<Card> getCardList(){
-        return hand.getCardList();
-    }
+
     public int getHandValue() {
         return hand.value();
     }
-
     public int takeBets() {
         return hand.takeBets();
     }

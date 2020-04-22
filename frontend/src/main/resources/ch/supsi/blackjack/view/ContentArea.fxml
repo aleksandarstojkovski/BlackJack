@@ -22,7 +22,7 @@
 
         <!-- PLAYER -->
         <HBox styleClass="player-info">
-            <VBox minWidth="100" styleClass="info-area">
+            <VBox minWidth="100" styleClass="info-area,info">
                 <Label text="%player" styleClass="label"/>
                 <Label fx:id="playerHand" styleClass="label-strong"/>
             </VBox>
@@ -37,10 +37,16 @@
                 <Label fx:id="betsAmount" styleClass="label-strong"   />
             </VBox>
             <!-- COMMANDS -->
-            <VBox fx:id="betsArea" styleClass="commands-area" HBox.hgrow="ALWAYS" >
-                <Label text="Place your bet" styleClass="label" />
-                <ListView fx:id="coinsListView" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350"  />
-            </VBox>
+            <StackPane HBox.hgrow="ALWAYS" >
+                <VBox fx:id="betsArea" styleClass="commands-area" >
+                    <Label text="Place your bet" styleClass="label" />
+                    <ListView fx:id="coinsListView" styleClass="coins-view" orientation="HORIZONTAL" prefHeight="350"  />
+                </VBox>
+                <VBox fx:id="notificationArea" styleClass="notification-area,draw" >
+                    <Label text="${controller.notificationTitle}" styleClass="label-strong" />
+                    <Label text="${controller.notificationText}" styleClass="label" />
+                </VBox>
+            </StackPane>
         </HBox>
     </VBox>
 </AnchorPane>

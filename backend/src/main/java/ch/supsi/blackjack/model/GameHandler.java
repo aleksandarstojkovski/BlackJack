@@ -9,7 +9,6 @@ public interface GameHandler {
     void bet(int betValue);
     void confirmBet();
     void nextRound();
-    void nextState();
     Coin[] getCoins();
 
 }

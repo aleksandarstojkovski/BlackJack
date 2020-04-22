@@ -1,25 +1,15 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
-import ch.supsi.blackjack.model.Card;
-import ch.supsi.blackjack.model.Coin;
-import ch.supsi.blackjack.model.Dealer;
-import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.*;
 import ch.supsi.blackjack.model.state.BetState;
 import ch.supsi.blackjack.model.state.PlayerDealsState;
-import ch.supsi.blackjack.view.CardImage;
-import ch.supsi.blackjack.view.CardImageCell;
-import ch.supsi.blackjack.view.CoinImage;
-import ch.supsi.blackjack.view.CoinImageCell;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import ch.supsi.blackjack.view.*;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -29,7 +19,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ContentAreaController extends AbstractController implements Initializable {
-    @FXML public VBox betsArea;
+    @FXML private VBox betsArea;
+    @FXML private VBox notificationArea;
     @FXML private Label dealerHand;
     @FXML private Label playerBalance;
     @FXML private Label playerHand;
@@ -49,6 +40,24 @@ public class ContentAreaController extends AbstractController implements Initial
     private final IntegerProperty playerBalanceProperty = new SimpleIntegerProperty(0);
 
     private final BooleanProperty betsAreaVisible = new SimpleBooleanProperty(false);
+    private final BooleanProperty notificationAreaVisible = new SimpleBooleanProperty(false);
+    private final StringProperty notificationTitle = new SimpleStringProperty();
+    private final StringProperty notificationText = new SimpleStringProperty();
+    // required for FXML binding
+    public StringProperty notificationTitleProperty() {
+        return notificationTitle;
+    }
+    public String getNotificationTitle()
+    {
+        return notificationTitle.get();
+    }
+    public StringProperty notificationTextProperty() {
+        return notificationText;
+    }
+    public String getNotificationText()
+    {
+        return notificationText.get();
+    }
 
     public ContentAreaController(Model model) {
         super(model);
@@ -57,6 +66,7 @@ public class ContentAreaController extends AbstractController implements Initial
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         betsArea.visibleProperty().bind(betsAreaVisible);
+        notificationArea.visibleProperty().bind(notificationAreaVisible);
 
         dealerCardListView.setCellFactory(c -> new CardImageCell(model));
         dealerCardListView.setItems(dealerCards);
@@ -106,48 +116,43 @@ public class ContentAreaController extends AbstractController implements Initial
 
     }
 
+
+
     private void handleGameOver() {
-        // TODO: temp dialog
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Game Over");
-        alert.setHeaderText("Ouch! You've lost every penny.");
-        alert.setContentText("Don't worry, you can play again :-).");
-        alert.showAndWait();
+        showMessage("Game Over", "Ouch! You've lost every penny.", RoundStatus.LOOSE);
     }
 
     private void handleRoundCompleted(RoundCompletedEvent event) {
         switch (event.getRoundStatus()) {
             case WIN:
-                showAlert("Win", "You win.");
+                showMessage("Win", "You win.", event.getRoundStatus());
                 break;
             case DRAW:
-                showAlert("Draw", "You draw");
+                showMessage("Draw", "You draw.", event.getRoundStatus());
                 break;
             case LOOSE:
-                showAlert("Loose", "You loose");
+                showMessage("Lost", "Dealer Wins.", event.getRoundStatus());
                 break;
         }
 
     }
 
     private void handlePlayerBlackjack(PlayerBlackjackEvent event) {
-        // TODO: temp dialog
-        showAlert("Blackjack", "You made Blackjack!");
+        FadingStatusMessage.flash(this.notificationArea, "You made Blackjack!");
     }
     private void handlePlayerBusted(PlayerBustedEvent event) {
-        // TODO: temp dialog
-        showAlert("Bust", "You busted.");
+        FadingStatusMessage.flash(this.notificationArea, "You busted!");
     }
 
     private void handleDealerBusted(DealerBustedEvent event) {
-        showAlert("Bust", "Dealer busted.");
+        FadingStatusMessage.flash(this.notificationArea, "Dealer busted!");
     }
 
-    private void showAlert(String title, String text) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(text);
-        alert.showAndWait();
+    private void showMessage(String title, String text, RoundStatus status) {
+        notificationArea.getStyleClass().set(1, status.name().toLowerCase());
+        notificationAreaVisible.set(true);
+        notificationTitle.set(title);
+        notificationText.set(text);
     }
 
 
@@ -175,6 +180,7 @@ public class ContentAreaController extends AbstractController implements Initial
         betsAmountProperty.set(0);
         playerHandProperty.setValue(0);
         dealerHandProperty.setValue(0);
+        notificationAreaVisible.set(false);
     }
 
     private void handleNewGame(GameStartedEvent event) {

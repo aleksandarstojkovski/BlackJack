@@ -14,11 +14,6 @@
                 <FontIcon styleClass="newgame-icon"/>
             </graphic>
         </Button>
-        <Button mnemonicParsing="false" text="%next_round" onAction="#nextRoundAction" disable="${controller.disableNextRound}" >
-            <graphic>
-                <FontIcon styleClass="nextround-icon"/>
-            </graphic>
-        </Button>
         <Button mnemonicParsing="false" text="%bet" onAction="#betAction" disable="${controller.disableBet}" >
             <graphic>
                 <FontIcon styleClass="bet-icon"/>
@@ -32,6 +27,12 @@
         <Button mnemonicParsing="false" text="%stop_card" onAction="#standAction" disable="${controller.disableHitAndStand}" >
             <graphic>
                 <FontIcon styleClass="stopcard-icon"/>
+            </graphic>
+        </Button>
+
+        <Button mnemonicParsing="false" text="%next_round" onAction="#nextRoundAction" disable="${controller.disableNextRound}" >
+            <graphic>
+                <FontIcon styleClass="nextround-icon"/>
             </graphic>
         </Button>
 
