@@ -31,6 +31,7 @@ public class Card implements Serializable {
         return "Card{" +
                 "seed=" + seed.label +
                 ", value=" + value.label +
+                ", back=" + back +
                 '}';
     }
 
@@ -40,8 +41,7 @@ public class Card implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
         return seed == card.seed &&
-                value == card.value &&
-                back == card.back;
+                value == card.value;
     }
 
     @Override

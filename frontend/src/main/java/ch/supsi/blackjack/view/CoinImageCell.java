@@ -1,11 +1,10 @@
 package ch.supsi.blackjack.view;
 
 import ch.supsi.blackjack.model.GameHandler;
-import ch.supsi.blackjack.model.Model;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 
 public class CoinImageCell extends ListCell<CoinImage> {
     final GameHandler model;
@@ -23,7 +22,7 @@ public class CoinImageCell extends ListCell<CoinImage> {
             Button button = new Button();
             button.getStyleClass().add("coin");
             ImageView imageView = new ImageView();
-            ListView listView = this.listViewProperty().get();
+            Region listView = this.listViewProperty().get();
             imageView.fitHeightProperty().bind(listView.heightProperty().subtract(20));
             imageView.setPreserveRatio(true);
             imageView.setImage(coin.getImage());

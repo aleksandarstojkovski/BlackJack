@@ -1,6 +1,5 @@
 package ch.supsi.blackjack.model.state;
 
-import ch.supsi.blackjack.event.DealerStartEvent;
 import ch.supsi.blackjack.model.Model;
 
 public class PlayerDealsState implements GameState {

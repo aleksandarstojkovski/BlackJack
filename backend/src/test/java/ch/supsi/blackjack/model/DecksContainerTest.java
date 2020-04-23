@@ -9,18 +9,13 @@ class DecksContainerTest {
 
     @Test
     void shuffle() {
-        // test equality
         try {
-            DecksContainer decksContainer1 = new DecksContainer(3);
-            DecksContainer decksContainer2 = decksContainer1;
-            assertEquals(decksContainer1,decksContainer2);
-        } catch (InvalidDecksContainerSizeException e) {
-            fail();
-        }
-        // test non-equality
-        try {
+            // test equality
             DecksContainer decksContainer1 = new DecksContainer(3);
             DecksContainer decksContainer2 = SerializationUtils.clone(decksContainer1);
+            assertEquals(decksContainer1,decksContainer2);
+
+            // test non-equality
             decksContainer2.shuffle();
             assertNotEquals(decksContainer1,decksContainer2);
         } catch (InvalidDecksContainerSizeException e) {

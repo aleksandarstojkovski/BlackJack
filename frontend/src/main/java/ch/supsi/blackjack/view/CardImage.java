@@ -37,17 +37,21 @@ public class CardImage implements Drawable {
            return getImageFront();
        }
     }
+
+    private Image loadImage() {
+        URL url = this.getClass().getResource(getFileName());
+        return new Image(url.toString());
+    }
+
     private Image getImageFront() {
         if (imageFront == null) {
-            URL url = this.getClass().getResource(getFileName());
-            imageFront = new Image(url.toString());
+            imageFront = loadImage();
         }
         return imageFront;
     }
     private Image getImageBack(){
         if(imageBack == null) {
-            URL url =  this.getClass().getResource(getFileName());
-            imageBack = new Image(url.toString());
+            imageBack = loadImage();
         }
         return imageBack;
     }
