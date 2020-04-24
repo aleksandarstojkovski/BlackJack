@@ -229,6 +229,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void showCoveredCard(DealerStartEvent event){
         dealerCards.get(1).flipCard();
+        dealerCards.set( 1,dealerCards.get(1));
     }
 
 }

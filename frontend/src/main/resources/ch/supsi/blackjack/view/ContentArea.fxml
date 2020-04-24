@@ -21,6 +21,7 @@
         </VBox>
 
         <!-- PLAYER -->
+
         <HBox styleClass="player-info">
             <VBox minWidth="100" styleClass="info-area,info">
                 <Label text="%player" styleClass="label"/>

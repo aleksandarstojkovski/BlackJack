@@ -6,6 +6,7 @@ import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 import ch.supsi.blackjack.model.state.GameState;
 import ch.supsi.blackjack.model.state.InitState;
 
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -290,4 +291,5 @@ public class Model extends AbstractModel {
         //model.nextRoundProperty().set(false);
         pcs.firePropertyChange(new GameOverEvent(this));
     }
+
 }
