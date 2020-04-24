@@ -1,5 +1,7 @@
 package ch.supsi.blackjack.model;
 
+import ch.supsi.blackjack.model.state.GameStateManager;
+
 public class DealerAI implements AI {
     private final Dealer aiEntity;
     DealerAI(Dealer dealer){
@@ -7,9 +9,9 @@ public class DealerAI implements AI {
     }
 
     @Override
-    public void compute(Model model) {
-        while(aiEntity.getHandValue()<17){
-            model.hitInternal(aiEntity);
+    public void compute(GameStateManager model) {
+        while(aiEntity.getHandValue() < 17){
+            model.hit(aiEntity);
         }
     }
 }

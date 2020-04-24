@@ -4,16 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-
     private List<Card> cardList;
     private int betValue;
 
     public Hand() {
         this.cardList = new ArrayList<>();
-    }
-
-    public List<Card> getCardList() {
-        return cardList;
     }
 
     public void addCard(Card card){
@@ -23,7 +18,7 @@ public class Hand {
     public int value() {
         int currentHandValue = 0;
         for (Card card : cardList) {
-            if (card.getValue().label.equals("ace")&&currentHandValue>10){
+            if (card.getValue().equals(Value.ACE) && currentHandValue > 10){
                 //ToDo: far scegliere il giocatore per attribuire il valore di asso.
                 currentHandValue += 1;
             } else {
@@ -34,7 +29,7 @@ public class Hand {
     }
 
     public void discardCards(){
-        this.cardList  = new ArrayList<>();
+        cardList.clear();
     }
 
     @Override
@@ -47,11 +42,18 @@ public class Hand {
     }
 
     public int takeBets(){
-        int bettedCoins=betValue;
+        int bettedCoins = betValue;
         betValue=0;
         // TODO: manage in better way do not clear array
         cardList.clear();
         return bettedCoins;
     }
 
+    public int size() {
+        return cardList.size();
+    }
+
+    public int getLastCardValue() {
+        return cardList.get(cardList.size()-1).getValue().cardValue;
+    }
 }

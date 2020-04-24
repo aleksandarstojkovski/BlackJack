@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model.state;
 
-import ch.supsi.blackjack.model.Model;
-
 public class DealerBustState implements GameState {
 
 
@@ -18,11 +16,11 @@ public class DealerBustState implements GameState {
 
     // business logic and state transition
     @Override
-    public void updateState(Model model) {
+    public void updateState(GameStateManager model) {
         // dealer bust property
         model.setDealerBusted();
         model.setCurrentState(UpdateTableState.instance());
-        model.nextState();
+        model.goNextState();
     }
 
 }

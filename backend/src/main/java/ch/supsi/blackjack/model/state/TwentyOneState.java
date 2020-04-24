@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model.state;
 
-import ch.supsi.blackjack.model.Model;
-
 public class TwentyOneState implements GameState {
 
     // singleton
@@ -17,10 +15,10 @@ public class TwentyOneState implements GameState {
 
     // business logic and state transition
     @Override
-    public void updateState(Model model) {
+    public void updateState(GameStateManager model) {
         model.setPlayerTwentyone();
         model.setCurrentState(UpdateTableState.instance());
-        model.nextState();
+        model.goNextState();
     }
 
 }

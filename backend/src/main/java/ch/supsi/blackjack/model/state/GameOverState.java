@@ -17,8 +17,8 @@ public class GameOverState implements GameState {
 
     // business logic and state transition
     @Override
-    public void updateState(Model model) {
-        model.exitGame();
+    public void updateState(GameStateManager model) {
+        model.exit();
     }
 
 }

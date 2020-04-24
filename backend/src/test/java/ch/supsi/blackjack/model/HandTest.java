@@ -9,7 +9,7 @@ class HandTest {
     public void addCard() {
         Hand testHand = new Hand();
         testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
-        assertEquals(1,testHand.getCardList().size());
+        assertEquals(1,testHand.size());
     }
 
     @Test
@@ -31,6 +31,6 @@ class HandTest {
         Hand testHand = new Hand();
         testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
         testHand.discardCards();
-        assertEquals(0,testHand.getCardList().size());
+        assertEquals(0, testHand.size());
     }
 }

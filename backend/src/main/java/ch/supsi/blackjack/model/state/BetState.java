@@ -17,7 +17,7 @@ public class BetState implements GameState {
 
     // business logic and state transition
     @Override
-    public void updateState(Model model) {
+    public void updateState(GameStateManager model) {
         // bet confirmed
         if (model.isBetConfirmed()){
             model.openRound();

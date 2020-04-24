@@ -1,5 +1,7 @@
 package ch.supsi.blackjack.model;
 
+import ch.supsi.blackjack.model.state.GameStateManager;
+
 public interface AI {
-    void compute(Model model);
+    void compute(GameStateManager model);
 }

@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model.state;
 
-import ch.supsi.blackjack.model.Model;
-
 public class PlayerBustState implements GameState {
     // singleton
     private static final PlayerBustState instance = new PlayerBustState();
@@ -16,10 +14,10 @@ public class PlayerBustState implements GameState {
 
     // business logic and state transition
     @Override
-    public void updateState(Model model) {
+    public void updateState(GameStateManager model) {
         model.setPlayerBusted();
         model.setCurrentState(UpdateTableState.instance());
-        model.nextState();
+        model.goNextState();
     }
 
 }

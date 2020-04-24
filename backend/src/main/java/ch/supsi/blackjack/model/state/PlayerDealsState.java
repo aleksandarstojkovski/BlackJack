@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model.state;
 
-import ch.supsi.blackjack.model.Model;
-
 public class PlayerDealsState implements GameState {
 
     // singleton
@@ -17,7 +15,7 @@ public class PlayerDealsState implements GameState {
 
     // business logic and state transition
     @Override
-    public void updateState(Model model) {
+    public void updateState(GameStateManager model) {
         if (model.isPlayerStand()){
             //Order is important non scambiare l'ordine
             model.setCurrentState(DealerDealsState.instance());
@@ -31,11 +29,11 @@ public class PlayerDealsState implements GameState {
             } else if (playerValue == 21) {
                 model.setCurrentState(TwentyOneState.instance());
                 model.updateDealer();
-                model.nextState();
+                model.goNextState();
             } else {
                 model.setCurrentState(PlayerBustState.instance());
                 model.updateDealer();
-                model.nextState();
+                model.goNextState();
             }
         }
     }
