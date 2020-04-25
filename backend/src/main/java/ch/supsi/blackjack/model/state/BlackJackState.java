@@ -1,5 +1,10 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * The player was lucky, getting a 21
+ * He automatically wins the Round
+ * Next State: UpdateTableState
+ */
 public class BlackJackState implements GameState {
 
     // singleton

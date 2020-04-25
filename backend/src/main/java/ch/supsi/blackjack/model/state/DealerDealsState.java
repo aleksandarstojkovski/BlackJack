@@ -1,5 +1,12 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * This is the turn of the Dealer.
+ * He can hit or stand.
+ * In case of Bust the Round is over, players won
+ * In case of Stand, cards are compared against the players
+ * Next State: DealerBustState,UpdateTableState
+*/
 public class DealerDealsState implements GameState {
 
     // singleton

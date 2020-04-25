@@ -1,7 +1,11 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * Dealer decided to hit, but he exceeds the limit of 21.
+ * The Round is over, main player won.
+ * Next State: UpdateTableState
+ */
 public class DealerBustState implements GameState {
-
 
     // singleton
     private static final DealerBustState instance = new DealerBustState();

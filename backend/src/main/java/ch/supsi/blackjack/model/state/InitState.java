@@ -1,5 +1,9 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * This is the very initial state
+ * Next state: BetState
+ */
 public class InitState implements GameState {
 
     // singleton

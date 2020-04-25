@@ -1,5 +1,11 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * The Round is completed
+ * If player has more money he can still play
+ * Otherwise the game is over
+ * Next State: BetState,GameOverState
+ */
 public class UpdateTableState implements GameState {
 
     // singleton

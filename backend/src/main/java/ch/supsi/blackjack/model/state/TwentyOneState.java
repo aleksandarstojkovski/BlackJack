@@ -1,5 +1,11 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * Player asked for new cards (hit) and reached 21
+ * It's not enough to win automatically
+ * We need to compare with Dealer cards
+ * Next State: UpdateTableState
+ */
 public class TwentyOneState implements GameState {
 
     // singleton

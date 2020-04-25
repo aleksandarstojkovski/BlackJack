@@ -1,6 +1,6 @@
 package ch.supsi.blackjack.model;
 
-public enum RoundStatus {
+public enum RoundResult {
     WIN,
     LOOSE,
     DRAW

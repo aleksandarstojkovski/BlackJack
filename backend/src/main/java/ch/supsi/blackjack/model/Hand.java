@@ -6,6 +6,7 @@ import java.util.List;
 public class Hand {
     private final List<Card> cardList;
     private int betValue;
+    private boolean busted = false;
 
     public Hand() {
         this.cardList = new ArrayList<>();
@@ -55,5 +56,13 @@ public class Hand {
 
     public int getLastCardValue() {
         return cardList.get(cardList.size()-1).getValue().cardValue;
+    }
+
+    public boolean isBusted() {
+        return busted;
+    }
+
+    public void setBusted(boolean busted) {
+        this.busted = busted;
     }
 }

@@ -1,5 +1,8 @@
 package ch.supsi.blackjack.model;
 
+/**
+ * Manage external interaction from controller
+ */
 public interface GameHandler {
 
     void newGame();

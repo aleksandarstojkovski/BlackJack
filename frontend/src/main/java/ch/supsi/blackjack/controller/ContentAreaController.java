@@ -119,19 +119,19 @@ public class ContentAreaController extends AbstractController implements Initial
 
 
     private void handleGameOver() {
-        showMessage("Game Over", "Ouch! You've lost every penny.", RoundStatus.LOOSE);
+        showMessage("Game Over", "Ouch! You've lost every penny.", RoundResult.LOOSE);
     }
 
     private void handleRoundCompleted(RoundCompletedEvent event) {
-        switch (event.getRoundStatus()) {
+        switch (event.getRoundResult()) {
             case WIN:
-                showMessage("Win", "You win.", event.getRoundStatus());
+                showMessage("Win", "You win.", event.getRoundResult());
                 break;
             case DRAW:
-                showMessage("Draw", "You draw.", event.getRoundStatus());
+                showMessage("Draw", "You draw.", event.getRoundResult());
                 break;
             case LOOSE:
-                showMessage("Lost", "Dealer Wins.", event.getRoundStatus());
+                showMessage("Lost", "Dealer Wins.", event.getRoundResult());
                 break;
         }
 
@@ -148,7 +148,7 @@ public class ContentAreaController extends AbstractController implements Initial
         FadingStatusMessage.flash(this.notificationArea, "Dealer busted!");
     }
 
-    private void showMessage(String title, String text, RoundStatus status) {
+    private void showMessage(String title, String text, RoundResult status) {
         notificationArea.getStyleClass().set(1, status.name().toLowerCase());
         notificationAreaVisible.set(true);
         notificationTitle.set(title);

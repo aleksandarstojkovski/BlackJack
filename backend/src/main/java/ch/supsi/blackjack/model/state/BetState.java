@@ -1,5 +1,11 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * This is the initial phase of a Round.
+ * The player has to bet.
+ * Once confirmed the cards can be distributed
+ * Next State: BetState, SetupTableState
+ */
 public class BetState implements GameState {
 
     // singleton

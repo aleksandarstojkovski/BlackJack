@@ -1,5 +1,11 @@
 package ch.supsi.blackjack.model.state;
 
+/**
+ * This is the turn of the Main Player.
+ * He can hit or stand.
+ * In case of Blackjack the Round is over, he won
+ * In case of Bust the Round is over, dealer won
+ */
 public class PlayerDealsState implements GameState {
 
     // singleton

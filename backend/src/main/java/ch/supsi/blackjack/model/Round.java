@@ -10,29 +10,33 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Here is the main logic of the game.
+ * A Round of Blackjack starts betting an amount of money
+ * After confirming the bet, each player receives 2 cards
+ * Dealer receives 2 cards as well, but one is hidden.
+ * Each player defines its own strategy, asking for more cards (hit) or confirming (stand)
+ * 21 is the maximum value. In case of 21, the player automatically win the round (Blackjack)
+ * Over 21 the player loose the round automatically (Bust)
+ * If still in game the turn pass to the next player/dealer
+ */
 public class Round implements GameStateManager {
+    private final List<Player> allPlayers = new ArrayList<>();
     private final Player mainPlayer;
     private final Dealer dealer;
-    private final List<Player> allPlayers = new ArrayList<>();
-
     // TODO: manage AI players
     private final List<Player> aiPlayers;
+
     private int currentAiPlayerIdx = 0;
 
-    // updated by the states  - indicates that the user busted
-    private boolean playerBusted = false;
-    // updated by the states  - indicates that the dealer busted
-    private boolean dealerBusted = false;
     // updated by model  - indicates that user confirmed the bte
     private boolean betConfirmed = false;
     // updated by model  - indicates that the user chose to stand
     private boolean playerStand = false;
 
     private GameState currentState;
-
     private final PropertyChangeSupport pcs;
 
-    /*ToDo: player deve diventare una arraylist di player per gestire il multiplayer*/
     public Round(PropertyChangeSupport pcs, Player mainPlayer, Dealer dealer, List<Player> aiPlayers){
         this.pcs = pcs;
 
@@ -76,7 +80,7 @@ public class Round implements GameStateManager {
     }
 
     public void exitGame() {
-        // from any state the user can leave the game
+        // the user can leave the game from any state. He jumps to the InitState
         setCurrentState(InitState.instance());
         pcs.firePropertyChange(new GameFinishedEvent(this));
     }
@@ -141,7 +145,7 @@ public class Round implements GameStateManager {
     }
 
     public void setPlayerBusted() {
-        playerBusted = true;
+        mainPlayer.hand.setBusted(true);
         pcs.firePropertyChange(new PlayerBustedEvent(this));
     }
 
@@ -158,60 +162,59 @@ public class Round implements GameStateManager {
         int dealerValue = dealer.getHandValue();
         int playerValue = mainPlayer.getHandValue();
 
-        RoundStatus roundStatus;
+        RoundResult mainPlayerResult;
 
-        if (playerBusted){
+        if (mainPlayer.hand.isBusted()){
             // dealer wins
-            for (Player p : allPlayers ){
-                p.takeBets();
-            }
-            roundStatus = RoundStatus.LOOSE;
-        } else if (dealerBusted){
+            mainPlayer.hand.takeBets();
+            mainPlayerResult = RoundResult.LOOSE;
+        } else if (dealer.hand.isBusted()){
             // player wins
             for (Player p : allPlayers){
-                int bettedCoins = p.takeBets();
+                int bettedCoins = p.hand.takeBets();
                 p.giveCoins(bettedCoins * 2);
             }
-            roundStatus = RoundStatus.WIN;
+            mainPlayerResult = RoundResult.WIN;
         } else if (dealerValue > playerValue){
             // no-one busted
             // dealer wins
-            for (Player p : allPlayers ){
-                p.takeBets();
+            for (Player p : allPlayers){
+                p.hand.takeBets();
             }
-            roundStatus = RoundStatus.LOOSE;
+            mainPlayerResult = RoundResult.LOOSE;
         } else if (dealerValue < playerValue) {
             // player wins
             for (Player p : allPlayers){
-                int bettedCoins=p.takeBets();
+                int bettedCoins=p.hand.takeBets();
                 p.giveCoins(bettedCoins*2);
             }
-            roundStatus = RoundStatus.WIN;
+            mainPlayerResult = RoundResult.WIN;
         } else {
             //dealerValue == playerValue
             for (Player p : allPlayers){
-                int bettedCoins = p.takeBets();
+                int bettedCoins = p.hand.takeBets();
                 p.giveCoins(bettedCoins);
             }
-            roundStatus = RoundStatus.WIN;
+            mainPlayerResult = RoundResult.WIN;
         }
         // removes bets from the dealer
-        dealer.takeBets();
+        dealer.hand.takeBets();
 
-        pcs.firePropertyChange(new RoundCompletedEvent(this, roundStatus));
+        pcs.firePropertyChange(new RoundCompletedEvent(this, mainPlayerResult));
 
         clear();
     }
 
     private void clear() {
-        playerBusted = false;
+        mainPlayer.hand.setBusted(false);
+        dealer.hand.setBusted(false);
+
         betConfirmed = false;
         playerStand = false;
-        dealerBusted = false;
     }
 
     public void setDealerBusted() {
-        dealerBusted = true;
+        dealer.hand.setBusted(true);
         pcs.firePropertyChange(new DealerBustedEvent(this));
     }
 
