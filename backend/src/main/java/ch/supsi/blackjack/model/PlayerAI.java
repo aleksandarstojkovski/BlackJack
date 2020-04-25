@@ -3,31 +3,33 @@ package ch.supsi.blackjack.model;
 import ch.supsi.blackjack.model.state.GameStateManager;
 
 public class PlayerAI implements AI {
-    protected int aiType = 0;
+    public enum AIType { PRUDENT, MEDIUM, RISKY }
+
+    protected final AIType aiType;
     private final Player aiEntity;
 
-    PlayerAI(Player player) {
+    PlayerAI(Player player, AIType aiType) {
         this.aiEntity = player;
-    }
-
-    public void setAiType(int aiType) {
         this.aiType = aiType;
     }
 
     @Override
     public void compute(GameStateManager model) {
-        if (aiType == 1) {
-            while (aiEntity.getHandValue() < 16) {
-                model.hit(aiEntity);
-            }
-        } else if (aiType == 2){
-            while (aiEntity.getHandValue() < 18) {
-                model.hit(aiEntity);
-            }
-        } else {
-            while (aiEntity.getHandValue() < 17) {
-                model.hit(aiEntity);
-            }
+        int limit;
+        switch (aiType) {
+            case RISKY:
+                limit = 18;
+                break;
+            case MEDIUM:
+                limit = 17;
+                break;
+            case PRUDENT:
+            default:
+                limit = 16;
+                break;
+        }
+        while (aiEntity.getHandValue() < limit) {
+            model.hit(aiEntity);
         }
     }
 

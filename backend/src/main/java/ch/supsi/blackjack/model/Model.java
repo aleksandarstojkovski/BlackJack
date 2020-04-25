@@ -8,12 +8,18 @@ import java.util.List;
 public class Model extends AbstractModel {
     // singleton
     private static Model instance;
-
     private GameStateManager round;
     private Dealer dealer;
-    private List<Player> playerList;
+    private Player humanPlayer;
+    private List<Player> aiPlayers;
 
-    private final Coin[] coins = {new Coin(100),new Coin(200),new Coin(300), new Coin(400),new Coin(500)};
+    private final Coin[] coins = {
+        new Coin(100),
+        new Coin(200),
+        new Coin(300),
+        new Coin(400),
+        new Coin(500)
+    };
 
     private Model() {
         super();
@@ -31,21 +37,22 @@ public class Model extends AbstractModel {
 
     @Override
     public void newGame() {
-        this.dealer = new Dealer();
-        this.playerList = new ArrayList<>();
-        playerList.add(new Player("Player 1",0));
-        round = new Round(pcs, dealer, playerList);
-        round.start();
+        humanPlayer = new Player("Player 1",0);
+        dealer = new Dealer();
+        aiPlayers = new ArrayList<>();
+
+        round = new Round(pcs, humanPlayer, dealer, aiPlayers);
+        round.startGame();
     }
 
     @Override
     public void exitGame() {
-        round.exit();
+        round.exitGame();
     }
 
     @Override
     public void nextRound() {
-        round.next();
+        round.nextRound();
     }
 
     @Override
@@ -55,7 +62,7 @@ public class Model extends AbstractModel {
 
     @Override
     public void stand() {
-        round.playerStand();
+        round.setPlayerStand();
     }
 
     @Override

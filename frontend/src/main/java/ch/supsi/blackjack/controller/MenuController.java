@@ -47,7 +47,7 @@ public class MenuController extends AbstractController implements Initializable 
         return disableBet.get();
     }
 
-    private final BooleanProperty disableExitGame = new SimpleBooleanProperty(false);
+    private final BooleanProperty disableExitGame = new SimpleBooleanProperty(true);
     // required for FXML binding
     public BooleanProperty disableExitGameProperty() {
         return disableExitGame;

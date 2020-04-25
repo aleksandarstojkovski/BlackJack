@@ -16,7 +16,7 @@ public class TwentyOneState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(GameStateManager model) {
-        model.setPlayerTwentyone();
+        model.setPlayerTwentyOne();
         model.setCurrentState(UpdateTableState.instance());
         model.goNextState();
     }

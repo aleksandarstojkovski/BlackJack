@@ -7,14 +7,18 @@ import ch.supsi.blackjack.model.state.GameStateManager;
 import ch.supsi.blackjack.model.state.InitState;
 
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Round implements GameStateManager {
+    private final Player mainPlayer;
+    private final Dealer dealer;
+    private final List<Player> allPlayers = new ArrayList<>();
 
-    // updated by the states - indicates that users can start to bet
-    private boolean betsOpen = false;
-    // updated by the states - indicates that users can start to deal
-    private boolean dealsOpen = false;
+    // TODO: manage AI players
+    private final List<Player> aiPlayers;
+    private int currentAiPlayerIdx = 0;
+
     // updated by the states  - indicates that the user busted
     private boolean playerBusted = false;
     // updated by the states  - indicates that the dealer busted
@@ -26,103 +30,93 @@ public class Round implements GameStateManager {
 
     private GameState currentState;
 
-    private final Dealer dealer;
-    private final List<Player> playerList;
     private final PropertyChangeSupport pcs;
 
     /*ToDo: player deve diventare una arraylist di player per gestire il multiplayer*/
-    public Round(PropertyChangeSupport pcs, Dealer dealer, List<Player> playerList){
+    public Round(PropertyChangeSupport pcs, Player mainPlayer, Dealer dealer, List<Player> aiPlayers){
         this.pcs = pcs;
-        this.dealer = dealer;
-        this.playerList = playerList;
 
         // initial state
         currentState = InitState.instance();
-    }
+        this.mainPlayer = mainPlayer;
+        this.dealer = dealer;
+        this.aiPlayers = aiPlayers;
 
-    public void goNextState() {
-        currentState.updateState(this);
-    }
-
-    public Dealer getDealer() {
-        return this.dealer;
+        allPlayers.add(mainPlayer);
+        allPlayers.addAll(aiPlayers);
+        allPlayers.add(dealer);
     }
 
     public void setCurrentState(GameState currentState) {
         this.currentState = currentState;
     }
 
+    public void goNextState() {
+        currentState.updateState(this);
+    }
+
     public void openRound() {
-        betsOpen = false;
-        dealsOpen = true;
-
-        hitTwice(dealer);//ToDo: miglioare l'apertura del gioco
-        for (Player player : playerList) {
-            hitTwice(player);
+        // at the beginning of the round, each player receives two cards
+        for (Player player : allPlayers) {
+            hit(player);
+            hit(player);
         }
     }
 
-    private void hitTwice(Player player) {
-        hit(player);
-        hit(player);
-    }
+    public void hit(Player player) {
+        Card card = dealer.giveCard();
+        pcs.firePropertyChange(new NewCardEvent(this, card, player));
+        player.addCard(card);
 
-    public void hit(Player currentPlayer) {
-        Card card = getDealer().giveCard();
-        pcs.firePropertyChange(new NewCardEvent(this, card,currentPlayer));
-        currentPlayer.addCard(card);
-
-        if(currentPlayer instanceof Dealer){
-            pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.currentState));
+        if(player instanceof Dealer){
+            pcs.firePropertyChange(new DealerHandUpdateEvent(this, player.hand, this.currentState));
         }else {
-            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, currentPlayer.getHandValue()));
+            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, player.getHandValue()));
         }
     }
 
-    public void exit() {
+    public void exitGame() {
+        // from any state the user can leave the game
         setCurrentState(InitState.instance());
         pcs.firePropertyChange(new GameFinishedEvent(this));
     }
 
-    public void next() {
+    public void nextRound() {
         // calling updateState on InitState
         // case1: BetState (user can start to bet)
         goNextState();
-        pcs.firePropertyChange(new NewRoundEvent(this,playerList));
+        pcs.firePropertyChange(new NewRoundEvent(this, allPlayers));
     }
 
     public void playerHit() {
-        hit(this.playerList.get(0));
+        hit(mainPlayer);
         // calling updateState on PlayerDealsState
         // case1: PlayerDealsState (Player didn't bust)
         // case1: PlayerBustState (Player has busted)
         goNextState();
     }
 
-    public void start() {
+    public void startGame() {
         // calling updateState on InitState
         // case1: BetState (user can start to bet)
         goNextState();
 
-        pcs.firePropertyChange(new GameStartedEvent(this, playerList));
+        pcs.firePropertyChange(new GameStartedEvent(this, allPlayers));
     }
 
-    public void playerStand() {
+    public void setPlayerStand() {
         playerStand = true;
         // calling updateState on PlayerDealsState
         // case1: PlayerBustState (Player made BlackJack)
         // case1: PlayerDealsState (Player didn't make BlackJack)
         goNextState();
-        pcs.firePropertyChange(new StandEvent(this,dealer));
+        pcs.firePropertyChange(new StandEvent(this, dealer));
     }
 
     public void playerBet(int amount) {
         try {
-            playerList.get(0).bet(amount);
+            mainPlayer.bet(amount);
             pcs.firePropertyChange(new NewBetEvent(this, amount));
-
-            // user can confirm the bet only after at least one coin has been bet
-            betsOpen = true;
 
             // calling updateState on BetState
             // case1: remain in BetState (until user confirms the bet)
@@ -155,26 +149,26 @@ public class Round implements GameStateManager {
         pcs.firePropertyChange(new PlayerBlackjackEvent(this));
     }
 
-    public void setPlayerTwentyone() {
+    public void setPlayerTwentyOne() {
         pcs.firePropertyChange(new PlayerTwentyoneEvent(this));
     }
 
     public void setRoundCompleted() {
 
         int dealerValue = dealer.getHandValue();
-        int playerValue = playerList.get(0).getHandValue();
+        int playerValue = mainPlayer.getHandValue();
 
         RoundStatus roundStatus;
 
         if (playerBusted){
             // dealer wins
-            for (Player p : playerList ){
+            for (Player p : allPlayers ){
                 p.takeBets();
             }
             roundStatus = RoundStatus.LOOSE;
         } else if (dealerBusted){
             // player wins
-            for (Player p : playerList){
+            for (Player p : allPlayers){
                 int bettedCoins = p.takeBets();
                 p.giveCoins(bettedCoins * 2);
             }
@@ -182,20 +176,20 @@ public class Round implements GameStateManager {
         } else if (dealerValue > playerValue){
             // no-one busted
             // dealer wins
-            for (Player p : playerList ){
+            for (Player p : allPlayers ){
                 p.takeBets();
             }
             roundStatus = RoundStatus.LOOSE;
         } else if (dealerValue < playerValue) {
             // player wins
-            for (Player p : playerList){
+            for (Player p : allPlayers){
                 int bettedCoins=p.takeBets();
                 p.giveCoins(bettedCoins*2);
             }
             roundStatus = RoundStatus.WIN;
         } else {
             //dealerValue == playerValue
-            for (Player p : playerList){
+            for (Player p : allPlayers){
                 int bettedCoins = p.takeBets();
                 p.giveCoins(bettedCoins);
             }
@@ -210,8 +204,6 @@ public class Round implements GameStateManager {
     }
 
     private void clear() {
-        dealsOpen = false;
-        betsOpen = false;
         playerBusted = false;
         betConfirmed = false;
         playerStand = false;
@@ -228,7 +220,7 @@ public class Round implements GameStateManager {
     }
 
     public boolean isPlayerWithMoney() {
-        return playerList.get(0).getCoins() > 0;
+        return mainPlayer.getCoins() > 0;
     }
 
     public boolean isPlayerStand() {
@@ -243,7 +235,7 @@ public class Round implements GameStateManager {
     }
 
     public int getPlayerHandValue() {
-        return playerList.get(0).getHandValue();
+        return mainPlayer.getHandValue();
     }
 
     public int getDealerHandValue() {
@@ -251,13 +243,12 @@ public class Round implements GameStateManager {
     }
 
     public void setGameOver() {
-        //model.nextRoundProperty().set(false);
         pcs.firePropertyChange(new GameOverEvent(this));
     }
 
     public void compute(Player player){
         if(player instanceof Dealer){
-            dealer.getAi().compute(this);
+            dealer.compute(this);
             goNextState();
         } else {
             //ToDo: futura implementazione del PlayerAI

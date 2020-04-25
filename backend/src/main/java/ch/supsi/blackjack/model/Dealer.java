@@ -2,8 +2,7 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 
-public class Dealer extends Player{
-
+public class Dealer extends VirtualPlayer {
     private DecksContainer decksContainer;
 
     public Dealer() {
@@ -21,5 +20,4 @@ public class Dealer extends Player{
     public Card giveCard(){
         return decksContainer.getCard();
     }
-
 }

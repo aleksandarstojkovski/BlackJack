@@ -8,18 +8,12 @@ public class Player {
     private final String nickname;
     protected final Hand hand;
     private int coins;
-    protected AI ai;
 
     Player(String nickname, int playerID) {
         this.playerID = playerID;
         this.nickname = nickname;
         this.hand = new Hand();
         this.coins = INITIAL_COINS;
-        this.ai = new PlayerAI(this);
-    }
-
-    public AI getAi() {
-        return ai;
     }
 
     public void addCard (Card newCard){
@@ -54,6 +48,7 @@ public class Player {
     public int getHandValue() {
         return hand.value();
     }
+
     public int takeBets() {
         return hand.takeBets();
     }

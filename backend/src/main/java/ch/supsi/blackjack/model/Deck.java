@@ -5,8 +5,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class Deck {
-
-    public static final int DECK_SIZE=52;
     private final Card[] cards;
 
     Deck(){

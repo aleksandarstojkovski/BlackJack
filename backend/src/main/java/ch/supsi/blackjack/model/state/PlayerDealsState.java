@@ -17,16 +17,16 @@ public class PlayerDealsState implements GameState {
     @Override
     public void updateState(GameStateManager model) {
         if (model.isPlayerStand()){
-            //Order is important non scambiare l'ordine
+            //Order of call is important
             model.setCurrentState(DealerDealsState.instance());
             model.updateDealer();
             model.computeDealer();
         } else {
             int playerValue = model.getPlayerHandValue();
-            if (playerValue < 21){
-                // stay in this state until the user busted or stands or makes blackjack
+            if (playerValue < model.BLACKJACK){
+                // stay in this state until the user bust or stands or makes blackjack
                 model.setCurrentState(PlayerDealsState.instance());
-            } else if (playerValue == 21) {
+            } else if (playerValue == model.BLACKJACK) {
                 model.setCurrentState(TwentyOneState.instance());
                 model.updateDealer();
                 model.goNextState();

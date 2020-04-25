@@ -16,7 +16,7 @@ public class SetupTableState implements GameState {
         // business logic and state transition
         @Override
         public void updateState(GameStateManager model) {
-            if (model.getPlayerHandValue() == 21){
+            if (model.getPlayerHandValue() == model.BLACKJACK){
                 model.setCurrentState(BlackJackState.instance());
                 model.goNextState();
             } else {

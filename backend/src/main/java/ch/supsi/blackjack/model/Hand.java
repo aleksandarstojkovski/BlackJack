@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private List<Card> cardList;
+    private final List<Card> cardList;
     private int betValue;
 
     public Hand() {
