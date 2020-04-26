@@ -20,10 +20,15 @@ public class CoinImage implements Drawable {
     @Override
     public Image getImage() {
         if(image == null) {
-            URL url = this.getClass().getResource(getFileName());
+            URL url = getUrl();
             image = new Image(url.toString());
         }
         return image;
+    }
+
+    // for test unit
+    URL getUrl() {
+        return this.getClass().getResource(getFileName());
     }
 
     public int getValue() {

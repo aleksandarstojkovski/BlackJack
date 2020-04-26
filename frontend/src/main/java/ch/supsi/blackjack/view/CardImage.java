@@ -21,7 +21,7 @@ public class CardImage implements Drawable {
     }
 
 
-    String getFileName() {
+    private String getFileName() {
         if(covered){
             return String.format("/ch/supsi/blackjack/images/cards/back_%s.png", card.getBack());
         }else{
@@ -39,8 +39,13 @@ public class CardImage implements Drawable {
     }
 
     private Image loadImage() {
-        URL url = this.getClass().getResource(getFileName());
+        URL url = getUrl();
         return new Image(url.toString());
+    }
+
+    // for test unit
+    URL getUrl() {
+        return this.getClass().getResource(getFileName());
     }
 
     private Image getImageFront() {

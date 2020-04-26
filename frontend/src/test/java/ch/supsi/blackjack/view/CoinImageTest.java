@@ -11,17 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CoinImageTest {
-    @BeforeAll
-    public static void beforeClass() {
-        // WORKAROUND !!!
-        // initialize javafx toolkit
-        JFXPanel fxPanel = new JFXPanel();
-    }
-
     @Test
-    void getImage() {
-        Coin coin = new Coin(5);
-        CoinImage img = new CoinImage(coin);
-        assertNotNull(img.getImage());
+    void getUrl() {
+        for (int val : Coin.Values) {
+            Coin coin = new Coin(val);
+            CoinImage img = new CoinImage(coin);
+            assertNotNull(img.getUrl());
+        }
     }
 }

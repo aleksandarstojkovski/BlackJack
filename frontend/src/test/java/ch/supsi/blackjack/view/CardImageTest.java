@@ -12,20 +12,13 @@ import java.net.URL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardImageTest {
-    @BeforeAll
-    public static void beforeClass() {
-        // WORKAROUND !!!
-        // initialize javafx toolkit
-        JFXPanel fxPanel = new JFXPanel();
-    }
-
     @Test
-    void getImage() {
+    void getUrl() {
         for (Seed seed : Seed.values()) {
             for (Value val : Value.values()) {
                 Card card = new Card(seed, val, "blu");
                 CardImage cardImage = new CardImage(card, false);
-                assertNotNull(cardImage.getImage());
+                assertNotNull(cardImage.getUrl());
             }
         }
     }
