@@ -5,7 +5,7 @@ package ch.supsi.blackjack.model;
  */
 public interface GameHandler {
 
-    void newGame();
+    void newGame(String nickName);
     void exitGame();
     void hit();
     void stand();

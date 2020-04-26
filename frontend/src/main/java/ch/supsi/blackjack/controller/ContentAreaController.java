@@ -59,7 +59,7 @@ public class ContentAreaController extends AbstractController implements Initial
         return notificationText.get();
     }
 
-    public ContentAreaController(Model model) {
+    public ContentAreaController(AbstractModel model) {
         super(model);
     }
 

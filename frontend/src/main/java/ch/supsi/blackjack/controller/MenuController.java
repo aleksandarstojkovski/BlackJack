@@ -1,7 +1,7 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
-import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.AbstractModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MenuController extends AbstractController implements Initializable {
-    public MenuController(Model model) {
+    public MenuController(AbstractModel model) {
         super(model);
     }
 
@@ -114,7 +114,9 @@ public class MenuController extends AbstractController implements Initializable 
 
     @FXML
     void newGameAction(ActionEvent actionEvent) {
-        model.newGame();
+        //TODO: ask nickname to user
+        String nickName = "Player 1";
+        model.newGame(nickName);
     }
 
     @FXML

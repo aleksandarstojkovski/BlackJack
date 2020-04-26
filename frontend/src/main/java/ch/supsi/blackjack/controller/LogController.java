@@ -1,5 +1,6 @@
 package ch.supsi.blackjack.controller;
 
+import ch.supsi.blackjack.model.AbstractModel;
 import ch.supsi.blackjack.model.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,7 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LogController extends AbstractController implements Initializable {
-    public LogController(Model model) {
+    public LogController(AbstractModel model) {
         super(model);
     }
     @FXML private TextArea textArea;

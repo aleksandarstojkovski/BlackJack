@@ -9,20 +9,20 @@ public class Model extends AbstractModel {
     // singleton
     private static Model instance;
     private GameStateManager round;
-    private Dealer dealer;
-    private Player humanPlayer;
-    private List<Player> aiPlayers;
 
-    private final Coin[] coins = {
-        new Coin(100),
-        new Coin(200),
-        new Coin(300),
-        new Coin(400),
-        new Coin(500)
-    };
+    private final Coin[] coins = new Coin[Coin.Values.length];
 
     private Model() {
         super();
+        initCoins();
+    }
+
+    private void initCoins() {
+        List<Coin> list = new ArrayList<>();
+        for (int v : Coin.Values)
+            list.add(new Coin(v));
+
+        list.toArray(coins);
     }
 
     // singleton
@@ -36,10 +36,10 @@ public class Model extends AbstractModel {
 
 
     @Override
-    public void newGame() {
-        humanPlayer = new Player("Player 1",0);
-        dealer = new Dealer();
-        aiPlayers = new ArrayList<>();
+    public void newGame(String nickName) {
+        Player humanPlayer = new Player(nickName, 0);
+        Dealer dealer = new Dealer();
+        List<Player> aiPlayers = new ArrayList<>();
 
         round = new Round(pcs, humanPlayer, dealer, aiPlayers);
         round.startGame();

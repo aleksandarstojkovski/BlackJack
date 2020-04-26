@@ -13,7 +13,7 @@ public class CoinImage implements Drawable {
         this.coin = coin;
     }
 
-    public String getFileName() {
+    private String getFileName() {
         return String.format("/ch/supsi/blackjack/images/coins/%d.png", coin.getValue());
     }
 

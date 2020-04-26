@@ -1,5 +1,6 @@
 package ch.supsi.blackjack;
 
+import ch.supsi.blackjack.model.AbstractModel;
 import ch.supsi.blackjack.model.Model;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +28,7 @@ public class MainApp extends Application {
         fxmlLoader.setControllerFactory((Class<?> type) -> {
             try {
                 for (Constructor<?> c : type.getConstructors()) {
-                    if (c.getParameterCount() == 1 && c.getParameterTypes()[0] == Model.class) {
+                    if ((c.getParameterCount() == 1) && c.getParameterTypes()[0].isAssignableFrom(AbstractModel.class)) {
                         PropertyChangeListener controller = (PropertyChangeListener)c.newInstance(model);
                         model.addPropertyChangeListener(controller);
                         return controller;

@@ -1,6 +1,8 @@
 package ch.supsi.blackjack.model;
 
 public class Coin {
+    public final static int[] Values = { 100, 200, 300, 400, 500 };
+
     private final int value;
 
     public Coin(int value){
