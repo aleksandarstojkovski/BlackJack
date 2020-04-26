@@ -1,30 +1,12 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.event.GameStartedEvent;
-import ch.supsi.blackjack.model.AbstractModel;
 import ch.supsi.blackjack.model.Model;
-import javafx.embed.swing.JFXPanel;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Matchers.anyString;
-
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-
-import java.beans.PropertyChangeSupport;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MenuControllerTest {
-
-    @BeforeAll
-    public static void beforeClass() {
-        // WORKAROUND !!!
-        // initialize javafx toolkit
-        JFXPanel fxPanel = new JFXPanel();
-    }
-
     @Test
     void initialState() {
         Model mockModel = MockModel.build();
