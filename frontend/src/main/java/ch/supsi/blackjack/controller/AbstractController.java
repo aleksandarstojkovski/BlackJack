@@ -10,6 +10,7 @@ abstract public class AbstractController implements PropertyChangeListener {
 
     public AbstractController(AbstractModel model) {
         this.model = model;
+        model.addPropertyChangeListener(this);
     }
 
 }
