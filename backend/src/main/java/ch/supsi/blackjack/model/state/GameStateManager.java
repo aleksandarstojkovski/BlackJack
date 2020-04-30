@@ -1,10 +1,9 @@
 package ch.supsi.blackjack.model.state;
 
+import ch.supsi.blackjack.model.Hand;
 import ch.supsi.blackjack.model.Player;
 
 public interface GameStateManager {
-    int BLACKJACK = 21;
-
     void setCurrentState(GameState state);
     void goNextState();
 
@@ -25,8 +24,8 @@ public interface GameStateManager {
     void setPlayerBlackjack();
     void setPlayerBusted();
 
-    int getDealerHandValue();
-    int getPlayerHandValue();
+    Hand getDealerHand();
+    Hand getPlayerHand();
 
     boolean isPlayerStand();
     boolean isPlayerWithMoney();

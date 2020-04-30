@@ -24,10 +24,6 @@ public class Round implements GameStateManager {
     private final List<Player> allPlayers = new ArrayList<>();
     private final Player mainPlayer;
     private final Dealer dealer;
-    // TODO: manage AI players
-    private final List<Player> aiPlayers;
-
-    private int currentAiPlayerIdx = 0;
 
     // updated by model  - indicates that user confirmed the bte
     private boolean betConfirmed = false;
@@ -37,17 +33,15 @@ public class Round implements GameStateManager {
     private GameState currentState;
     private final PropertyChangeSupport pcs;
 
-    public Round(PropertyChangeSupport pcs, Player mainPlayer, Dealer dealer, List<Player> aiPlayers){
+    public Round(PropertyChangeSupport pcs, Player mainPlayer, Dealer dealer){
         this.pcs = pcs;
 
         // initial state
         currentState = InitState.instance();
         this.mainPlayer = mainPlayer;
         this.dealer = dealer;
-        this.aiPlayers = aiPlayers;
 
         allPlayers.add(mainPlayer);
-        allPlayers.addAll(aiPlayers);
         allPlayers.add(dealer);
     }
 
@@ -145,8 +139,17 @@ public class Round implements GameStateManager {
     }
 
     public void setPlayerBusted() {
-        mainPlayer.hand.setBusted(true);
         pcs.firePropertyChange(new PlayerBustedEvent(this));
+    }
+
+    @Override
+    public Hand getDealerHand() {
+        return dealer.hand;
+    }
+
+    @Override
+    public Hand getPlayerHand() {
+        return mainPlayer.hand;
     }
 
     public void setPlayerBlackjack() {
@@ -206,15 +209,14 @@ public class Round implements GameStateManager {
     }
 
     private void clear() {
-        mainPlayer.hand.setBusted(false);
-        dealer.hand.setBusted(false);
+        mainPlayer.discardCards();
+        dealer.discardCards();
 
         betConfirmed = false;
         playerStand = false;
     }
 
     public void setDealerBusted() {
-        dealer.hand.setBusted(true);
         pcs.firePropertyChange(new DealerBustedEvent(this));
     }
 
@@ -237,14 +239,6 @@ public class Round implements GameStateManager {
         compute(dealer);
     }
 
-    public int getPlayerHandValue() {
-        return mainPlayer.getHandValue();
-    }
-
-    public int getDealerHandValue() {
-        return dealer.getHandValue();
-    }
-
     public void setGameOver() {
         pcs.firePropertyChange(new GameOverEvent(this));
     }
@@ -255,7 +249,7 @@ public class Round implements GameStateManager {
             goNextState();
         } else {
             //ToDo: futura implementazione del PlayerAI
-            System.out.println("Questa è instanceof Player, Player ID = "+player.getPlayerID()); //Print diagnostico
+            System.out.println("Questa è instanceof Player, Player = " + player.getNickname()); //Print diagnostico
         }
     }
 }

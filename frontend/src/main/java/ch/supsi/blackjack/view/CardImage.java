@@ -43,7 +43,7 @@ public class CardImage implements Drawable {
         return new Image(url.toString());
     }
 
-    // for test unit
+    // package visibility for unit test
     URL getUrl() {
         return this.getClass().getResource(getFileName());
     }

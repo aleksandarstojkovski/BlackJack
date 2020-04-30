@@ -37,11 +37,9 @@ public class Model extends AbstractModel {
 
     @Override
     public void newGame(String nickName) {
-        Player humanPlayer = new Player(nickName, 0);
+        Player humanPlayer = new Player(nickName);
         Dealer dealer = new Dealer();
-        List<Player> aiPlayers = new ArrayList<>();
-
-        round = new Round(pcs, humanPlayer, dealer, aiPlayers);
+        round = new Round(pcs, humanPlayer, dealer);
         round.startGame();
     }
 

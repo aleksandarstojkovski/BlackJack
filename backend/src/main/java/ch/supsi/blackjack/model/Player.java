@@ -3,14 +3,12 @@ package ch.supsi.blackjack.model;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 
 public class Player {
-    private final int playerID;
     private static final int INITIAL_COINS=1000;
     private final String nickname;
     protected final Hand hand;
     private int coins;
 
-    Player(String nickname, int playerID) {
-        this.playerID = playerID;
+    Player(String nickname) {
         this.nickname = nickname;
         this.hand = new Hand();
         this.coins = INITIAL_COINS;
@@ -19,10 +17,7 @@ public class Player {
     public void addCard (Card newCard){
         this.hand.addCard(newCard);
     }
-
-    public int getPlayerID() {
-        return playerID;
-    }
+    public void discardCards() { hand.discardCards(); }
 
     public String getNickname() {
         return nickname;

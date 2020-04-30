@@ -22,7 +22,7 @@ public class DealerDealsState implements GameState {
     // business logic and state transition
     @Override
     public void updateState(GameStateManager model) {
-        if(model.getDealerHandValue() > model.BLACKJACK){
+        if(model.getDealerHand().isBusted()){
             model.setCurrentState(DealerBustState.instance());
         } else {
             model.setCurrentState(UpdateTableState.instance());

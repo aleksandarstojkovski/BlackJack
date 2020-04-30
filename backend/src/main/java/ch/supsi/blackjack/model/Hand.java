@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    public final static int BLACKJACK = 21;
+
     private final List<Card> cardList;
     private int betValue;
-    private boolean busted = false;
 
     public Hand() {
         this.cardList = new ArrayList<>();
@@ -45,8 +46,7 @@ public class Hand {
     public int takeBets(){
         int bettedCoins = betValue;
         betValue=0;
-        // TODO: manage in better way do not clear array
-        cardList.clear();
+        discardCards();
         return bettedCoins;
     }
 
@@ -59,10 +59,10 @@ public class Hand {
     }
 
     public boolean isBusted() {
-        return busted;
+        return value() > BLACKJACK;
     }
 
-    public void setBusted(boolean busted) {
-        this.busted = busted;
+    public boolean isBlackJack() {
+        return value() == BLACKJACK;
     }
 }

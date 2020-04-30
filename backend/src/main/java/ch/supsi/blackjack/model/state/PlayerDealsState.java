@@ -1,5 +1,7 @@
 package ch.supsi.blackjack.model.state;
 
+import ch.supsi.blackjack.model.Hand;
+
 /**
  * This is the turn of the Main Player.
  * He can hit or stand.
@@ -28,18 +30,18 @@ public class PlayerDealsState implements GameState {
             model.updateDealer();
             model.computeDealer();
         } else {
-            int playerValue = model.getPlayerHandValue();
-            if (playerValue < model.BLACKJACK){
-                // stay in this state until the user bust or stands or makes blackjack
-                model.setCurrentState(PlayerDealsState.instance());
-            } else if (playerValue == model.BLACKJACK) {
+            Hand hand = model.getPlayerHand();
+            if (hand.isBusted()){
+                model.setCurrentState(PlayerBustState.instance());
+                model.updateDealer();
+                model.goNextState();
+            } else if (hand.isBlackJack()) {
                 model.setCurrentState(TwentyOneState.instance());
                 model.updateDealer();
                 model.goNextState();
             } else {
-                model.setCurrentState(PlayerBustState.instance());
-                model.updateDealer();
-                model.goNextState();
+                // stay in this state until the user bust or stands or makes blackjack
+                model.setCurrentState(PlayerDealsState.instance());
             }
         }
     }

@@ -6,7 +6,7 @@ public class Dealer extends VirtualPlayer {
     private DecksContainer decksContainer;
 
     public Dealer() {
-        super("Dealer",99);
+        super("Dealer");
         this.ai = new DealerAI(this);
         try {
             decksContainer = new DecksContainer(3);

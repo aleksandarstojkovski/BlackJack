@@ -26,7 +26,7 @@ public class CoinImage implements Drawable {
         return image;
     }
 
-    // for test unit
+    // package visibility for unit test
     URL getUrl() {
         return this.getClass().getResource(getFileName());
     }
