@@ -1,6 +1,9 @@
 package ch.supsi.blackjack.controller;
 
+import ch.supsi.blackjack.event.BetConfirmedEvent;
+import ch.supsi.blackjack.event.GameFinishedEvent;
 import ch.supsi.blackjack.event.GameStartedEvent;
+import ch.supsi.blackjack.event.NewBetEvent;
 import ch.supsi.blackjack.model.Model;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
@@ -19,11 +22,29 @@ public class MockModel {
             return null;
         }).when(mockModel).addPropertyChangeListener(Mockito.any());
 
-        // new Game
+        // newGame
         Mockito.doAnswer((Answer<Void>) invocation -> {
             pcs.firePropertyChange(new GameStartedEvent(mockModel, null));
             return null;
         }).when(mockModel).newGame(Mockito.anyString());
+
+        // exitGame
+        Mockito.doAnswer((Answer<Void>) invocation -> {
+            pcs.firePropertyChange(new GameFinishedEvent( mockModel));
+            return null;
+        }).when(mockModel).exitGame();
+
+        // hit
+        Mockito.doAnswer((Answer<Void>) invocation -> {
+            pcs.firePropertyChange(new NewBetEvent(mockModel, 10 ));
+            return null;
+        }).when(mockModel).hit();
+
+        // confirmBet
+        Mockito.doAnswer((Answer<Void>) invocation -> {
+            pcs.firePropertyChange(new BetConfirmedEvent( mockModel));
+            return null;
+        }).when(mockModel).confirmBet();
 
         return mockModel;
     }
