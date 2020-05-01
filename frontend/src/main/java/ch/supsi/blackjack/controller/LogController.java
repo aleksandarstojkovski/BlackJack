@@ -1,7 +1,6 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.model.AbstractModel;
-import ch.supsi.blackjack.model.Model;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;

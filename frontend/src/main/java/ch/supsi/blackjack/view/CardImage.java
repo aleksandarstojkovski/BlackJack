@@ -5,22 +5,27 @@ import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
+import javafx.util.Callback;
 
 import java.net.URL;
 
 public class CardImage implements Drawable {
+    private final BooleanProperty covered;
     private final Card card;
     private Image imageFront;
     private Image imageBack;
-    private BooleanProperty covered;
 
     public CardImage(Card card) {
-        this.card = card;
-        this.covered = new SimpleBooleanProperty(false);
+        this(card, false);
     }
     public CardImage(Card card, boolean covered) {
         this.card = card;
         this.covered = new SimpleBooleanProperty(covered);
+    }
+
+    // this let the ListView automatically refresh on covered change status
+    public static Callback<CardImage, Observable[]> extractor() {
+        return (CardImage c) -> new Observable[]{ c.covered };
     }
 
     private String getFileName() {
@@ -64,11 +69,10 @@ public class CardImage implements Drawable {
     }
 
     public void flipCard(){
-        covered.set(!getCovered());
+        covered.set(!isCovered());
     }
 
-    public boolean getCovered(){
-        return this.covered.get();
+    private boolean isCovered() {
+        return covered.get();
     }
-
 }

@@ -31,8 +31,8 @@ public class ContentAreaController extends AbstractController implements Initial
 
     //TODO: test controller through observables and events
     private final ObservableList<CoinImage> coins = FXCollections.observableArrayList();
-    private final ObservableList<CardImage> playerCards = FXCollections.observableArrayList();
-    private final ObservableList<CardImage> dealerCards = FXCollections.observableArrayList();
+    private final ObservableList<CardImage> playerCards = FXCollections.observableArrayList(CardImage.extractor());
+    private final ObservableList<CardImage> dealerCards = FXCollections.observableArrayList(CardImage.extractor());
 
     private final IntegerProperty playerHandProperty = new SimpleIntegerProperty(0);
     private final IntegerProperty dealerHandProperty = new SimpleIntegerProperty(0);
@@ -203,8 +203,10 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     private void handleDealerHand(DealerHandUpdateEvent event) {
-        if(event.getHandSize()==2 && ((event.getCurrentState() instanceof PlayerDealsState) || (event.getCurrentState() instanceof BetState))){
-            dealerHandProperty.set(event.getValue()-event.getLastCardValue());
+        //TODO: should we move this logic in model?
+        boolean hideRealHandValue = event.getHandSize()==2 && ((event.getCurrentState() instanceof PlayerDealsState) || (event.getCurrentState() instanceof BetState));
+        if(hideRealHandValue){
+            dealerHandProperty.set(event.getValue() - event.getLastCardValue());
         }else {
             dealerHandProperty.set(event.getValue());
         }
@@ -213,23 +215,19 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void handleNewCard(NewCardEvent event) {
         Card card = event.getCard();
-        CardImage img;
         if (event.getPlayer() instanceof Dealer){
-            if (dealerCards.size()==1) {
-                img = new CardImage(card,true);
-            }else{
-                img = new CardImage(card);
-            }
+            // dealer second card must be covered
+            boolean covered = dealerCards.size() == 1;
+            CardImage img = new CardImage(card, covered);
             dealerCards.add(img);
         } else {
-            img = new CardImage(card);
+            CardImage img = new CardImage(card);
             playerCards.add(img);
         }
     }
 
     private void showCoveredCard(DealerStartEvent event){
         dealerCards.get(1).flipCard();
-        dealerCards.set(1,dealerCards.get(1));
     }
 
 }
