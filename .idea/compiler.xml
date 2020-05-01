@@ -16,6 +16,7 @@
       <module name="frontend" target="11" />
       <module name="frontend (1)" target="11" />
       <module name="frontend (2)" target="11" />
+      <module name="labingsw02pap2019202002" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
