@@ -19,25 +19,25 @@ class PlayerTest {
     @Test
     void getCoins() {
         testPlayer = new Player("TestPlayer");
-        testPlayer.giveCoins(100);
-        assertEquals(1100,testPlayer.getCoins());
+        int startingCoin = testPlayer.getCoins();
+        assertEquals(startingCoin,testPlayer.getCoins());
     }
 
     @Test
     void giveCoins() {
         testPlayer = new Player("TestPlayer");
-        assertEquals(1000,testPlayer.getCoins());
+        int startingCoin = testPlayer.getCoins();
         testPlayer.giveCoins(100);
-        assertEquals(1100,testPlayer.getCoins());
+        assertEquals(startingCoin+100,testPlayer.getCoins());
 
     }
 
     @Test
     void bet() throws InsufficientCoinsException {
         testPlayer = new Player("TestPlayer");
-        testPlayer.giveCoins(100);
+        int startingCoin = testPlayer.getCoins();
         testPlayer.bet(50);
-        assertEquals(1050,testPlayer.getCoins());
+        assertEquals(startingCoin-50,testPlayer.getCoins());
     }
 
     @Test
