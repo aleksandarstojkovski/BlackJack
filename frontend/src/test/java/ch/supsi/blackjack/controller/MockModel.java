@@ -1,7 +1,9 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
+import ch.supsi.blackjack.model.Card;
 import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.Player;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -36,7 +38,7 @@ public class MockModel {
         Mockito.doAnswer((Answer<Void>) invocation -> {
             pcs.firePropertyChange(new NewBetEvent(mockModel, 10 ));
             return null;
-        }).when(mockModel).hit();
+        }).when(mockModel).bet(Mockito.anyInt());
 
         // confirmBet
         Mockito.doAnswer((Answer<Void>) invocation -> {
@@ -49,6 +51,12 @@ public class MockModel {
             pcs.firePropertyChange(new NewRoundEvent(mockModel, new ArrayList<>()));
             return null;
         }).when(mockModel).nextRound();
+
+        // hit
+        Mockito.doAnswer((Answer<Void>) invocation -> {
+            pcs.firePropertyChange(new StandEvent(mockModel, null));
+            return null;
+        }).when(mockModel).stand();
 
         return mockModel;
     }
