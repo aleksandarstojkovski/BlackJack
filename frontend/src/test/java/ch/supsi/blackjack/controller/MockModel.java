@@ -1,14 +1,12 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.event.BetConfirmedEvent;
-import ch.supsi.blackjack.event.GameFinishedEvent;
-import ch.supsi.blackjack.event.GameStartedEvent;
-import ch.supsi.blackjack.event.NewBetEvent;
+import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.Model;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class MockModel {
     public static Model build() {
@@ -45,6 +43,12 @@ public class MockModel {
             pcs.firePropertyChange(new BetConfirmedEvent( mockModel));
             return null;
         }).when(mockModel).confirmBet();
+
+        // nextRound
+        Mockito.doAnswer((Answer<Void>) invocation -> {
+            pcs.firePropertyChange(new NewRoundEvent(mockModel, new ArrayList<>()));
+            return null;
+        }).when(mockModel).nextRound();
 
         return mockModel;
     }
