@@ -14,8 +14,6 @@
       <module name="backend" target="11" />
       <module name="blackjack" target="11" />
       <module name="frontend" target="11" />
-      <module name="frontend (1)" target="11" />
-      <module name="frontend (2)" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
