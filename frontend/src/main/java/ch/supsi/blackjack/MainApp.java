@@ -30,7 +30,6 @@ public class MainApp extends Application {
                 for (Constructor<?> c : type.getConstructors()) {
                     if ((c.getParameterCount() == 1) && c.getParameterTypes()[0].isAssignableFrom(AbstractModel.class)) {
                         PropertyChangeListener controller = (PropertyChangeListener)c.newInstance(model);
-                        model.addPropertyChangeListener(controller);
                         return controller;
                     }
                 }
