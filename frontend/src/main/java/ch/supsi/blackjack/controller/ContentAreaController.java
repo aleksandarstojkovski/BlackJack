@@ -2,8 +2,8 @@ package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.*;
-import ch.supsi.blackjack.model.state.BetState;
-import ch.supsi.blackjack.model.state.PlayerDealsState;
+import ch.supsi.blackjack.model.state.RoundBetState;
+import ch.supsi.blackjack.model.state.RoundPlayerDealsState;
 import ch.supsi.blackjack.view.*;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -204,7 +204,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void handleDealerHand(DealerHandUpdateEvent event) {
         //TODO: should we move this logic in model?
-        boolean hideRealHandValue = event.getHandSize()==2 && ((event.getCurrentState() instanceof PlayerDealsState) || (event.getCurrentState() instanceof BetState));
+        boolean hideRealHandValue = event.getHandSize()==2 && ((event.getState() instanceof RoundPlayerDealsState) || (event.getState() instanceof RoundBetState));
         if(hideRealHandValue){
             dealerHandProperty.set(event.getValue() - event.getLastCardValue());
         }else {
