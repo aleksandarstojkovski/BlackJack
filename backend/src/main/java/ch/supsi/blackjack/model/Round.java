@@ -2,9 +2,7 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
-import ch.supsi.blackjack.model.state.GameState;
-import ch.supsi.blackjack.model.state.GameStateManager;
-import ch.supsi.blackjack.model.state.InitState;
+import ch.supsi.blackjack.model.state.*;
 
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ import java.util.List;
  * If still in game the turn pass to the next player/dealer
  */
 public class Round implements GameStateManager {
+    private RoundState state;
     private final List<Player> allPlayers = new ArrayList<>();
     private final Player mainPlayer;
     private final Dealer dealer;
@@ -30,27 +29,30 @@ public class Round implements GameStateManager {
     // updated by model  - indicates that the user chose to stand
     private boolean playerStand = false;
 
-    private GameState currentState;
     private final PropertyChangeSupport pcs;
 
     public Round(PropertyChangeSupport pcs, Player mainPlayer, Dealer dealer){
         this.pcs = pcs;
 
         // initial state
-        currentState = InitState.instance();
+        state = new RoundInitState();
         this.mainPlayer = mainPlayer;
         this.dealer = dealer;
 
         allPlayers.add(mainPlayer);
         allPlayers.add(dealer);
     }
-
-    public void setCurrentState(GameState currentState) {
-        this.currentState = currentState;
+    @Override
+    public void setState(RoundState state){
+        this.state = state;
+    }
+    @Override
+    public RoundState getState(){
+        return state;
     }
 
     public void goNextState() {
-        currentState.updateState(this);
+        state.updateState(this);
     }
 
     public void openRound() {
@@ -67,7 +69,7 @@ public class Round implements GameStateManager {
         player.addCard(card);
 
         if(player instanceof Dealer){
-            pcs.firePropertyChange(new DealerHandUpdateEvent(this, player.hand, this.currentState));
+            pcs.firePropertyChange(new DealerHandUpdateEvent(this, player.hand, this.state));
         }else {
             pcs.firePropertyChange(new PlayerHandUpdateEvent(this, player.getHandValue()));
         }
@@ -75,7 +77,7 @@ public class Round implements GameStateManager {
 
     public void exitGame() {
         // the user can leave the game from any state. He jumps to the InitState
-        setCurrentState(InitState.instance());
+        setState(new RoundInitState());
         pcs.firePropertyChange(new GameFinishedEvent(this));
     }
 
@@ -233,7 +235,7 @@ public class Round implements GameStateManager {
     }
     public void updateDealer(){
         pcs.firePropertyChange(new DealerStartEvent(this,dealer));
-        pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.currentState));
+        pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.state));
     }
     public void computeDealer() {
         compute(dealer);

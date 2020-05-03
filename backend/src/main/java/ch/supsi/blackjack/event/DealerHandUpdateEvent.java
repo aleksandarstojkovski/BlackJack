@@ -1,20 +1,22 @@
 package ch.supsi.blackjack.event;
 
 import ch.supsi.blackjack.model.Hand;
+import ch.supsi.blackjack.model.Round;
 import ch.supsi.blackjack.model.state.GameState;
+import ch.supsi.blackjack.model.state.RoundState;
 
 public class DealerHandUpdateEvent extends AbstractEvent {
     private final int handValue;
     private final int lastCardValue;
     private final int handSize;
-    private final GameState currentState;
+    private final RoundState state;
 
-    public DealerHandUpdateEvent(Object source, Hand hand, GameState currentState) {
+    public DealerHandUpdateEvent(Object source, Hand hand, RoundState state) {
         super(source);
         this.handValue = hand.value();
         this.handSize = hand.size();
         this.lastCardValue = hand.getLastCardValue();
-        this.currentState = currentState;
+        this.state = state;
     }
 
     public int getValue() {
@@ -26,7 +28,7 @@ public class DealerHandUpdateEvent extends AbstractEvent {
     public int getLastCardValue(){
         return lastCardValue;
     }
-    public GameState getCurrentState(){
-        return currentState;
+    public RoundState getState(){
+        return state;
     }
 }

@@ -4,7 +4,8 @@ import ch.supsi.blackjack.model.Hand;
 import ch.supsi.blackjack.model.Player;
 
 public interface GameStateManager {
-    void setCurrentState(GameState state);
+    void setState(RoundState state);
+    RoundState getState();
     void goNextState();
 
     void startGame();
