@@ -19,36 +19,69 @@ public class ContentAreaView  extends AbstractView {
         return AbstractView.create(ContentAreaView.class, "/ch/supsi/blackjack/view/ContentArea.fxml", controller, bundle);
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
-
-        if (event instanceof NewCardEvent) {
-            controller.handleNewCard((NewCardEvent) event);
-        } else if (event instanceof DealerHandUpdateEvent) {
-            controller.handleDealerHand((DealerHandUpdateEvent) event);
-        } else if (event instanceof PlayerHandUpdateEvent) {
-            controller.handlePlayerHand((PlayerHandUpdateEvent) event);
-        } else if (event instanceof GameStartedEvent) {
-            controller.handleNewGame((GameStartedEvent) event);
-        } else if (event instanceof GameFinishedEvent){
-            controller.handleExitGame((GameFinishedEvent) event);
-        } else if (event instanceof NewBetEvent) {
-            controller.handleNewBet((NewBetEvent) event);
-        } else if (event instanceof NewRoundEvent){
-            controller.handleNewRound((NewRoundEvent) event);
-        } else if (event instanceof PlayerBustedEvent){
-            controller.handlePlayerBusted((PlayerBustedEvent) event);
-        } else if (event instanceof PlayerBlackjackEvent){
-            controller.handlePlayerBlackjack((PlayerBlackjackEvent) event);
-        } else if (event instanceof RoundCompletedEvent){
-            controller.handleRoundCompleted((RoundCompletedEvent) event);
-        } else if (event instanceof DealerBustedEvent){
-            controller.handleDealerBusted((DealerBustedEvent) event);
-        } else if (event instanceof GameOverEvent) {
-            controller.handleGameOver();
-        } else if (event instanceof DealerStartEvent) {
-            controller.showCoveredCard((DealerStartEvent) event);
-        }
-
+    @EventHandler
+    void handleEvent(GameStartedEvent event) {
+        controller.handleNewGame(event);
     }
+
+    @EventHandler
+    void handleEvent(GameFinishedEvent event) {
+        controller.handleExitGame(event);
+    }
+
+    @EventHandler
+    void handleEvent(NewRoundEvent event) {
+        controller.handleNewRound(event);
+    }
+
+    @EventHandler
+    void handleEvent(NewBetEvent event) {
+        controller.handleNewBet(event);
+    }
+
+    @EventHandler
+    void handleEvent(PlayerBustedEvent event) {
+        controller.handlePlayerBusted(event);
+    }
+
+    @EventHandler
+    void handleEvent(DealerBustedEvent event) {
+        controller.handleDealerBusted(event);
+    }
+
+    @EventHandler
+    void handleEvent(RoundCompletedEvent event) {
+        controller.handleRoundCompleted(event);
+    }
+
+    @EventHandler
+    void handleEvent(PlayerBlackjackEvent event) {
+        controller.handlePlayerBlackjack(event);
+    }
+
+    @EventHandler
+    void handleEvent(NewCardEvent event) {
+        controller.handleNewCard(event);
+    }
+
+    @EventHandler
+    void handleEvent(DealerHandUpdateEvent event) {
+        controller.handleDealerHand(event);
+    }
+
+    @EventHandler
+    void handleEvent(PlayerHandUpdateEvent event) {
+        controller.handlePlayerHand(event);
+    }
+
+    @EventHandler
+    void handleEvent(GameOverEvent event) {
+        controller.handleGameOver();
+    }
+
+    @EventHandler
+    void handleEvent(DealerStartEvent event) {
+        controller.showCoveredCard(event);
+    }
+
 }

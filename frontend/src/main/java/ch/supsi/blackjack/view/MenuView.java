@@ -3,7 +3,6 @@ package ch.supsi.blackjack.view;
 import ch.supsi.blackjack.controller.MenuController;
 import ch.supsi.blackjack.event.*;
 
-import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
@@ -19,26 +18,49 @@ public class MenuView extends AbstractView {
         return AbstractView.create(MenuView.class, "/ch/supsi/blackjack/view/Menu.fxml", controller, bundle);
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
-        if (event instanceof GameStartedEvent) {
-            controller.onGameStarted();
-        } else if (event instanceof GameFinishedEvent) {
-            controller.onGameFinished();
-        } else if (event instanceof NewRoundEvent) {
-            controller.onNewRound();
-        } else if (event instanceof NewBetEvent) {
-            controller.onNewBet();
-        } else if (event instanceof BetConfirmedEvent) {
-            controller.onBetConfirmed();
-        } else if (event instanceof StandEvent) {
-            controller.onStand();
-        } else if (event instanceof PlayerBustedEvent) {
-            controller.onPlayerBusted();
-        } else if (event instanceof RoundCompletedEvent) {
-            controller.onRoundCompleted();
-        } else if (event instanceof PlayerBlackjackEvent) {
-            controller.onPlayerBlackjack();
-        }
+    @EventHandler
+    void handleEvent(GameStartedEvent event) {
+        controller.onGameStarted();
     }
+
+    @EventHandler
+    void handleEvent(GameFinishedEvent event) {
+        controller.handleGameFinished();
+    }
+
+    @EventHandler
+    void handleEvent(NewRoundEvent event) {
+        controller.handleNewRound();
+    }
+
+    @EventHandler
+    void handleEvent(NewBetEvent event) {
+        controller.handleNewBet();
+    }
+
+    @EventHandler
+    void handleEvent(BetConfirmedEvent event) {
+        controller.handleBetConfirmed();
+    }
+
+    @EventHandler
+    void handleEvent(StandEvent event) {
+        controller.handleStand();
+    }
+
+    @EventHandler
+    void handleEvent(PlayerBustedEvent event) {
+        controller.handlePlayerBusted();
+    }
+
+    @EventHandler
+    void handleEvent(RoundCompletedEvent event) {
+        controller.handleRoundCompleted();
+    }
+
+    @EventHandler
+    void handleEvent(PlayerBlackjackEvent event) {
+        controller.handlePlayerBlackjack();
+    }
+
 }

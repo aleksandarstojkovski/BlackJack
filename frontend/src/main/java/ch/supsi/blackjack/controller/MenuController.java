@@ -113,7 +113,7 @@ public class MenuController extends AbstractController implements Initializable 
         disableBet.set(true);
     }
 
-    public void onGameFinished() {
+    public void handleGameFinished() {
         disableNewGame.set(false);
         disableExitGame.set(true);
         disableHitAndStand.set(true);
@@ -121,33 +121,33 @@ public class MenuController extends AbstractController implements Initializable 
         disableNextRound.set(true);
     }
 
-    public void onNewRound() {
+    public void handleNewRound() {
         disableNextRound.set(true);
     }
 
-    public void onNewBet() {
+    public void handleNewBet() {
         disableBet.set(false);
     }
 
-    public void onBetConfirmed() {
+    public void handleBetConfirmed() {
         disableBet.set(true);
         disableHitAndStand.set(false);
     }
 
-    public void onStand() {
+    public void handleStand() {
         disableHitAndStand.set(true);
     }
 
-    public void onPlayerBusted() {
+    public void handlePlayerBusted() {
         disableHitAndStand.set(true);
     }
 
-    public void onRoundCompleted() {
+    public void handleRoundCompleted() {
         disableNextRound.set(false);
         disableHitAndStand.set(true);
     }
 
-    public void onPlayerBlackjack() {
+    public void handlePlayerBlackjack() {
         disableHitAndStand.set(true);
         disableBet.set(true);
         disableNextRound.set(true);
