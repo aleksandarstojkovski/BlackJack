@@ -1,4 +1,4 @@
-package ch.supsi.blackjack.view;
+package ch.supsi.blackjack.component;
 
 import ch.supsi.blackjack.model.Card;
 import javafx.beans.Observable;

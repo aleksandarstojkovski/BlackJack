@@ -2,7 +2,10 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="ch.supsi.blackjack.controller.ContentAreaController" prefHeight="582.0" prefWidth="900.0">
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ch.supsi.blackjack.controller.ContentAreaController"
+            prefHeight="582.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
 
     <VBox alignment="center" styleClass="cards-table"
             AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" >

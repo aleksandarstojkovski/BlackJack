@@ -1,4 +1,4 @@
-package ch.supsi.blackjack.view;
+package ch.supsi.blackjack.component;
 
 import ch.supsi.blackjack.model.GameHandler;
 import javafx.scene.control.Button;

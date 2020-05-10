@@ -1,10 +1,10 @@
 package ch.supsi.blackjack.controller;
 
+import ch.supsi.blackjack.component.*;
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.*;
 import ch.supsi.blackjack.model.state.RoundBetState;
 import ch.supsi.blackjack.model.state.RoundPlayerDealsState;
-import ch.supsi.blackjack.view.*;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
-import java.beans.PropertyChangeEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -83,46 +82,11 @@ public class ContentAreaController extends AbstractController implements Initial
         dealerHand.textProperty().bind(dealerHandProperty.asString());
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
-        
-        if (event instanceof NewCardEvent) {
-            handleNewCard((NewCardEvent) event);
-        } else if (event instanceof DealerHandUpdateEvent) {
-            handleDealerHand((DealerHandUpdateEvent) event);
-        } else if (event instanceof PlayerHandUpdateEvent) {
-            handlePlayerHand((PlayerHandUpdateEvent) event);
-        } else if (event instanceof GameStartedEvent) {
-            handleNewGame((GameStartedEvent) event);
-        } else if (event instanceof GameFinishedEvent){
-            handleExitGame((GameFinishedEvent) event);
-        } else if (event instanceof NewBetEvent) {
-            handleNewBet((NewBetEvent) event);
-        } else if (event instanceof NewRoundEvent){
-            handleNewRound((NewRoundEvent) event);
-        } else if (event instanceof PlayerBustedEvent){
-            handlePlayerBusted((PlayerBustedEvent) event);
-        } else if (event instanceof PlayerBlackjackEvent){
-            handlePlayerBlackjack((PlayerBlackjackEvent) event);
-        } else if (event instanceof RoundCompletedEvent){
-            handleRoundCompleted((RoundCompletedEvent) event);
-        } else if (event instanceof DealerBustedEvent){
-            handleDealerBusted((DealerBustedEvent) event);
-        } else if (event instanceof GameOverEvent) {
-            handleGameOver();
-        } else if (event instanceof DealerStartEvent) {
-            showCoveredCard((DealerStartEvent) event);
-        }
-
-    }
-
-
-
-    private void handleGameOver() {
+    public void handleGameOver() {
         showMessage("Game Over", "Ouch! You've lost every penny.", RoundResult.LOOSE);
     }
 
-    private void handleRoundCompleted(RoundCompletedEvent event) {
+    public void handleRoundCompleted(RoundCompletedEvent event) {
         switch (event.getRoundResult()) {
             case WIN:
                 showMessage("Win", "You win.", event.getRoundResult());
@@ -137,14 +101,14 @@ public class ContentAreaController extends AbstractController implements Initial
 
     }
 
-    private void handlePlayerBlackjack(PlayerBlackjackEvent event) {
+    public void handlePlayerBlackjack(PlayerBlackjackEvent event) {
         FadingStatusMessage.flash(this.notificationArea, "You made Blackjack!");
     }
-    private void handlePlayerBusted(PlayerBustedEvent event) {
+    public void handlePlayerBusted(PlayerBustedEvent event) {
         FadingStatusMessage.flash(this.notificationArea, "You busted!");
     }
 
-    private void handleDealerBusted(DealerBustedEvent event) {
+    public void handleDealerBusted(DealerBustedEvent event) {
         FadingStatusMessage.flash(this.notificationArea, "Dealer busted!");
     }
 
@@ -156,18 +120,18 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
 
-    private void handleNewRound(NewRoundEvent event) {
+    public void handleNewRound(NewRoundEvent event) {
         clearTable();
         loadAvailableCoins();
         playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
         betsAreaVisible.set(true);
     }
 
-    private void handleNewBet(NewBetEvent event) {
+    public void handleNewBet(NewBetEvent event) {
         betsAmountProperty.set(betsAmountProperty.get() + event.getBetValue());
     }
 
-    private void handleExitGame(GameFinishedEvent event) {
+    public void handleExitGame(GameFinishedEvent event) {
         clearTable();
         betsAreaVisible.set(false);
     }
@@ -183,26 +147,26 @@ public class ContentAreaController extends AbstractController implements Initial
         notificationAreaVisible.set(false);
     }
 
-    private void handleNewGame(GameStartedEvent event) {
+    public void handleNewGame(GameStartedEvent event) {
         clearTable();
         loadAvailableCoins();
         playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
         betsAreaVisible.set(true);
     }
 
-    private void loadAvailableCoins() {
+    public void loadAvailableCoins() {
         for (Coin c : model.getCoins()){
             CoinImage img = new CoinImage(c);
             coins.add(img);
         }
     }
 
-    private void handlePlayerHand(PlayerHandUpdateEvent event) {
+    public void handlePlayerHand(PlayerHandUpdateEvent event) {
         playerHandProperty.set(event.getValue());
         betsAreaVisible.set(false);
     }
 
-    private void handleDealerHand(DealerHandUpdateEvent event) {
+    public void handleDealerHand(DealerHandUpdateEvent event) {
         //TODO: should we move this logic in model?
         boolean hideRealHandValue = event.getHandSize()==2 && ((event.getState() instanceof RoundPlayerDealsState) || (event.getState() instanceof RoundBetState));
         if(hideRealHandValue){
@@ -213,7 +177,7 @@ public class ContentAreaController extends AbstractController implements Initial
         betsAreaVisible.set(false);
     }
 
-    private void handleNewCard(NewCardEvent event) {
+    public void handleNewCard(NewCardEvent event) {
         Card card = event.getCard();
         if (event.getPlayer() instanceof Dealer){
             // dealer second card must be covered
@@ -226,7 +190,7 @@ public class ContentAreaController extends AbstractController implements Initial
         }
     }
 
-    private void showCoveredCard(DealerStartEvent event){
+    public void showCoveredCard(DealerStartEvent event){
         dealerCards.get(1).flipCard();
     }
 

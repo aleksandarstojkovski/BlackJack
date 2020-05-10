@@ -1,13 +1,8 @@
-package ch.supsi.blackjack.view;
+package ch.supsi.blackjack.component;
 
 import ch.supsi.blackjack.model.Coin;
-import javafx.embed.swing.JFXPanel;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.net.URL;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CoinImageTest {

@@ -1,6 +1,5 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.AbstractModel;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -8,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-import java.beans.PropertyChangeEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -78,39 +76,6 @@ public class MenuController extends AbstractController implements Initializable 
 //        );
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
-        if (event instanceof GameStartedEvent) {
-            disableNewGame.set(true);
-            disableExitGame.set(false);
-            disableHitAndStand.set(true);
-            disableBet.set(true);
-        } else if (event instanceof GameFinishedEvent) {
-            disableNewGame.set(false);
-            disableExitGame.set(true);
-            disableHitAndStand.set(true);
-            disableBet.set(true);
-            disableNextRound.set(true);
-        } else if (event instanceof NewRoundEvent) {
-            disableNextRound.set(true);
-        } else if (event instanceof NewBetEvent) {
-            disableBet.set(false);
-        } else if (event instanceof BetConfirmedEvent) {
-            disableBet.set(true);
-            disableHitAndStand.set(false);
-        } else if (event instanceof StandEvent) {
-            disableHitAndStand.set(true);
-        } else if (event instanceof PlayerBustedEvent) {
-            disableHitAndStand.set(true);
-        } else if (event instanceof RoundCompletedEvent) {
-            disableNextRound.set(false);
-            disableHitAndStand.set(true);
-        } else if (event instanceof PlayerBlackjackEvent) {
-            disableHitAndStand.set(true);
-            disableBet.set(true);
-            disableNextRound.set(true);
-        }
-    }
 
     @FXML
     void newGameAction(ActionEvent actionEvent) {
@@ -141,4 +106,50 @@ public class MenuController extends AbstractController implements Initializable 
         model.nextRound();
     }
 
+    public void onGameStarted() {
+        disableNewGame.set(true);
+        disableExitGame.set(false);
+        disableHitAndStand.set(true);
+        disableBet.set(true);
+    }
+
+    public void onGameFinished() {
+        disableNewGame.set(false);
+        disableExitGame.set(true);
+        disableHitAndStand.set(true);
+        disableBet.set(true);
+        disableNextRound.set(true);
+    }
+
+    public void onNewRound() {
+        disableNextRound.set(true);
+    }
+
+    public void onNewBet() {
+        disableBet.set(false);
+    }
+
+    public void onBetConfirmed() {
+        disableBet.set(true);
+        disableHitAndStand.set(false);
+    }
+
+    public void onStand() {
+        disableHitAndStand.set(true);
+    }
+
+    public void onPlayerBusted() {
+        disableHitAndStand.set(true);
+    }
+
+    public void onRoundCompleted() {
+        disableNextRound.set(false);
+        disableHitAndStand.set(true);
+    }
+
+    public void onPlayerBlackjack() {
+        disableHitAndStand.set(true);
+        disableBet.set(true);
+        disableNextRound.set(true);
+    }
 }

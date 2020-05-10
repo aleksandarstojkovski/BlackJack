@@ -1,4 +1,4 @@
-package ch.supsi.blackjack.view;
+package ch.supsi.blackjack.component;
 
 import javafx.animation.FadeTransition;
 import javafx.collections.ObservableList;

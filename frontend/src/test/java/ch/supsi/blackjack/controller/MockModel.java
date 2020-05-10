@@ -18,7 +18,7 @@ public class MockModel {
         // Property Change Listener
         Mockito.doAnswer((Answer<Void>) invocation -> {
             AbstractController c = invocation.getArgumentAt(0, AbstractController.class);
-            pcs.addPropertyChangeListener(c);
+//            pcs.addPropertyChangeListener(c);
             return null;
         }).when(mockModel).addPropertyChangeListener(Mockito.any());
 
