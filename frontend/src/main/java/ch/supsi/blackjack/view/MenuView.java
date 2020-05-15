@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Methods annotated with @EventHandler are executed through reflection
  */
 public class MenuView extends AbstractView {
-    private final static String FXML = "/ch/supsi/blackjack/view/Menu.fxml";
+    private final static String FXML = "ch/supsi/blackjack/view/Menu.fxml";
     private final MenuController controller;
 
     // Constructor is not public, use Static Factory Method

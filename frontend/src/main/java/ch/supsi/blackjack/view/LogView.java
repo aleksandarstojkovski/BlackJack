@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Methods annotated with @EventHandler are executed through reflection
  */
 public class LogView extends AbstractView {
-    private final static String FXML = "/ch/supsi/blackjack/view/Log.fxml";
+    private final static String FXML = "ch/supsi/blackjack/view/Log.fxml";
     private final LogController controller;
 
     // Constructor is not public, use Static Factory Method

@@ -1,107 +1,85 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.model.Model;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-class MenuControllerTest {
+public class MenuControllerTest {
 
     @Test
-    void initialState() {
+    public void initialState() {
         Model mockModel = MockModel.build();
         MenuController controller = new MenuController(mockModel);
 
-//        assertFalse(controller.getDisableNewGame());
-//        assertTrue(controller.getDisableBet());
-//        assertTrue(controller.getDisableHitAndStand());
-//        assertTrue(controller.getDisableExitGame());
+        Assert.assertFalse(controller.getDisableNewGame());
+        Assert.assertTrue(controller.getDisableBet());
+        Assert.assertTrue(controller.getDisableHitAndStand());
+        Assert.assertTrue(controller.getDisableExitGame());
     }
 
     @Test
-    void startGame() {
+    public void startGame() {
         // Mock Model
         Model mockModel = MockModel.build();
         // Real Controller
         MenuController controller = new MenuController(mockModel);
-        controller.newGameAction(null);
+        controller.onGameStarted();
 
-//        assertTrue(controller.getDisableNewGame());
-//        assertTrue(controller.getDisableBet());
-//        assertTrue(controller.getDisableHitAndStand());
-//        assertFalse(controller.getDisableExitGame());
+        Assert.assertTrue(controller.getDisableNewGame());
+        Assert.assertTrue(controller.getDisableBet());
+        Assert.assertTrue(controller.getDisableHitAndStand());
+        Assert.assertFalse(controller.getDisableExitGame());
     }
 
     @Test
-    void gameFinish() {
+    public void gameFinish() {
         // Mock Model
         Model mockModel = MockModel.build();
         // Real Controller
         MenuController controller = new MenuController(mockModel);
-        controller.newGameAction(null);
-        controller.exitGameAction(null);
-
-//        assertFalse(controller.getDisableNewGame());
-//        assertTrue(controller.getDisableExitGame());
-//        assertTrue(controller.getDisableHitAndStand());
-//        assertTrue(controller.getDisableBet());
-//        assertTrue(controller.getDisableNextRound());
+        controller.onGameFinished();
+        Assert.assertFalse(controller.getDisableNewGame());
+        Assert.assertTrue(controller.getDisableExitGame());
+        Assert.assertTrue(controller.getDisableHitAndStand());
+        Assert.assertTrue(controller.getDisableBet());
+        Assert.assertTrue(controller.getDisableNextRound());
     }
 
     @Test
-    void nextRound() {
+    public void nextRound() {
         // Mock Model
         Model mockModel = MockModel.build();
         // Real Controller
         MenuController controller = new MenuController(mockModel);
-        mockModel.nextRound();
-
-//        assertTrue(controller.getDisableNextRound());
+        controller.onNewRound();
+        Assert.assertTrue(controller.getDisableNextRound());
     }
 
     @Test
-    void newBet() {
+    public void newBet() {
         // Mock Model
         Model mockModel = MockModel.build();
         // Real Controller
         MenuController controller = new MenuController(mockModel);
-        controller.newGameAction(null);
-        mockModel.bet(50);
+        controller.onNewBet();
 
-//        assertFalse(controller.getDisableBet());
+        Assert.assertFalse(controller.getDisableBet());
     }
 
     @Test
-    void confirmBet() {
+    public void confirmBet() {
         // Mock Model
         Model mockModel = MockModel.build();
         // Real Controller
         MenuController controller = new MenuController(mockModel);
-        controller.newGameAction(null);
-        mockModel.bet(50);
-        mockModel.confirmBet();
+        controller.onBetConfirmed();
 
-//        assertTrue(controller.getDisableBet());
-//        assertFalse(controller.getDisableHitAndStand());
+        Assert.assertTrue(controller.getDisableBet());
+        Assert.assertFalse(controller.getDisableHitAndStand());
     }
 
     @Test
-    void hitAction() {
-        // Mock Model
-        Model mockModel = MockModel.build();
-        // Real Controller
-        MenuController controller = new MenuController(mockModel);
-        controller.newGameAction(null);
-        mockModel.bet(50);
-        mockModel.confirmBet();
-        mockModel.stand();
-
-//        assertTrue(controller.getDisableHitAndStand());
-    }
-
-    @Test
-    void standAction() {
+    public void standAction() {
         // Mock Model
         Model mockModel = MockModel.build();
         // Real Controller
@@ -109,7 +87,7 @@ class MenuControllerTest {
         controller.newGameAction(null);
         controller.standAction(null);
 
-//        assertTrue(controller.getDisableHitAndStand());
+        Assert.assertTrue(controller.getDisableHitAndStand());
     }
 
 }

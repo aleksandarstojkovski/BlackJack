@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public abstract class AbstractView implements PropertyChangeListener {
-    protected Parent component;
+    private Parent component;
 
     protected void setComponent(Parent component) { this.component = component; }
     public Parent getComponent() {
@@ -32,11 +32,15 @@ public abstract class AbstractView implements PropertyChangeListener {
         // create the View invoking the constructor that expect a controller as parameter
         T view = clazz.getDeclaredConstructor(controller.getClass()).newInstance(controller);
         // load the FXML associated to that view
-        URL url = AbstractView.class.getResource(resource);
+        URL url = AbstractView.class.getClassLoader().getResource(resource);
+        if(url == null) {
+            throw new InstantiationException("cannot load FXML resource: " + resource);
+        }
+
         FXMLLoader fxmlLoader = new FXMLLoader(url, bundle);
         // don't let the FXMLLoader create a new controller, use the controller passed as parameter
         fxmlLoader.setControllerFactory((Class<?> type) -> controller);
-        // set in the View the JavaFX component returned by the load
+        // set in the View the JavaFX component returned by the fxmlLoader
         view.setComponent(fxmlLoader.load());
 
         return view;

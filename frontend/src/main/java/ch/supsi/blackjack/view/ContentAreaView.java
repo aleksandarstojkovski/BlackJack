@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * Methods annotated with @EventHandler are executed through reflection
  */
 public class ContentAreaView  extends AbstractView {
-    private final static String FXML = "/ch/supsi/blackjack/view/ContentArea.fxml";
+    private final static String FXML = "ch/supsi/blackjack/view/ContentArea.fxml";
     private final ContentAreaController controller;
 
     // Constructor is not public, use Static Factory Method
