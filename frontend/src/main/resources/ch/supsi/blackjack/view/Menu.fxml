@@ -36,7 +36,7 @@
             </graphic>
         </Button>
 
-        <Button mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" disable="${controller.disableExitGame}" >
+        <Button mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" disable="${controller.disableExitGame}" fx:id="exit_game">
             <graphic>
                 <FontIcon styleClass="exitgame-icon"/>
             </graphic>

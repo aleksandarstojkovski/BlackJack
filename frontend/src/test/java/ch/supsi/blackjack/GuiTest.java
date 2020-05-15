@@ -34,6 +34,7 @@ public class GuiTest extends ApplicationTest {
     public void walkThrough() {
         testVisibility();
         testState();
+        testStartAndExit();
     }
 
     private void testVisibility() {
@@ -47,6 +48,18 @@ public class GuiTest extends ApplicationTest {
     private void testState() {
         step("main scene", () -> {
             verifyThat("#new_game", isEnabled());
+        });
+    }
+
+    public void testStartAndExit() {
+        step("file menu", () -> {
+            sleep(SLEEP_INTERVAL);
+            clickOn("#new_game");
+            verifyThat("#exit_game", isVisible());
+            verifyThat("#exit_game", isEnabled());
+
+            sleep(SLEEP_INTERVAL);
+            clickOn("#exit_game");
         });
     }
 
