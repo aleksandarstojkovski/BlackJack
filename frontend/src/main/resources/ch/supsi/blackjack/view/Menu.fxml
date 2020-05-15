@@ -9,7 +9,7 @@
             fx:controller="ch.supsi.blackjack.controller.MenuController"
             prefHeight="18.0" prefWidth="900.0">
     <ToolBar AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Button mnemonicParsing="false" text="%new_game" onAction="#newGameAction" disable="${controller.disableNewGame}" >
+        <Button mnemonicParsing="false" text="%new_game" onAction="#newGameAction" disable="${controller.disableNewGame}" fx:id="new_game">
             <graphic>
                 <FontIcon styleClass="newgame-icon"/>
             </graphic>
@@ -36,7 +36,7 @@
             </graphic>
         </Button>
 
-        <Button mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" disable="${controller.disableExitGame}" >
+        <Button mnemonicParsing="false" text="%exit_game" onAction="#exitGameAction" disable="${controller.disableExitGame}" fx:id="exit_game">
             <graphic>
                 <FontIcon styleClass="exitgame-icon"/>
             </graphic>
