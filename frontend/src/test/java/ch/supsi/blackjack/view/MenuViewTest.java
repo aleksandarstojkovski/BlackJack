@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 public class MenuViewTest extends ApplicationTest {
-    @org.junit.Test
+//    @org.junit.Test
     public void walkThrough() {
         create();
     }
