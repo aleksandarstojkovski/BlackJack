@@ -1,17 +1,13 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.model.AbstractModel;
+import ch.supsi.blackjack.model.GameHandler;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class MenuController extends AbstractController implements Initializable {
-    public MenuController(AbstractModel model) {
+public class MenuController extends AbstractController  {
+    public MenuController(GameHandler model) {
         super(model);
     }
 
@@ -65,17 +61,6 @@ public class MenuController extends AbstractController implements Initializable 
         return disableNewGame.get();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        BooleanBinding disableHitAndStand = getModel().gameRunningProperty().not().or(
-//                getModel().dealsOpenProperty().not().or(
-//                        getModel().playerBustedProperty().or(
-//                                getModel().playerStandProperty()
-//                        )
-//                )
-//        );
-    }
-
 
     @FXML
     void newGameAction(ActionEvent actionEvent) {
@@ -102,6 +87,7 @@ public class MenuController extends AbstractController implements Initializable 
     @FXML
     public void betAction(ActionEvent actionEvent) {model.confirmBet(); }
 
+    @FXML
     public void nextRoundAction(ActionEvent actionEvent) {
         model.nextRound();
     }
@@ -113,7 +99,7 @@ public class MenuController extends AbstractController implements Initializable 
         disableBet.set(true);
     }
 
-    public void handleGameFinished() {
+    public void onGameFinished() {
         disableNewGame.set(false);
         disableExitGame.set(true);
         disableHitAndStand.set(true);
@@ -121,33 +107,33 @@ public class MenuController extends AbstractController implements Initializable 
         disableNextRound.set(true);
     }
 
-    public void handleNewRound() {
+    public void onNewRound() {
         disableNextRound.set(true);
     }
 
-    public void handleNewBet() {
+    public void onNewBet() {
         disableBet.set(false);
     }
 
-    public void handleBetConfirmed() {
+    public void onBetConfirmed() {
         disableBet.set(true);
         disableHitAndStand.set(false);
     }
 
-    public void handleStand() {
+    public void onStand() {
         disableHitAndStand.set(true);
     }
 
-    public void handlePlayerBusted() {
+    public void onPlayerBusted() {
         disableHitAndStand.set(true);
     }
 
-    public void handleRoundCompleted() {
+    public void onRoundCompleted() {
         disableNextRound.set(false);
         disableHitAndStand.set(true);
     }
 
-    public void handlePlayerBlackjack() {
+    public void onPlayerBlackjack() {
         disableHitAndStand.set(true);
         disableBet.set(true);
         disableNextRound.set(true);

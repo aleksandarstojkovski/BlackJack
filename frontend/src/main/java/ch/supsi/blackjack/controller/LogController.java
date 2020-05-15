@@ -1,14 +1,14 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.model.AbstractModel;
+import ch.supsi.blackjack.model.GameHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 
 import java.beans.PropertyChangeEvent;
 
 public class LogController extends AbstractController {
-    public LogController(AbstractModel model) {
+    public LogController(GameHandler model) {
         super(model);
     }
     @FXML private TextArea textArea;

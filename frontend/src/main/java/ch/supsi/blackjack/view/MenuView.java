@@ -7,15 +7,23 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
+/**
+ * The View is associated to an FXML resource for the definition of the components
+ * Methods annotated with @EventHandler are executed through reflection
+ */
 public class MenuView extends AbstractView {
+    private final static String FXML = "/ch/supsi/blackjack/view/Menu.fxml";
     private final MenuController controller;
 
+    // Constructor is not public, use Static Factory Method
     MenuView(MenuController controller) {
         this.controller = controller;
     }
 
-    public static MenuView create(MenuController controller, ResourceBundle bundle) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
-        return AbstractView.create(MenuView.class, "/ch/supsi/blackjack/view/Menu.fxml", controller, bundle);
+    // Static Factory Method
+    public static MenuView create(MenuController controller, ResourceBundle bundle)
+            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
+        return AbstractView.create(MenuView.class, FXML, controller, bundle);
     }
 
     @EventHandler
@@ -25,42 +33,42 @@ public class MenuView extends AbstractView {
 
     @EventHandler
     void handleEvent(GameFinishedEvent event) {
-        controller.handleGameFinished();
+        controller.onGameFinished();
     }
 
     @EventHandler
     void handleEvent(NewRoundEvent event) {
-        controller.handleNewRound();
+        controller.onNewRound();
     }
 
     @EventHandler
     void handleEvent(NewBetEvent event) {
-        controller.handleNewBet();
+        controller.onNewBet();
     }
 
     @EventHandler
     void handleEvent(BetConfirmedEvent event) {
-        controller.handleBetConfirmed();
+        controller.onBetConfirmed();
     }
 
     @EventHandler
     void handleEvent(StandEvent event) {
-        controller.handleStand();
+        controller.onStand();
     }
 
     @EventHandler
     void handleEvent(PlayerBustedEvent event) {
-        controller.handlePlayerBusted();
+        controller.onPlayerBusted();
     }
 
     @EventHandler
     void handleEvent(RoundCompletedEvent event) {
-        controller.handleRoundCompleted();
+        controller.onRoundCompleted();
     }
 
     @EventHandler
     void handleEvent(PlayerBlackjackEvent event) {
-        controller.handlePlayerBlackjack();
+        controller.onPlayerBlackjack();
     }
 
 }

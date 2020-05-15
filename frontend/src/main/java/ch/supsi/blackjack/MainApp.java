@@ -29,9 +29,15 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // resource bundle for i18n (actually only default language is provided: blackjack.properties)
         ResourceBundle bundle = ResourceBundle.getBundle("ch/supsi/blackjack/bundles/blackjack");
 
-        // MVC scaffolding
+        // MVC scaffolding:
+        // - Views listen to model notification (Observer Pattern) and interact with controller
+        // - Controllers interact with a GameHandler object (model) and with the Components of the View
+        // - JavaFX route user events to the controller defined in the FXML file
+
+        // There is one single instance of Model
         Model model = Model.instance();
 
         ContentAreaView contentAreaView = ContentAreaView.create(new ContentAreaController(model), bundle);
@@ -43,18 +49,22 @@ public class MainApp extends Application {
         LogView logView = LogView.create(new LogController(model), bundle);
         model.addPropertyChangeListener(logView);
 
+        // add components to the primary stage and show it
         setupStage(primaryStage, contentAreaView, menuView, logView);
     }
 
     private void setupStage(Stage primaryStage, ContentAreaView contentAreaView, MenuView menuView, LogView logView) {
-        AnchorPane root = new AnchorPane();
         VBox vbox = new VBox();
         AnchorPane.setBottomAnchor(vbox, 0.0);
         AnchorPane.setTopAnchor(vbox, 0.0);
         AnchorPane.setRightAnchor(vbox, 0.0);
         AnchorPane.setLeftAnchor(vbox, 0.0);
+
+        // the main page is an AnchorPane that contains a simple VBox layout
+        AnchorPane root = new AnchorPane();
         root.getChildren().add(vbox);
 
+        // VBox children are the components of the following views: ContentAreaView, MenuView, LogView
         vbox.getChildren().add(contentAreaView.getComponent());
         vbox.getChildren().add(menuView.getComponent());
         vbox.getChildren().add(logView.getComponent());

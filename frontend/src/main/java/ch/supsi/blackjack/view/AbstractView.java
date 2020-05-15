@@ -15,35 +15,40 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public abstract class AbstractView implements PropertyChangeListener {
-    protected Pane component;
+    protected Parent component;
 
-    protected void setComponent(Pane component) { this.component = component; }
+    protected void setComponent(Parent component) { this.component = component; }
     public Parent getComponent() {
         return component;
     }
 
-    // factory method
-    protected static <T extends AbstractView> T create(Class<T> clazz, String resource, AbstractController controller, ResourceBundle bundle) throws InstantiationException, IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    // Static Factory Method
+    protected static <T extends AbstractView> T create(Class<T> clazz, String resource, AbstractController controller, ResourceBundle bundle)
+            throws InstantiationException, IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         if (controller == null) {
             throw new InstantiationException("view controller cannot be null!");
         }
 
+        // create the View invoking the constructor that expect a controller as parameter
         T view = clazz.getDeclaredConstructor(controller.getClass()).newInstance(controller);
+        // load the FXML associated to that view
         URL url = AbstractView.class.getResource(resource);
         FXMLLoader fxmlLoader = new FXMLLoader(url, bundle);
+        // don't let the FXMLLoader create a new controller, use the controller passed as parameter
         fxmlLoader.setControllerFactory((Class<?> type) -> controller);
+        // set in the View the JavaFX component returned by the load
         view.setComponent(fxmlLoader.load());
 
         return view;
     }
 
+    /**
+     * routing of the PropertyChangeEvent to the proper method (using reflection)
+     * @param event
+     */
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         try {
-//            Method method = this.getClass().getDeclaredMethod("handleEvent", event.getClass());
-//            if(method.getAnnotation(EventHandler.class) != null)
-//                method.invoke(this, event);
-
             // find a method in subclass that is annotated as @EventHandler
             // the method should have 1 parameter of the concrete PropertyChangeEvent type
             for(var method : this.getClass().getDeclaredMethods()) {
