@@ -1,9 +1,9 @@
 package ch.supsi.blackjack.component;
 
 import ch.supsi.blackjack.model.Coin;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 
 class CoinImageTest {
     @Test
