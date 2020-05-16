@@ -1,4 +1,6 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
+
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * This is the turn of the Dealer.
@@ -7,17 +9,22 @@ package ch.supsi.blackjack.model.state;
  * In case of Stand, cards are compared against the players
  * Next State: DealerBustState,UpdateTableState
 */
-public class RoundDealerDealsState implements RoundState {
+public class DealerDealsState implements RoundState {
 
-    public RoundDealerDealsState() {printStatus();}
+    RoundHandler round;
 
-    @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundUpdateTableState());
+    public DealerDealsState(RoundHandler round) {
+        this.round = round;
+        printStatus();
     }
 
     @Override
-    public void prev(GameStateManager round) {
+    public void next() {
+        round.setState(new UpdateTableState(round));
+    }
+
+    @Override
+    public void prev() {
 
     }
 
@@ -28,11 +35,11 @@ public class RoundDealerDealsState implements RoundState {
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         if(round.getDealerHand().isBusted()){
-            round.setState(new RoundDealerBustState());
+            round.setState(new DealerBustState(round));
         } else {
-            next(round);
+            next();
         }
         round.goNextState();
     }

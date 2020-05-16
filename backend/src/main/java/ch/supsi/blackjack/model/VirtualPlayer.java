@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model;
 
-import ch.supsi.blackjack.model.state.GameStateManager;
-
 public class VirtualPlayer extends Player implements AI {
     protected AI ai;
     public VirtualPlayer(String nickname) {
@@ -11,7 +9,7 @@ public class VirtualPlayer extends Player implements AI {
     }
 
     @Override
-    public void compute(GameStateManager model) {
+    public void compute(RoundHandler model) {
         ai.compute(model);
     }
 }

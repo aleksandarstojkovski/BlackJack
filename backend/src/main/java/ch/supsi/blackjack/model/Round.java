@@ -2,14 +2,13 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
-import ch.supsi.blackjack.model.state.*;
-
-import java.beans.PropertyChangeSupport;
+import ch.supsi.blackjack.model.state.round.BetState;
+import ch.supsi.blackjack.model.state.round.RoundState;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Here is the main logic of the game.
+ * Here is the main logic of the round.
  * A Round of Blackjack starts betting an amount of money
  * After confirming the bet, each player receives 2 cards
  * Dealer receives 2 cards as well, but one is hidden.
@@ -18,7 +17,8 @@ import java.util.List;
  * Over 21 the player loose the round automatically (Bust)
  * If still in game the turn pass to the next player/dealer
  */
-public class Round implements GameStateManager {
+public class Round implements RoundHandler {
+    private GameModel gameModel;
     private RoundState state;
     private final List<Player> allPlayers = new ArrayList<>();
     private final Player mainPlayer;
@@ -29,18 +29,12 @@ public class Round implements GameStateManager {
     // updated by model  - indicates that the user chose to stand
     private boolean playerStand = false;
 
-    private final PropertyChangeSupport pcs;
-
-    public Round(PropertyChangeSupport pcs, Player mainPlayer, Dealer dealer){
-        this.pcs = pcs;
-
-        // initial state
-        state = new RoundInitState();
+    public Round(GameModel gameModel, Player mainPlayer, Dealer dealer){
         this.mainPlayer = mainPlayer;
         this.dealer = dealer;
-
         allPlayers.add(mainPlayer);
         allPlayers.add(dealer);
+        this.gameModel = gameModel;
     }
     @Override
     public void setState(RoundState state){
@@ -51,8 +45,12 @@ public class Round implements GameStateManager {
         return state;
     }
 
+    public GameModel getGameModel() {
+        return gameModel;
+    }
+
     public void goNextState() {
-        state.updateState(this);
+        state.updateState();
     }
 
     public void openRound() {
@@ -65,58 +63,58 @@ public class Round implements GameStateManager {
 
     public void hit(Player player) {
         Card card = dealer.giveCard();
-        pcs.firePropertyChange(new NewCardEvent(this, card, player));
+        gameModel.firePropertyChange(new NewCardEvent(this, card, player));
         player.addCard(card);
 
         if(player instanceof Dealer){
-            pcs.firePropertyChange(new DealerHandUpdateEvent(this, player.hand, this.state));
+            gameModel.firePropertyChange(new DealerHandUpdateEvent(this, player.hand, this.state));
         }else {
-            pcs.firePropertyChange(new PlayerHandUpdateEvent(this, player.getHandValue()));
+            gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, player.getHandValue()));
         }
     }
 
-    public void exitGame() {
-        // the user can leave the game from any state. He jumps to the InitState
-        setState(new RoundInitState());
-        pcs.firePropertyChange(new GameFinishedEvent(this));
+    public void exitRound() {
+        // the user can leave the game from any state. He jumps to the GameState InitState
+        gameModel.exitGame();
+        gameModel.firePropertyChange(new GameFinishedEvent(this));
     }
 
     public void nextRound() {
-        // calling updateState on InitState
+        // calling updateState on Continue
         // case1: BetState (user can start to bet)
         goNextState();
-        pcs.firePropertyChange(new NewRoundEvent(this, allPlayers));
+        gameModel.firePropertyChange(new NewRoundEvent(this, allPlayers));
     }
 
     public void playerHit() {
         hit(mainPlayer);
         // calling updateState on PlayerDealsState
         // case1: PlayerDealsState (Player didn't bust)
-        // case1: PlayerBustState (Player has busted)
+        // case2: PlayerBustState (Player has busted)
         goNextState();
     }
 
-    public void startGame() {
-        // calling updateState on InitState
+    public void startRound() {
+        state = new BetState(this);
         // case1: BetState (user can start to bet)
         goNextState();
 
-        pcs.firePropertyChange(new GameStartedEvent(this, allPlayers));
+        gameModel.firePropertyChange(new GameStartedEvent(this, allPlayers));
     }
 
     public void setPlayerStand() {
         playerStand = true;
         // calling updateState on PlayerDealsState
         // case1: PlayerBustState (Player made BlackJack)
-        // case1: PlayerDealsState (Player didn't make BlackJack)
+        // case2: PlayerDealsState (Player didn't make BlackJack)
         goNextState();
-        pcs.firePropertyChange(new StandEvent(this, dealer));
+        gameModel.firePropertyChange(new StandEvent(this, dealer));
     }
 
     public void playerBet(int amount) {
         try {
             mainPlayer.bet(amount);
-            pcs.firePropertyChange(new NewBetEvent(this, amount));
+            gameModel.firePropertyChange(new NewBetEvent(this, amount));
 
             // calling updateState on BetState
             // case1: remain in BetState (until user confirms the bet)
@@ -129,7 +127,7 @@ public class Round implements GameStateManager {
     public void playerConfirmBet() {
         // this will let BetState know that it can go to the next state
         betConfirmed = true;
-        pcs.firePropertyChange(new BetConfirmedEvent(this));
+        gameModel.firePropertyChange(new BetConfirmedEvent(this));
 
         // calling updateState on BetState
         // case1: SetupTableState (Player confirmed the bet)
@@ -141,7 +139,7 @@ public class Round implements GameStateManager {
     }
 
     public void setPlayerBusted() {
-        pcs.firePropertyChange(new PlayerBustedEvent(this));
+        gameModel.firePropertyChange(new PlayerBustedEvent(this));
     }
 
     @Override
@@ -155,11 +153,11 @@ public class Round implements GameStateManager {
     }
 
     public void setPlayerBlackjack() {
-        pcs.firePropertyChange(new PlayerBlackjackEvent(this));
+        gameModel.firePropertyChange(new PlayerBlackjackEvent(this));
     }
 
     public void setPlayerTwentyOne() {
-        pcs.firePropertyChange(new PlayerTwentyoneEvent(this));
+        gameModel.firePropertyChange(new PlayerTwentyoneEvent(this));
     }
 
     public void setRoundCompleted() {
@@ -205,7 +203,7 @@ public class Round implements GameStateManager {
         // removes bets from the dealer
         dealer.hand.takeBets();
 
-        pcs.firePropertyChange(new RoundCompletedEvent(this, mainPlayerResult));
+        gameModel.firePropertyChange(new RoundCompletedEvent(this, mainPlayerResult));
 
         clear();
     }
@@ -219,7 +217,7 @@ public class Round implements GameStateManager {
     }
 
     public void setDealerBusted() {
-        pcs.firePropertyChange(new DealerBustedEvent(this));
+        gameModel.firePropertyChange(new DealerBustedEvent(this));
     }
 
     public boolean isBetConfirmed() {
@@ -234,15 +232,15 @@ public class Round implements GameStateManager {
         return playerStand;
     }
     public void updateDealer(){
-        pcs.firePropertyChange(new DealerStartEvent(this,dealer));
-        pcs.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.state));
+        gameModel.firePropertyChange(new DealerStartEvent(this,dealer));
+        gameModel.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.state));
     }
     public void computeDealer() {
         compute(dealer);
     }
 
     public void setGameOver() {
-        pcs.firePropertyChange(new GameOverEvent(this));
+        gameModel.firePropertyChange(new GameOverEvent(this));
     }
 
     public void compute(Player player){

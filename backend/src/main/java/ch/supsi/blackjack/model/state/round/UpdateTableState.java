@@ -1,4 +1,7 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
+
+import ch.supsi.blackjack.model.Round;
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * The Round is completed
@@ -6,22 +9,22 @@ package ch.supsi.blackjack.model.state;
  * Otherwise the game is over
  * Next State: BetState,GameOverState
  */
-public class RoundUpdateTableState implements RoundState {
+public class UpdateTableState implements RoundState {
 
-    // singleton
-    private static final RoundUpdateTableState instance = new RoundUpdateTableState();
+    RoundHandler round;
 
-    public RoundUpdateTableState() {
+    public UpdateTableState(RoundHandler round) {
+        this.round = round;
         printStatus();
     }
 
     @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundBetState());
+    public void next() {
+        round.setState(new BetState(round));
     }
 
     @Override
-    public void prev(GameStateManager round) {
+    public void prev() {
 
     }
 
@@ -32,17 +35,15 @@ public class RoundUpdateTableState implements RoundState {
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         round.setRoundCompleted();
 
         if (round.isPlayerWithMoney()){
-            next(round);
+            next();
         } else {
             round.setGameOver();
-            round.setState(new RoundGameOverState());
+            round.setState(new GameOverState((Round) round));
             round.goNextState();
         }
-
     }
-
 }

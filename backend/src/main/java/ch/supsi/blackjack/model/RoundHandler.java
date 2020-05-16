@@ -1,15 +1,17 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.Hand;
 import ch.supsi.blackjack.model.Player;
+import ch.supsi.blackjack.model.state.round.RoundState;
 
-public interface GameStateManager {
+public interface RoundHandler {
     void setState(RoundState state);
     RoundState getState();
+
     void goNextState();
 
-    void startGame();
-    void exitGame();
+    void startRound();
+    void exitRound();
     void nextRound();
 
     void playerBet(int amount);

@@ -1,7 +1,7 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
-import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.GameModel;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -9,53 +9,53 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class MockModel {
-    public static Model build() {
-        Model mockModel = Mockito.mock(Model.class);
-        PropertyChangeSupport pcs = new PropertyChangeSupport(mockModel);
+    public static GameModel build() {
+        GameModel mockGameModel = Mockito.mock(GameModel.class);
+        PropertyChangeSupport pcs = new PropertyChangeSupport(mockGameModel);
 
         // Property Change Listener
         Mockito.doAnswer((Answer<Void>) invocation -> {
             AbstractController c = invocation.getArgumentAt(0, AbstractController.class);
 //            pcs.addPropertyChangeListener(c);
             return null;
-        }).when(mockModel).addPropertyChangeListener(Mockito.any());
+        }).when(mockGameModel).addPropertyChangeListener(Mockito.any());
 
         // newGame
         Mockito.doAnswer((Answer<Void>) invocation -> {
-            pcs.firePropertyChange(new GameStartedEvent(mockModel, null));
+            pcs.firePropertyChange(new GameStartedEvent(mockGameModel, null));
             return null;
-        }).when(mockModel).newGame(Mockito.anyString());
+        }).when(mockGameModel).newGame(Mockito.anyString());
 
         // exitGame
         Mockito.doAnswer((Answer<Void>) invocation -> {
-            pcs.firePropertyChange(new GameFinishedEvent( mockModel));
+            pcs.firePropertyChange(new GameFinishedEvent(mockGameModel));
             return null;
-        }).when(mockModel).exitGame();
+        }).when(mockGameModel).exitRound();
 
         // hit
         Mockito.doAnswer((Answer<Void>) invocation -> {
-            pcs.firePropertyChange(new NewBetEvent(mockModel, 10 ));
+            pcs.firePropertyChange(new NewBetEvent(mockGameModel, 10 ));
             return null;
-        }).when(mockModel).bet(Mockito.anyInt());
+        }).when(mockGameModel).bet(Mockito.anyInt());
 
         // confirmBet
         Mockito.doAnswer((Answer<Void>) invocation -> {
-            pcs.firePropertyChange(new BetConfirmedEvent( mockModel));
+            pcs.firePropertyChange(new BetConfirmedEvent(mockGameModel));
             return null;
-        }).when(mockModel).confirmBet();
+        }).when(mockGameModel).confirmBet();
 
         // nextRound
         Mockito.doAnswer((Answer<Void>) invocation -> {
-            pcs.firePropertyChange(new NewRoundEvent(mockModel, new ArrayList<>()));
+            pcs.firePropertyChange(new NewRoundEvent(mockGameModel, new ArrayList<>()));
             return null;
-        }).when(mockModel).nextRound();
+        }).when(mockGameModel).nextRound();
 
         // hit
         Mockito.doAnswer((Answer<Void>) invocation -> {
-            pcs.firePropertyChange(new StandEvent(mockModel, null));
+            pcs.firePropertyChange(new StandEvent(mockGameModel, null));
             return null;
-        }).when(mockModel).stand();
+        }).when(mockGameModel).stand();
 
-        return mockModel;
+        return mockGameModel;
     }
 }

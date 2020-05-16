@@ -1,9 +1,7 @@
 package ch.supsi.blackjack.event;
 
 import ch.supsi.blackjack.model.Hand;
-import ch.supsi.blackjack.model.Round;
-import ch.supsi.blackjack.model.state.GameState;
-import ch.supsi.blackjack.model.state.RoundState;
+import ch.supsi.blackjack.model.state.round.RoundState;
 
 public class DealerHandUpdateEvent extends AbstractEvent {
     private final int handValue;

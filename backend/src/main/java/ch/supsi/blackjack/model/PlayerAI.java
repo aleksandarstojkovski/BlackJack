@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model;
 
-import ch.supsi.blackjack.model.state.GameStateManager;
-
 public class PlayerAI implements AI {
     public enum AIType { PRUDENT, MEDIUM, RISKY }
 
@@ -14,7 +12,7 @@ public class PlayerAI implements AI {
     }
 
     @Override
-    public void compute(GameStateManager model) {
+    public void compute(RoundHandler model) {
         int limit;
         switch (aiType) {
             case RISKY:
@@ -33,7 +31,7 @@ public class PlayerAI implements AI {
         }
     }
 
-    public void bet(Model model){
+    public void bet(GameModel gameModel){
         int currentCoins=aiEntity.getCoins();
     }
 }

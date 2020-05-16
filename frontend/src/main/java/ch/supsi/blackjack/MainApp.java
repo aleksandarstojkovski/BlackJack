@@ -3,23 +3,17 @@ package ch.supsi.blackjack;
 import ch.supsi.blackjack.controller.ContentAreaController;
 import ch.supsi.blackjack.controller.LogController;
 import ch.supsi.blackjack.controller.MenuController;
-import ch.supsi.blackjack.model.AbstractModel;
-import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.GameModel;
 import ch.supsi.blackjack.view.ContentAreaView;
 import ch.supsi.blackjack.view.LogView;
 import ch.supsi.blackjack.view.MenuView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.beans.PropertyChangeListener;
-import java.lang.reflect.Constructor;
 import java.util.ResourceBundle;
 
 public class MainApp extends Application {
@@ -38,16 +32,16 @@ public class MainApp extends Application {
         // - JavaFX route user events to the controller defined in the FXML file
 
         // There is one single instance of Model
-        Model model = Model.instance();
+        GameModel gameModel = GameModel.instance();
 
-        ContentAreaView contentAreaView = ContentAreaView.create(new ContentAreaController(model), bundle);
-        model.addPropertyChangeListener(contentAreaView);
+        ContentAreaView contentAreaView = ContentAreaView.create(new ContentAreaController(gameModel), bundle);
+        gameModel.addPropertyChangeListener(contentAreaView);
 
-        MenuView menuView = MenuView.create(new MenuController(model), bundle);
-        model.addPropertyChangeListener(menuView);
+        MenuView menuView = MenuView.create(new MenuController(gameModel), bundle);
+        gameModel.addPropertyChangeListener(menuView);
 
-        LogView logView = LogView.create(new LogController(model), bundle);
-        model.addPropertyChangeListener(logView);
+        LogView logView = LogView.create(new LogController(gameModel), bundle);
+        gameModel.addPropertyChangeListener(logView);
 
         // add components to the primary stage and show it
         setupStage(primaryStage, contentAreaView.getComponent(), menuView.getComponent(), logView.getComponent());

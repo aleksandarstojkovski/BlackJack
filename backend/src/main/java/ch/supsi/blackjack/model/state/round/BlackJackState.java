@@ -1,25 +1,28 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
 
-import ch.supsi.blackjack.model.Round;
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * The player was lucky, getting a 21
  * He automatically wins the Round
  * Next State: UpdateTableState
  */
-public class RoundBlackJackState implements RoundState {
+public class BlackJackState implements RoundState {
 
-    public  RoundBlackJackState(){
+    RoundHandler round;
+
+    public BlackJackState(RoundHandler round){
+        this.round =  round;
         printStatus();
     }
 
     @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundUpdateTableState());
+    public void next() {
+        round.setState(new UpdateTableState(round));
     }
 
     @Override
-    public void prev(GameStateManager round) {
+    public void prev() {
         System.out.println("No previous state needed from here");
     }
 
@@ -30,10 +33,10 @@ public class RoundBlackJackState implements RoundState {
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         // player made blackjack within first two cards
         round.setPlayerBlackjack();
-        next(round);
+        next();
         round.goNextState();
     }
 
