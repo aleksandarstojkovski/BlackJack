@@ -55,7 +55,7 @@ public class GuiTest extends ApplicationTest {
         testNextRound();
     }
 
-    private void testInitialState() {
+    public void testInitialState() {
         step("testInitialState", this::initialState);
     }
 
@@ -89,7 +89,7 @@ public class GuiTest extends ApplicationTest {
         });
     }
 
-    private void testStartBetHitAndExit() {
+    public void testStartBetHitAndExit() {
         step("testStartBetHitAndExit", () -> {
             newGame();
             betOnRandomCoin();
