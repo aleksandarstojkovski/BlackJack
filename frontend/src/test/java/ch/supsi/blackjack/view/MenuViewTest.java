@@ -1,8 +1,10 @@
 package ch.supsi.blackjack.view;
 
+import ch.supsi.blackjack.UITest;
 import ch.supsi.blackjack.controller.MenuController;
 import ch.supsi.blackjack.model.GameHandler;
 import org.junit.Assert;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -10,8 +12,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
+@Category(UITest.class)
 public class MenuViewTest extends ApplicationTest {
-//    @org.junit.Test
+    @org.junit.Test
     public void walkThrough() {
         create();
     }
