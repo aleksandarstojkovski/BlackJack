@@ -1,7 +1,8 @@
 package ch.supsi.blackjack.model;
 
 public class Dealer extends VirtualPlayer {
-    private DecksContainer decksContainer;
+
+    private final DecksContainer decksContainer;
 
     public Dealer(DecksContainer decksContainer) {
         super("Dealer");
@@ -13,4 +14,5 @@ public class Dealer extends VirtualPlayer {
     public Card giveCard(){
         return decksContainer.getCard();
     }
+
 }

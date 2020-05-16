@@ -16,4 +16,5 @@ public enum Seed {
     public String getLabel() {
         return label;
     }
+
 }

@@ -1,7 +1,9 @@
 package ch.supsi.blackjack.model;
 
 public class VirtualPlayer extends Player implements AI {
+
     protected AI ai;
+
     public VirtualPlayer(String nickname) {
         super(nickname);
 
@@ -12,4 +14,5 @@ public class VirtualPlayer extends Player implements AI {
     public void compute(RoundHandler model) {
         ai.compute(model);
     }
+
 }

@@ -3,6 +3,7 @@ package ch.supsi.blackjack.model;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 
 public class Player {
+
     private static final int INITIAL_COINS=1000;
     private final String nickname;
     protected final Hand hand;

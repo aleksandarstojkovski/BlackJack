@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ContentAreaController extends AbstractController implements Initializable {
+
     @FXML private VBox betsArea;
     @FXML private VBox notificationArea;
     @FXML private Label dealerHand;

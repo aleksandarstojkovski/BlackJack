@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel extends AbstractModel implements GameHandler {
+
     // singleton
     private static GameModel instance;
     // Macchina a stati di Game
     private GameState gameState;
-    private GameState initState;
-    private GameState roundState;
+    private final GameState initState;
+    private final GameState roundState;
 
     private RoundHandler round;
 

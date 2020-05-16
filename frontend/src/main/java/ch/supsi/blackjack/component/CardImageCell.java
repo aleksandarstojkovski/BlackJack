@@ -6,7 +6,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 public class CardImageCell extends ListCell<CardImage> {
+
     final GameHandler model;
+
     public CardImageCell(GameHandler model) {
         this.model = model;
     }

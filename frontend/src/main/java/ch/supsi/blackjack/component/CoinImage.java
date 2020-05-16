@@ -36,8 +36,4 @@ public class CoinImage implements Drawable {
         return coin.getValue();
     }
 
-    public String getFxId() {
-        return coin.getFxId();
-    }
-
 }

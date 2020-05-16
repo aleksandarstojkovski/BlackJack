@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import java.beans.PropertyChangeEvent;
 
 public class LogController extends AbstractController {
+
     public LogController(GameHandler model) {
         super(model);
     }

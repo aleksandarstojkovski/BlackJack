@@ -10,6 +10,7 @@ import javafx.util.Callback;
 import java.net.URL;
 
 public class CardImage implements Drawable {
+
     private final BooleanProperty covered;
     private final Card card;
     private Image imageFront;

@@ -18,7 +18,7 @@ import java.util.List;
  * If still in game the turn pass to the next player/dealer
  */
 public class Round implements RoundHandler {
-    private GameModel gameModel;
+    private final GameModel gameModel;
     private RoundState state;
     private final List<Player> allPlayers = new ArrayList<>();
     private final Player mainPlayer;

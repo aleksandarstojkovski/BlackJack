@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+
     private Player testPlayer;
 
     @Test
@@ -48,4 +49,5 @@ class PlayerTest {
         assertEquals(10,testPlayer.getHandValue());
 
     }
+
 }

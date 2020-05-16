@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    public final static int BLACKJACK = 21;
 
+    public final static int BLACKJACK = 21;
     private final List<Card> cardList;
     private int betValue;
 

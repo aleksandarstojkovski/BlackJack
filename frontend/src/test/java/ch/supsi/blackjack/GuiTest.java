@@ -1,6 +1,6 @@
 package ch.supsi.blackjack;
 
-import ch.supsi.blackjack.model.Coin;
+import ch.supsi.blackjack.component.CoinImageCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
@@ -18,7 +18,7 @@ import static org.testfx.matcher.base.NodeMatchers.*;
 @Category(UITest.class)
 public class GuiTest extends ApplicationTest {
 
-    private static final int SLEEP_INTERVAL = 10;
+    private static final int SLEEP_INTERVAL = 5;
 
     private int stepNo;
 
@@ -34,6 +34,7 @@ public class GuiTest extends ApplicationTest {
     }
 
     private void step(final String step, final Runnable runnable) {
+        System.out.printf(step);
         ++stepNo;
         runnable.run();
     }
@@ -55,14 +56,14 @@ public class GuiTest extends ApplicationTest {
     }
 
     private void testInitialState() {
-        step("main scene", () -> {
+        step("testInitialState", () -> {
             verifyNewGameIsVisibleAndEnabled();
             verifyThat("#textArea", TextInputControlMatchers.hasText(""));
         });
     }
 
     public void testStartAndExit() {
-        step("file menu", () -> {
+        step("testStartAndExit", () -> {
 
             // new game
             sleep(SLEEP_INTERVAL);
@@ -78,28 +79,29 @@ public class GuiTest extends ApplicationTest {
 
     public void testAllCoins(){
 
-        for (String coinFxId : Coin.coinFxIds){
-            // new game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#new_game");
-            verifyExitIsVisibleAndEnabled();
-            verifyCoinsAreVisibleAndEnabled();
+        step("testAllCoins", () -> {
+            for (String coinFxId : CoinImageCell.coinFxIds) {
+                // new game
+                sleep(SLEEP_INTERVAL);
+                clickOn("#new_game");
+                verifyExitIsVisibleAndEnabled();
+                verifyCoinsAreVisibleAndEnabled();
 
-            // bet the coin
-            sleep(SLEEP_INTERVAL);
-            clickOn(coinFxId);
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsVisibleAndEnabled();
+                // bet the coin
+                sleep(SLEEP_INTERVAL);
+                clickOn(coinFxId);
+                verifyExitIsVisibleAndEnabled();
+                verifyBetIsVisibleAndEnabled();
 
-            // exit game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#exit_game");
-        }
-
+                // exit game
+                sleep(SLEEP_INTERVAL);
+                clickOn("#exit_game");
+            }
+        });
     }
 
     public void testStartBetAndExit() {
-        step("file menu", () -> {
+        step("testStartBetAndExit", () -> {
 
             // new game
             sleep(SLEEP_INTERVAL);
@@ -127,7 +129,7 @@ public class GuiTest extends ApplicationTest {
     }
 
     private void testStartBetHitAndExit() {
-        step("file menu", () -> {
+        step("testStartBetHitAndExit", () -> {
 
             // new game
             sleep(SLEEP_INTERVAL);
@@ -137,7 +139,7 @@ public class GuiTest extends ApplicationTest {
 
             // bet on a random coin
             sleep(SLEEP_INTERVAL);
-            clickOn(Coin.coinFxIds[rand.nextInt(Coin.coinFxIds.length)]);
+            clickOn(CoinImageCell.coinFxIds[rand.nextInt(CoinImageCell.coinFxIds.length)]);
             verifyExitIsVisibleAndEnabled();
             verifyBetIsVisibleAndEnabled();
 
@@ -161,7 +163,7 @@ public class GuiTest extends ApplicationTest {
     }
 
     public void testStartBetStandAndExit() {
-        step("file menu", () -> {
+        step("testStartBetStandAndExit", () -> {
 
             // new game
             sleep(SLEEP_INTERVAL);
@@ -171,7 +173,7 @@ public class GuiTest extends ApplicationTest {
 
             // bet on a random coin
             sleep(SLEEP_INTERVAL);
-            clickOn(Coin.coinFxIds[rand.nextInt(Coin.coinFxIds.length)]);
+            clickOn(CoinImageCell.coinFxIds[rand.nextInt(CoinImageCell.coinFxIds.length)]);
             verifyExitIsVisibleAndEnabled();
             verifyBetIsVisibleAndEnabled();
 
@@ -203,7 +205,7 @@ public class GuiTest extends ApplicationTest {
     }
 
     public void verifyCoinsAreVisibleAndEnabled(){
-        for (String coinFxId : Coin.coinFxIds){
+        for (String coinFxId : CoinImageCell.coinFxIds){
             verifyThat(coinFxId, isVisible());
         }
     }

@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class FadingStatusMessage {
+
     public static void flash(Node node, String message) {
         final Rectangle rectangle = new Rectangle();
         final Text text = new Text(message);

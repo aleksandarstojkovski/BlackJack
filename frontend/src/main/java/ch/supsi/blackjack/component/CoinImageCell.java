@@ -7,7 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 public class CoinImageCell extends ListCell<CoinImage> {
+
     final GameHandler model;
+
+    public final static String[] coinFxIds = { "#coin100", "#coin200", "#coin300", "#coin400", "#coin500" };
+
     public CoinImageCell(GameHandler model) {
         this.model = model;
     }
@@ -29,7 +33,7 @@ public class CoinImageCell extends ListCell<CoinImage> {
 
             button.setGraphic(imageView);
             button.setOnAction(e -> model.bet(coin.getValue()) );
-            button.setId(coin.getFxId());
+            button.setId("coin"+coin.getValue());
 
             setText(null);
             setGraphic(button);

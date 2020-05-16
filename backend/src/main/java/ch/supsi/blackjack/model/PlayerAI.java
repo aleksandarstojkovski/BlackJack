@@ -1,6 +1,7 @@
 package ch.supsi.blackjack.model;
 
 public class PlayerAI implements AI {
+
     public enum AIType { PRUDENT, MEDIUM, RISKY }
 
     protected final AIType aiType;

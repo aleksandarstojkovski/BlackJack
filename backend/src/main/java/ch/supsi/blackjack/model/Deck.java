@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class Deck {
+
     private final Card[] cards;
 
     Deck() {

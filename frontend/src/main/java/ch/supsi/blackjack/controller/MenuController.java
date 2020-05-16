@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class MenuController extends AbstractController  {
+
     public MenuController(GameHandler model) {
         super(model);
     }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
+
     Round round;
     GameModel model;
     Player player;
@@ -33,4 +34,5 @@ class RoundTest {
         round = new Round(model, player, dealer);
         assertEquals(model, round.getGameModel());
     }
+
 }

@@ -1,7 +1,9 @@
 package ch.supsi.blackjack.model;
 
 public class DealerAI implements AI {
+
     private final Dealer aiEntity;
+
     DealerAI(Dealer dealer){
         this.aiEntity = dealer;
     }
@@ -12,4 +14,5 @@ public class DealerAI implements AI {
             model.hit(aiEntity);
         }
     }
+
 }

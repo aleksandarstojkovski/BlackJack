@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Card implements Serializable {
+
     public enum BackColor {
         RED,
         BLUE
@@ -83,4 +84,5 @@ public class Card implements Serializable {
         }
 
     }
+
 }

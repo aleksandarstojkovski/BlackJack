@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class DecksContainer implements Serializable {
+
     public static final int DEFAULT_NUMBER_OF_DECKS=3;
     private static final int MIN_NUMBER_OF_DECKS=1;
     private static final int MAX_NUMBER_OF_DECKS=5;
