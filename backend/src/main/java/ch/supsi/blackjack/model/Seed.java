@@ -7,10 +7,13 @@ public enum Seed {
     C("clubs"),
     S("spades");
 
-    public final String label;
+    private final String label;
 
     Seed(String label) {
         this.label = label;
     }
 
+    public String getLabel() {
+        return label;
+    }
 }

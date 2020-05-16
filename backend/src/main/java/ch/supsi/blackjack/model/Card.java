@@ -26,11 +26,12 @@ public class Card implements Serializable {
     public String getBack(){
         return back;
     }
+
     @Override
     public String toString() {
         return "Card{" +
-                "seed=" + seed.label +
-                ", value=" + value.label +
+                "seed=" + seed.getLabel() +
+                ", value=" + value.getLabel() +
                 ", back=" + back +
                 '}';
     }

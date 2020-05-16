@@ -16,12 +16,20 @@ public enum Value {
     QUEEN("queen", 10),
     KING("king", 10);
 
-    public final String label;
-    public final int cardValue;
+    private final String label;
+    private final int defaultValue;
 
-    Value( String label, int cardValue) {
+    Value( String label, int defaultValue) {
         this.label = label;
-        this.cardValue = cardValue;
+        this.defaultValue = defaultValue;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public int getDefaultValue() {
+        return defaultValue;
     }
 
 }

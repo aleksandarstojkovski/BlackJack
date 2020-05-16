@@ -1,8 +1,6 @@
-package ch.supsi.blackjack.controller;
+package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
-import ch.supsi.blackjack.model.DecksContainer;
-import ch.supsi.blackjack.model.GameModel;
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
@@ -11,7 +9,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class MockGameModel {
-    public static GameModel build()  {
+    public static GameModel build() {
         GameModel mockGameModel = Mockito.mock(GameModel.class);
         PropertyChangeSupport pcs = new PropertyChangeSupport(mockGameModel);
 

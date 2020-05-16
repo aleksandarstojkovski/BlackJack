@@ -1,5 +1,6 @@
 package ch.supsi.blackjack.model;
 
+import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import ch.supsi.blackjack.model.state.game.InitState;
 import ch.supsi.blackjack.model.state.game.RoundState;
 import ch.supsi.blackjack.model.state.game.GameState;
@@ -70,9 +71,10 @@ public class GameModel extends AbstractModel implements GameHandler {
 
 
     @Override
-    public void newGame(String nickName) {
+    public void newGame(String nickName, int numberOfDecks) throws InvalidDecksContainerSizeException {
+        DecksContainer decksContainer = new DecksContainer(numberOfDecks);
         Player humanPlayer = new Player(nickName);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(decksContainer);
         round = new Round(this, humanPlayer, dealer);
         startGame();
     }

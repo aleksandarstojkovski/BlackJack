@@ -20,12 +20,17 @@ public class Hand {
     public int value() {
         int currentHandValue = 0;
         for (Card card : cardList) {
-            if (card.getValue().equals(Value.ACE) && currentHandValue > 10){
-                //ToDo: far scegliere il giocatore per attribuire il valore di asso.
-                currentHandValue += 1;
-            } else {
-                currentHandValue += card.getValue().cardValue;
-            }
+            currentHandValue = getCardValue(currentHandValue, card);
+        }
+        return currentHandValue;
+    }
+
+    private int getCardValue(int currentHandValue, Card card) {
+        if (card.getValue().equals(Value.ACE) && currentHandValue > 10){
+            //ToDo: far scegliere al giocatore il valore da attribuire all'asso.
+            currentHandValue += 1;
+        } else {
+            currentHandValue += card.getValue().getDefaultValue();
         }
         return currentHandValue;
     }
@@ -55,7 +60,7 @@ public class Hand {
     }
 
     public int getLastCardValue() {
-        return cardList.get(cardList.size()-1).getValue().cardValue;
+        return cardList.get(cardList.size()-1).getValue().getDefaultValue();
     }
 
     public boolean isBusted() {

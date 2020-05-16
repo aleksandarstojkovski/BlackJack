@@ -32,7 +32,7 @@ public class CardImage implements Drawable {
         if(covered.get()){
             return String.format("/ch/supsi/blackjack/images/cards/back_%s.png", card.getBack());
         }else{
-            return String.format("/ch/supsi/blackjack/images/cards/%s_of_%s.png", card.getValue().label, card.getSeed().label);
+            return String.format("/ch/supsi/blackjack/images/cards/%s_of_%s.png", card.getValue().getLabel(), card.getSeed().getLabel());
         }
     }
 
