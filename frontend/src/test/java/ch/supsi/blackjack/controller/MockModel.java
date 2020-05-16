@@ -1,9 +1,7 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.event.*;
-import ch.supsi.blackjack.model.Card;
 import ch.supsi.blackjack.model.Model;
-import ch.supsi.blackjack.model.Player;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
