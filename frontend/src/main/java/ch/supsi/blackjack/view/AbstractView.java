@@ -15,7 +15,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public abstract class AbstractView implements PropertyChangeListener {
-    private Parent component;
+    protected Parent component;
+    protected EventRouter eventRouter;
 
     protected void setComponent(Parent component) { this.component = component; }
     public Parent getComponent() {
@@ -31,6 +32,8 @@ public abstract class AbstractView implements PropertyChangeListener {
 
         // create the View invoking the constructor that expect a controller as parameter
         T view = clazz.getDeclaredConstructor(controller.getClass()).newInstance(controller);
+        view.eventRouter = new EventRouter(view);
+
         // load the FXML associated to that view
         URL url = AbstractView.class.getClassLoader().getResource(resource);
         if(url == null) {
@@ -52,19 +55,6 @@ public abstract class AbstractView implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-        try {
-            // find a method in subclass that is annotated as @EventHandler
-            // the method should have 1 parameter of the concrete PropertyChangeEvent type
-            for(var method : this.getClass().getDeclaredMethods()) {
-                if(method.getAnnotation(EventHandler.class) != null &&
-                   method.getParameterCount() == 1 &&
-                   method.getParameterTypes()[0].isAssignableFrom(event.getClass())) {
-                    // if present invoke otherwise do nothing
-                    method.invoke(this, event);
-                }
-            }
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        eventRouter.route(event);
     }
 }
