@@ -1,6 +1,6 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.model.Model;
+import ch.supsi.blackjack.model.GameModel;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,8 +8,8 @@ public class MenuControllerTest {
 
     @Test
     public void initialState() {
-        Model mockModel = MockModel.build();
-        MenuController controller = new MenuController(mockModel);
+        GameModel mockGameModel = MockGameModel.build();
+        MenuController controller = new MenuController(mockGameModel);
 
         Assert.assertFalse(controller.getDisableNewGame());
         Assert.assertTrue(controller.getDisableBet());
@@ -20,9 +20,9 @@ public class MenuControllerTest {
     @Test
     public void startGame() {
         // Mock Model
-        Model mockModel = MockModel.build();
+        GameModel mockGameModel = MockGameModel.build();
         // Real Controller
-        MenuController controller = new MenuController(mockModel);
+        MenuController controller = new MenuController(mockGameModel);
         controller.onGameStarted();
 
         Assert.assertTrue(controller.getDisableNewGame());
@@ -34,9 +34,9 @@ public class MenuControllerTest {
     @Test
     public void gameFinish() {
         // Mock Model
-        Model mockModel = MockModel.build();
+        GameModel mockGameModel = MockGameModel.build();
         // Real Controller
-        MenuController controller = new MenuController(mockModel);
+        MenuController controller = new MenuController(mockGameModel);
         controller.onGameFinished();
         Assert.assertFalse(controller.getDisableNewGame());
         Assert.assertTrue(controller.getDisableExitGame());
@@ -48,9 +48,9 @@ public class MenuControllerTest {
     @Test
     public void nextRound() {
         // Mock Model
-        Model mockModel = MockModel.build();
+        GameModel mockGameModel = MockGameModel.build();
         // Real Controller
-        MenuController controller = new MenuController(mockModel);
+        MenuController controller = new MenuController(mockGameModel);
         controller.onNewRound();
         Assert.assertTrue(controller.getDisableNextRound());
     }
@@ -58,9 +58,9 @@ public class MenuControllerTest {
     @Test
     public void newBet() {
         // Mock Model
-        Model mockModel = MockModel.build();
+        GameModel mockGameModel = MockGameModel.build();
         // Real Controller
-        MenuController controller = new MenuController(mockModel);
+        MenuController controller = new MenuController(mockGameModel);
         controller.onNewBet();
 
         Assert.assertFalse(controller.getDisableBet());
@@ -69,21 +69,22 @@ public class MenuControllerTest {
     @Test
     public void confirmBet() {
         // Mock Model
-        Model mockModel = MockModel.build();
+        GameModel mockGameModel = MockGameModel.build();
         // Real Controller
-        MenuController controller = new MenuController(mockModel);
+        MenuController controller = new MenuController(mockGameModel);
         controller.onBetConfirmed();
 
         Assert.assertTrue(controller.getDisableBet());
         Assert.assertFalse(controller.getDisableHitAndStand());
+
     }
 
     @Test
     public void standAction() {
         // Mock Model
-        Model mockModel = MockModel.build();
+        GameModel mockGameModel = MockGameModel.build();
         // Real Controller
-        MenuController controller = new MenuController(mockModel);
+        MenuController controller = new MenuController(mockGameModel);
         controller.newGameAction(null);
         controller.standAction(null);
 
