@@ -43,12 +43,9 @@ public class GuiTest extends ApplicationTest {
 
     @Test
     public void walkThrough() {
-        verifyThat("#new_game", isVisible());
-        verifyThat("#textArea", TextInputControlMatchers.hasText(""));
-
-//        testVisibility();
-//        testState();
-//        testStartAndExit();
+        testVisibility();
+        testState();
+        testStartAndExit();
     }
 
     private void testVisibility() {
