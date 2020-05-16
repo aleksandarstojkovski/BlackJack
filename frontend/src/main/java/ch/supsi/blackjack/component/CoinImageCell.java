@@ -29,6 +29,7 @@ public class CoinImageCell extends ListCell<CoinImage> {
 
             button.setGraphic(imageView);
             button.setOnAction(e -> model.bet(coin.getValue()) );
+            button.setId(coin.getFxId());
 
             setText(null);
             setGraphic(button);

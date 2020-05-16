@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import java.net.URL;
 
 public class CoinImage implements Drawable {
+
     private final Coin coin;
     private Image image;
 
@@ -34,4 +35,9 @@ public class CoinImage implements Drawable {
     public int getValue() {
         return coin.getValue();
     }
+
+    public String getFxId() {
+        return coin.getFxId();
+    }
+
 }
