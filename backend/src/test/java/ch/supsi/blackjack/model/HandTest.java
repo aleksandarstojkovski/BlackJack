@@ -9,28 +9,33 @@ class HandTest {
     @Test
     public void addCard() {
         Hand testHand = new Hand();
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
-        assertEquals(1,testHand.size());
+        var card = new Card.Builder(Value.ACE).build();
+        testHand.addCard(card);
+        assertEquals(1, testHand.size());
     }
 
     @Test
     public void value() {
         Hand testHand = new Hand();
 
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
+        var card = new Card.Builder(Value.ACE).setSeed(Seed.C).build();
+        testHand.addCard(card);
         assertEquals(11, testHand.value());
 
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
+        card = new Card.Builder(Value.ACE).setSeed(Seed.C).build();
+        testHand.addCard(card);
         assertEquals(12, testHand.value());
 
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
+        card = new Card.Builder(Value.ACE).setSeed(Seed.C).build();
+        testHand.addCard(card);
         assertEquals(13, testHand.value());
     }
 
     @Test
     public void discardCards() {
         Hand testHand = new Hand();
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
+        var card = new Card.Builder(Value.TWO).build();
+        testHand.addCard(card);
         testHand.discardCards();
         assertEquals(0, testHand.size());
     }
@@ -38,17 +43,26 @@ class HandTest {
     @Test
     void isBusted() {
         Hand testHand = new Hand();
-        testHand.addCard(new Card(Seed.C,Value.EIGHT,"blu"));
-        testHand.addCard(new Card(Seed.C,Value.EIGHT,"blu"));
-        testHand.addCard(new Card(Seed.C,Value.EIGHT,"blu"));
+
+        var eight = new Card.Builder(Value.EIGHT).build();
+        testHand.addCard(eight);
+
+        var nine = new Card.Builder(Value.NINE).build();
+        testHand.addCard(nine);
+
+        var seven = new Card.Builder(Value.SEVEN).build();
+        testHand.addCard(seven);
+
         assertTrue(testHand.isBusted());
     }
 
     @Test
     void isBlackJack() {
         Hand testHand = new Hand();
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
-        testHand.addCard(new Card(Seed.C,Value.TEN,"blu"));
+        var ace = new Card.Builder(Value.ACE).build();
+        testHand.addCard(ace);
+        var ten = new Card.Builder(Value.TEN).build();
+        testHand.addCard(ten);
         assertTrue(testHand.isBlackJack());
     }
 
@@ -58,10 +72,12 @@ class HandTest {
         Hand testHand = new Hand();
         assertEquals(cards++, testHand.size());
 
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
+        var ace = new Card.Builder(Value.ACE).build();
+        testHand.addCard(ace);
         assertEquals(cards++, testHand.size());
 
-        testHand.addCard(new Card(Seed.C,Value.ACE,"blu"));
+        var ace2= new Card.Builder(Value.ACE).build();
+        testHand.addCard(ace2);
         assertEquals(cards, testHand.size());
     }
 }

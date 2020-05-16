@@ -7,17 +7,18 @@ import java.util.List;
 public class Deck {
     private final Card[] cards;
 
-    Deck(){
+    Deck() {
+        this(Card.BackColor.BLUE);
+    }
+
+    Deck(Card.BackColor backColor) {
         List<Card> cardList = new ArrayList<>();
-        String back;
-        if(Math.random() < 0.5){
-            back="red";
-        }else{
-            back="blu";
-        }
-        for(Seed seed : EnumSet.allOf(Seed.class)) {
-            for(Value value : EnumSet.allOf(Value.class)) {
-                cardList.add(new Card(seed, value, back));
+
+        for(Value value : EnumSet.allOf(Value.class)) {
+            var cardBuilder = new Card.Builder(value).setBack(backColor);
+            for(Seed seed : EnumSet.allOf(Seed.class)) {
+                Card card = cardBuilder.setSeed(seed).build();
+                cardList.add(card);
             }
         }
         cards = new Card[cardList.size()];

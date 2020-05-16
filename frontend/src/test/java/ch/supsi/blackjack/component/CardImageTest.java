@@ -10,7 +10,7 @@ public class CardImageTest {
     public void getUrl() {
         for (Seed seed : Seed.values()) {
             for (Value val : Value.values()) {
-                Card card = new Card(seed, val, "blu");
+                var card = new Card.Builder(val).setSeed(seed).build();
                 CardImage cardImage = new CardImage(card, false);
                 Assert.assertNotNull(cardImage.getUrl());
             }

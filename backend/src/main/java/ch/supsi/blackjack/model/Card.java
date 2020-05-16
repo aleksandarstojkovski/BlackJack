@@ -4,15 +4,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Card implements Serializable {
+    public enum BackColor {
+        RED,
+        BLUE
+    }
 
     private final Seed seed;
     private final Value value;
-    private final String back;
+    private final BackColor back;
 
-    public Card(Seed seed, Value value, String back){
-        this.seed = seed;
-        this.value = value;
-        this.back = back;
+    public Card(Builder builder) {
+        this.seed = builder.seed;
+        this.value = builder.value;
+        this.back = builder.back;
     }
 
     public Seed getSeed() {
@@ -23,7 +27,7 @@ public class Card implements Serializable {
         return value;
     }
 
-    public String getBack(){
+    public BackColor getBack(){
         return back;
     }
 
@@ -48,5 +52,35 @@ public class Card implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(seed, value);
+    }
+
+    public static class Builder {
+        private Value value;    // mandatory
+        private Seed seed = Seed.D;
+        private BackColor back = BackColor.BLUE;
+
+        public Builder(Value value) {
+            this.value = value;
+        }
+
+        public Builder setSeed(Seed seed) {
+            this.seed = seed;
+            return this;
+        }
+
+        public Builder setValue(Value value) {
+            this.value = value;
+            return this;
+        }
+
+        public Builder setBack(BackColor back) {
+            this.back = back;
+            return this;
+        }
+
+        public Card build() {
+            return new Card(this);
+        }
+
     }
 }

@@ -20,7 +20,8 @@ public class DecksContainer implements Serializable {
         if (numberOfDecks > MIN_NUMBER_OF_DECKS  && numberOfDecks < MAX_NUMBER_OF_DECKS){
             this.numberOfDecks=numberOfDecks;
             for (int i=0; i<numberOfDecks; i++){
-                Deck deck = new Deck();
+                Card.BackColor backColor = (Math.random() < 0.5) ? Card.BackColor.RED : Card.BackColor.BLUE;
+                Deck deck = new Deck(backColor);
                 availableCards.addAll(Arrays.asList(deck.getCards()));
             }
         } else {
