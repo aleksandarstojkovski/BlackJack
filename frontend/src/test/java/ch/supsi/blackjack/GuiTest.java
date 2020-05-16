@@ -1,7 +1,11 @@
 package ch.supsi.blackjack;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
+import org.junit.After;
 import org.junit.Test;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.control.TextInputControlMatchers;
 
@@ -16,6 +20,13 @@ public class GuiTest extends ApplicationTest {
     private int stepNo;
 
     MainApp main;
+
+    @After
+    public void tearDown () throws Exception {
+        FxToolkit.hideStage();
+        release(new KeyCode[]{});
+        release(new MouseButton[]{});
+    }
 
     private void step(final String step, final Runnable runnable) {
         ++stepNo;

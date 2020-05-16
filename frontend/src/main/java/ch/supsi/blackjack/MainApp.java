@@ -50,10 +50,10 @@ public class MainApp extends Application {
         model.addPropertyChangeListener(logView);
 
         // add components to the primary stage and show it
-        setupStage(primaryStage, contentAreaView, menuView, logView);
+        setupStage(primaryStage, contentAreaView.getComponent(), menuView.getComponent(), logView.getComponent());
     }
 
-    private void setupStage(Stage primaryStage, ContentAreaView contentAreaView, MenuView menuView, LogView logView) {
+    private void setupStage(Stage primaryStage, Parent... components) {
         VBox vbox = new VBox();
         AnchorPane.setBottomAnchor(vbox, 0.0);
         AnchorPane.setTopAnchor(vbox, 0.0);
@@ -65,9 +65,8 @@ public class MainApp extends Application {
         root.getChildren().add(vbox);
 
         // VBox children are the components of the following views: ContentAreaView, MenuView, LogView
-        vbox.getChildren().add(contentAreaView.getComponent());
-        vbox.getChildren().add(menuView.getComponent());
-        vbox.getChildren().add(logView.getComponent());
+        for (Parent component : components)
+            vbox.getChildren().add(component);
 
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add("/ch/supsi/blackjack/css/style.css");
@@ -76,5 +75,6 @@ public class MainApp extends Application {
         primaryStage.getIcons().add(appIcon);
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.toFront();
     }
 }
