@@ -52,6 +52,7 @@ public class GuiTest extends ApplicationTest {
         testStartBetAndExit();
         testStartBetHitAndExit();
         testStartBetStandAndExit();
+        testNextRound();
     }
 
     private void testInitialState() {
@@ -104,11 +105,22 @@ public class GuiTest extends ApplicationTest {
             betOnRandomCoin();
             confirmBet();
             stand();
-            nextRound();
             exitGame();
         });
     }
 
+    public void testNextRound() {
+        step("testStartBetStandAndExit", () -> {
+            newGame();
+            for (int i=0;i<2;i++) {
+                betOnRandomCoin();
+                confirmBet();
+                stand();
+                nextRound();
+            }
+            exitGame();
+        });
+    }
 
 
     private void initialState(){
