@@ -1,20 +1,13 @@
 package ch.supsi.blackjack.model;
 
-import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
-
 public class Dealer extends VirtualPlayer {
     private DecksContainer decksContainer;
 
-    public Dealer() {
+    public Dealer(DecksContainer decksContainer) {
         super("Dealer");
         this.ai = new DealerAI(this);
-        try {
-            decksContainer = new DecksContainer(3);
-            // ToDo: rendere modificabile il numero di mazzi
-        } catch (InvalidDecksContainerSizeException e) {
-            e.printStackTrace();
-        }
-        decksContainer.shuffle();
+        this.decksContainer = decksContainer;
+        this.decksContainer.shuffle();
     }
 
     public Card giveCard(){

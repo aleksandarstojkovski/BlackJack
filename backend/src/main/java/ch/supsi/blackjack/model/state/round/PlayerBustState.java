@@ -1,23 +1,28 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
+
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * Player decided to hit, but he exceeds the limit of 21.
  * The Round is over, main player won.
  * Next State: UpdateTableState
  */
-public class RoundPlayerBustState implements RoundState {
+public class PlayerBustState implements RoundState {
 
-    public RoundPlayerBustState() {
+    RoundHandler round;
+
+    public PlayerBustState(RoundHandler round) {
+        this.round = round;
         printStatus();
     }
 
     @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundUpdateTableState());
+    public void next() {
+        round.setState(new UpdateTableState(round));
     }
 
     @Override
-    public void prev(GameStateManager round) {
+    public void prev() {
 
     }
 
@@ -28,9 +33,9 @@ public class RoundPlayerBustState implements RoundState {
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         round.setPlayerBusted();
-        next(round);
+        next();
         round.goNextState();
     }
 

@@ -1,6 +1,6 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
 
-import ch.supsi.blackjack.model.Round;
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * This is the initial phase of a Round.
@@ -8,30 +8,33 @@ import ch.supsi.blackjack.model.Round;
  * Once confirmed the cards can be distributed
  * Next State: BetState, SetupTableState
  */
-public class RoundBetState implements RoundState {
+public class BetState implements RoundState {
 
-    public RoundBetState(){
+    RoundHandler round;
+
+    public BetState(RoundHandler round){
         printStatus();
+        this.round = round;
     }
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         // bet confirmed
         if (round.isBetConfirmed()){
             round.openRound();
-            next(round);
+            next();
         }
     }
 
     @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundSetupTableState());
+    public void next() {
+        round.setState(new SetupTableState(round));
     }
 
     @Override
-    public void prev(GameStateManager round) {
-        round.setState(new RoundInitState());
+    public void prev() {
+        System.out.println("No previous state from here");
     }
 
     @Override

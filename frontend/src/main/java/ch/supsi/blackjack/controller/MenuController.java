@@ -1,6 +1,8 @@
 package ch.supsi.blackjack.controller;
 
+import ch.supsi.blackjack.model.DecksContainer;
 import ch.supsi.blackjack.model.GameHandler;
+import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -66,12 +68,16 @@ public class MenuController extends AbstractController  {
     void newGameAction(ActionEvent actionEvent) {
         //TODO: ask nickname to user
         String nickName = "Player 1";
-        model.newGame(nickName);
+        try {
+            model.newGame(nickName, DecksContainer.DEFAULT_NUMBER_OF_DECKS);
+        } catch (InvalidDecksContainerSizeException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void exitGameAction(ActionEvent actionEvent) {
-        model.exitGame();
+        model.exitRound();
     }
 
     @FXML

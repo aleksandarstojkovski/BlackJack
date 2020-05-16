@@ -11,9 +11,9 @@ class PlayerTest {
     @Test
     void addCard() {
         testPlayer = new Player("TestPlayer");
-        Card testCard = new Card(Seed.S,Value.ACE,"blu");
+        var testCard = new Card.Builder(Value.ACE).build();
         testPlayer.addCard(testCard);
-        assertEquals(1,testPlayer.hand.size());
+        assertEquals(1, testPlayer.hand.size());
     }
 
     @Test
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     void getHandValue() {
         testPlayer = new Player("TestPlayer");
-        Card testCard = new Card(Seed.S,Value.TEN,"blu");
+        var testCard = new Card.Builder(Value.TEN).build();
         testPlayer.hand.addCard(testCard);
         assertEquals(10,testPlayer.getHandValue());
 

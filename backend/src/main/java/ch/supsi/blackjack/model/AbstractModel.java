@@ -1,9 +1,10 @@
 package ch.supsi.blackjack.model;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-abstract public class AbstractModel implements GameHandler {
+abstract public class AbstractModel{
 
     protected final PropertyChangeSupport pcs;
 
@@ -17,5 +18,9 @@ abstract public class AbstractModel implements GameHandler {
 
     public void removePropertyChangeListener(PropertyChangeListener pcl) {
         pcs.removePropertyChangeListener(pcl);
+    }
+
+    public void firePropertyChange(PropertyChangeEvent event){
+        pcs.firePropertyChange(event);
     }
 }
