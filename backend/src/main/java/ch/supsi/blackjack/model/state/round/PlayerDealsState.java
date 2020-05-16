@@ -1,6 +1,7 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
 
 import ch.supsi.blackjack.model.Hand;
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * This is the turn of the Main Player.
@@ -8,19 +9,22 @@ import ch.supsi.blackjack.model.Hand;
  * In case of Blackjack the Round is over, he won
  * In case of Bust the Round is over, dealer won
  */
-public class RoundPlayerDealsState implements RoundState {
+public class PlayerDealsState implements RoundState {
 
-    public RoundPlayerDealsState() {
+    RoundHandler round;
+
+    public PlayerDealsState(RoundHandler round) {
+        this.round = round;
         printStatus();
     }
 
     @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundDealerDealsState());
+    public void next() {
+        round.setState(new DealerDealsState(round));
     }
 
     @Override
-    public void prev(GameStateManager round) {
+    public void prev() {
 
     }
 
@@ -31,25 +35,25 @@ public class RoundPlayerDealsState implements RoundState {
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         if (round.isPlayerStand()){
             //Order of call is important
-            next(round);
+            next();
             round.updateDealer();
             round.computeDealer();
         } else {
             Hand hand = round.getPlayerHand();
             if (hand.isBusted()){
-                round.setState(new RoundPlayerBustState());
+                round.setState(new PlayerBustState(round));
                 round.updateDealer();
                 round.goNextState();
             } else if (hand.isBlackJack()) {
-                round.setState(new RoundTwentyOneState());
+                round.setState(new TwentyOneState(round));
                 round.updateDealer();
                 round.goNextState();
             } else {
                 // stay in this state until the user bust or stands or makes blackjack
-                round.setState(new RoundPlayerDealsState());
+                round.setState(new PlayerDealsState(round));
             }
         }
     }

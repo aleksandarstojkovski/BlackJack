@@ -71,7 +71,7 @@ public class MenuController extends AbstractController  {
 
     @FXML
     void exitGameAction(ActionEvent actionEvent) {
-        model.exitGame();
+        model.exitRound();
     }
 
     @FXML

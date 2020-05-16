@@ -1,24 +1,29 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
+
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * Player confirmed his bet and cards was distributed
  * If player got 21 with 2 cards the Round is over, main player won.
  * Next State: BlackJackState,PlayerDealsState
  */
-public class RoundSetupTableState implements RoundState {
+public class SetupTableState implements RoundState {
 
-    public RoundSetupTableState(){
+    RoundHandler round;
+
+    public SetupTableState(RoundHandler round){
+        this.round = round;
         printStatus();
     }
 
     @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundPlayerDealsState());
+    public void next() {
+        round.setState(new PlayerDealsState(round));
     }
 
     @Override
-    public void prev(GameStateManager round) {
-        round.setState(new RoundBetState());
+    public void prev() {
+        round.setState(new BetState(round));
     }
 
     @Override
@@ -28,12 +33,12 @@ public class RoundSetupTableState implements RoundState {
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         if (round.getPlayerHand().isBlackJack()){
-            round.setState(new RoundBlackJackState());
+            round.setState(new BlackJackState(round));
             round.goNextState();
         } else {
-            next(round);
+            next();
         }
     }
 }

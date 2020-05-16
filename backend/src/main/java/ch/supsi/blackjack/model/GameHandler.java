@@ -6,7 +6,7 @@ package ch.supsi.blackjack.model;
 public interface GameHandler {
 
     void newGame(String nickName);
-    void exitGame();
+    void exitRound();
     void hit();
     void stand();
     void bet(int betValue);

@@ -1,4 +1,6 @@
-package ch.supsi.blackjack.model.state;
+package ch.supsi.blackjack.model.state.round;
+
+import ch.supsi.blackjack.model.RoundHandler;
 
 /**
  * Player asked for new cards (hit) and reached 21
@@ -6,19 +8,22 @@ package ch.supsi.blackjack.model.state;
  * We need to compare with Dealer cards
  * Next State: UpdateTableState
  */
-public class RoundTwentyOneState implements RoundState {
+public class TwentyOneState implements RoundState {
 
-    public RoundTwentyOneState() {
+    RoundHandler round;
+
+    public TwentyOneState(RoundHandler round) {
+        this.round = round;
         printStatus();
     }
 
     @Override
-    public void next(GameStateManager round) {
-        round.setState(new RoundUpdateTableState());
+    public void next() {
+        round.setState(new UpdateTableState(round));
     }
 
     @Override
-    public void prev(GameStateManager round) {
+    public void prev() {
 
     }
 
@@ -29,9 +34,9 @@ public class RoundTwentyOneState implements RoundState {
 
     // business logic and state transition
     @Override
-    public void updateState(GameStateManager round) {
+    public void updateState() {
         round.setPlayerTwentyOne();
-        next(round);
+        next();
         round.goNextState();
     }
 
