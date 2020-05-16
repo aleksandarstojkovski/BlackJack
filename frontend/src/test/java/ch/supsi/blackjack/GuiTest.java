@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.control.TextInputControlMatchers;
 import java.util.Random;
 
 import static org.testfx.api.FxAssert.verifyThat;
@@ -34,7 +33,7 @@ public class GuiTest extends ApplicationTest {
     }
 
     private void step(final String step, final Runnable runnable) {
-        System.out.printf(step);
+        System.out.print(step);
         ++stepNo;
         runnable.run();
     }
@@ -56,186 +55,203 @@ public class GuiTest extends ApplicationTest {
     }
 
     private void testInitialState() {
-        step("testInitialState", () -> {
-            verifyNewGameIsVisibleAndEnabled();
-            verifyThat("#textArea", TextInputControlMatchers.hasText(""));
-        });
+        step("testInitialState", this::initialState);
     }
 
     public void testStartAndExit() {
         step("testStartAndExit", () -> {
-
-            // new game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#new_game");
-            verifyExitIsVisibleAndEnabled();
-            verifyCoinsAreVisibleAndEnabled();
-
-            sleep(SLEEP_INTERVAL);
-            clickOn("#exit_game");
-
+            newGame();
+            exitGame();
         });
     }
 
     public void testAllCoins(){
-
         step("testAllCoins", () -> {
             for (String coinFxId : CoinImageCell.coinFxIds) {
-                // new game
-                sleep(SLEEP_INTERVAL);
-                clickOn("#new_game");
-                verifyExitIsVisibleAndEnabled();
-                verifyCoinsAreVisibleAndEnabled();
-
+                newGame();
                 // bet the coin
                 sleep(SLEEP_INTERVAL);
                 clickOn(coinFxId);
                 verifyExitIsVisibleAndEnabled();
                 verifyBetIsVisibleAndEnabled();
-
-                // exit game
-                sleep(SLEEP_INTERVAL);
-                clickOn("#exit_game");
+                exitGame();
             }
         });
     }
 
     public void testStartBetAndExit() {
         step("testStartBetAndExit", () -> {
-
-            // new game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#new_game");
-            verifyExitIsVisibleAndEnabled();
-            verifyCoinsAreVisibleAndEnabled();
-
-            // bet 100coins
-            sleep(SLEEP_INTERVAL);
-            clickOn("#coin100");
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsVisibleAndEnabled();
-
-            // confirm bet
-            sleep(SLEEP_INTERVAL);
-            clickOn("#bet");
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsDisabled();
-
-            // exit game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#exit_game");
-
+            newGame();
+            betOnRandomCoin();
+            confirmBet();
+            exitGame();
         });
     }
 
     private void testStartBetHitAndExit() {
         step("testStartBetHitAndExit", () -> {
-
-            // new game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#new_game");
-            verifyExitIsVisibleAndEnabled();
-            verifyCoinsAreVisibleAndEnabled();
-
-            // bet on a random coin
-            sleep(SLEEP_INTERVAL);
-            clickOn(CoinImageCell.coinFxIds[rand.nextInt(CoinImageCell.coinFxIds.length)]);
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsVisibleAndEnabled();
-
-            // confirm bet
-            sleep(SLEEP_INTERVAL);
-            clickOn("#bet");
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsDisabled();
-
-            // hit
-            sleep(SLEEP_INTERVAL);
-            clickOn("#get_card");
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsDisabled();
-
-            // exit game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#exit_game");
-
+            newGame();
+            betOnRandomCoin();
+            confirmBet();
+            hit();
+            exitGame();
         });
     }
 
     public void testStartBetStandAndExit() {
         step("testStartBetStandAndExit", () -> {
-
-            // new game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#new_game");
-            verifyExitIsVisibleAndEnabled();
-            verifyCoinsAreVisibleAndEnabled();
-
-            // bet on a random coin
-            sleep(SLEEP_INTERVAL);
-            clickOn(CoinImageCell.coinFxIds[rand.nextInt(CoinImageCell.coinFxIds.length)]);
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsVisibleAndEnabled();
-
-            // confirm bet
-            sleep(SLEEP_INTERVAL);
-            clickOn("#bet");
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsDisabled();
-
-            // stand
-            sleep(SLEEP_INTERVAL);
-            clickOn("#stop_card");
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsDisabled();
-            verifyNextRoundIsVisibleAndEnabled();
-
-            // next round
-            sleep(SLEEP_INTERVAL);
-            clickOn("#next_round");
-            verifyExitIsVisibleAndEnabled();
-            verifyBetIsDisabled();
-            verifyNextRoundIsDisabled();
-
-            // exit game
-            sleep(SLEEP_INTERVAL);
-            clickOn("#exit_game");
-
+            newGame();
+            betOnRandomCoin();
+            confirmBet();
+            stand();
+            nextRound();
+            exitGame();
         });
     }
 
-    public void verifyCoinsAreVisibleAndEnabled(){
+
+
+    private void initialState(){
+        verifyNewGameIsVisibleAndEnabled();
+        verifyBetIsDisabled();
+        verifyNextRoundIsDisabled();
+        verifyHitIsDisabled();
+        verifyStandIsDisabled();
+        verifyExitIsDisabled();
+    }
+
+    private void newGame(){
+        clickOn("#new_game");
+        verifyNewGameIsDisabled();
+        verifyBetIsDisabled();
+        verifyHitIsDisabled();
+        verifyStandIsDisabled();
+        verifyNextRoundIsDisabled();
+        verifyExitIsVisibleAndEnabled();
+        verifyCoinsAreVisibleAndEnabled();
+    }
+
+    private void betOnRandomCoin(){
+        clickOn(CoinImageCell.coinFxIds[rand.nextInt(CoinImageCell.coinFxIds.length)]);
+        verifyNewGameIsDisabled();
+        verifyBetIsVisibleAndEnabled();
+        verifyHitIsDisabled();
+        verifyStandIsDisabled();
+        verifyNextRoundIsDisabled();
+        verifyExitIsVisibleAndEnabled();
+        verifyCoinsAreVisibleAndEnabled();
+    }
+
+    private void confirmBet(){
+        sleep(SLEEP_INTERVAL);
+        clickOn("#bet");
+        verifyNewGameIsDisabled();
+        verifyBetIsDisabled();
+        verifyHitIsVisibleAndEnabled();
+        verifyStandIsVisibleAndEnabled();
+        // if player makes blackjack NextRound would be enabled
+        // verifyNextRoundIsDisabled();
+        verifyExitIsVisibleAndEnabled();
+    }
+
+    private void hit(){
+        sleep(SLEEP_INTERVAL);
+        clickOn("#get_card");
+        // if player busts newGame would be enabled
+        // verifyNewGameIsDisabled();
+        verifyBetIsDisabled();
+        verifyExitIsVisibleAndEnabled();
+        verifyBetIsDisabled();
+    }
+
+    private void exitGame(){
+        sleep(SLEEP_INTERVAL);
+        clickOn("#exit_game");
+        initialState();
+    }
+
+    private void stand(){
+        sleep(SLEEP_INTERVAL);
+        clickOn("#stop_card");
+        verifyExitIsVisibleAndEnabled();
+        verifyBetIsDisabled();
+        verifyHitIsDisabled();
+        // if user busts nextRound would not be enabled
+        //verifyNextRoundIsVisibleAndEnabled();
+    }
+
+    private void nextRound(){
+        sleep(SLEEP_INTERVAL);
+        clickOn("#next_round");
+        verifyNewGameIsDisabled();
+        verifyBetIsDisabled();
+        verifyHitIsDisabled();
+        verifyStandIsDisabled();
+        verifyNextRoundIsDisabled();
+        verifyExitIsVisibleAndEnabled();
+        verifyCoinsAreVisibleAndEnabled();
+    }
+
+
+
+    private void verifyCoinsAreVisibleAndEnabled(){
         for (String coinFxId : CoinImageCell.coinFxIds){
             verifyThat(coinFxId, isVisible());
         }
     }
 
-    public void verifyExitIsVisibleAndEnabled(){
+    private void verifyExitIsVisibleAndEnabled(){
         verifyThat("#exit_game", isVisible());
         verifyThat("#exit_game", isEnabled());
     }
 
-    public void verifyBetIsVisibleAndEnabled(){
+    private void verifyBetIsVisibleAndEnabled(){
         verifyThat("#bet", isVisible());
         verifyThat("#bet", isEnabled());
     }
 
-    public void verifyBetIsDisabled(){
-        verifyThat("#bet", isDisabled());
-    }
-
-    public void verifyNextRoundIsVisibleAndEnabled(){
+    private void verifyNextRoundIsVisibleAndEnabled(){
         verifyThat("#next_round", isVisible());
         verifyThat("#next_round", isEnabled());
     }
 
-    public void verifyNextRoundIsDisabled(){
+    private void verifyNewGameIsVisibleAndEnabled(){
+        verifyThat("#new_game", isVisible());
+        verifyThat("#new_game", isEnabled());
+    }
+
+    private void verifyHitIsVisibleAndEnabled(){
+        verifyThat("#get_card", isVisible());
+        verifyThat("#get_card", isEnabled());
+    }
+
+    private void verifyStandIsVisibleAndEnabled(){
+        verifyThat("#stop_card", isVisible());
+        verifyThat("#stop_card", isEnabled());
+    }
+
+    private void verifyNewGameIsDisabled(){
+        verifyThat("#new_game", isDisabled());
+    }
+
+    private void verifyNextRoundIsDisabled(){
         verifyThat("#next_round", isDisabled());
     }
 
-    public void verifyNewGameIsVisibleAndEnabled(){
-        verifyThat("#new_game", isVisible());
-        verifyThat("#new_game", isEnabled());
+    private void verifyBetIsDisabled(){
+        verifyThat("#bet", isDisabled());
+    }
+
+    private void verifyHitIsDisabled(){
+        verifyThat("#get_card", isDisabled());
+    }
+
+    private void verifyStandIsDisabled(){
+        verifyThat("#stop_card", isDisabled());
+    }
+
+    private void verifyExitIsDisabled(){
+        verifyThat("#exit_game", isDisabled());
     }
 
 }
