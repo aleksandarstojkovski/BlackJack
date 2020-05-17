@@ -9,7 +9,7 @@ import ch.supsi.blackjack.model.RoundHandler;
  */
 public class DealerBustState implements RoundState {
 
-    RoundHandler round;
+    private final RoundHandler round;
 
     public DealerBustState(RoundHandler round) {
         this.round = round;

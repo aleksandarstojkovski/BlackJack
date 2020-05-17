@@ -11,7 +11,7 @@ import ch.supsi.blackjack.model.RoundHandler;
  */
 public class PlayerDealsState implements RoundState {
 
-    RoundHandler round;
+    private final RoundHandler round;
 
     public PlayerDealsState(RoundHandler round) {
         this.round = round;

@@ -22,7 +22,10 @@ public class DecksContainer implements Serializable {
             this.numberOfDecks=numberOfDecks;
             for (int i=0; i<numberOfDecks; i++){
                 Card.BackColor backColor = (Math.random() < 0.5) ? Card.BackColor.RED : Card.BackColor.BLUE;
-                Deck deck = new Deck(backColor);
+
+                Deck deck = new Deck.Builder()
+                        .setBackColor(backColor)
+                        .build();
                 availableCards.addAll(Arrays.asList(deck.getCards()));
             }
         } else {

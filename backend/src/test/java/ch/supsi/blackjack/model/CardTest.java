@@ -8,15 +8,17 @@ class CardTest {
 
     @Test
     void equals() {
-        Card card1 = new Card.Builder(Value.ACE).setSeed(Seed.D).build();
-        Card card2 = new Card.Builder(Value.ACE).setSeed(Seed.D).build();
+        var builder = new Card.Builder();
+        Card card1 = builder.build();
+        Card card2 = builder.build();
         assertEquals(card1, card2);
     }
 
     @Test
     void notEquals() {
-        Card card1 = new Card.Builder(Value.ACE).setSeed(Seed.D).build();
-        Card card2 = new Card.Builder(Value.TEN).setSeed(Seed.D).build();
+        var builder = new Card.Builder().setSeed(Seed.D);
+        Card card1 = builder.setValue(Value.ACE).build();
+        Card card2 = builder.setValue(Value.TEN).build();
         assertNotEquals(card1, card2);
     }
 

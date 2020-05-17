@@ -3,10 +3,7 @@ package ch.supsi.blackjack.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,14 +13,13 @@ class DeckTest {
 
     @BeforeEach
     void setup() {
-        testDeck = new Deck();
+        testDeck = new Deck.Builder().build();
     }
 
     @Test
     void testSize(){
         int size = Value.values().length * Seed.values().length;
         assertEquals(size, testDeck.getCards().length);
-
     }
 
     @Test
@@ -34,13 +30,39 @@ class DeckTest {
 
     @Test
     void testDeckContainsAllCards(){
-        Deck deck = new Deck();
+        List<Card> cards = new ArrayList<>();
+
+        var cardBuilder = new Card.Builder();
         for(Value value : EnumSet.allOf(Value.class)) {
+            cardBuilder.setValue(value);
             for(Seed seed : EnumSet.allOf(Seed.class)) {
-                var cardBuilder = new Card.Builder(value).setSeed(seed);
-                assertTrue(Arrays.asList(deck.getCards()).contains(cardBuilder.build()));
+                var card = cardBuilder.setSeed(seed).build();
+                cards.add(card);
             }
         }
+
+        var deckCards = Arrays.asList(testDeck.getCards());
+        assertTrue(deckCards.containsAll(cards));
+    }
+
+    @Test
+    void testSmallDeck(){
+        testDeck = new Deck.Builder()
+                .setValues(EnumSet.range(Value.ACE, Value.TEN))
+                .build();
+
+        var cardBuilder = new Card.Builder();
+        List<Card> excludedCards = new ArrayList<>();
+        for(Value value : EnumSet.range(Value.JACK, Value.KING)) {
+            cardBuilder.setValue(value);
+            for(Seed seed : EnumSet.allOf(Seed.class)) {
+                var card = cardBuilder.setSeed(seed).build();
+                excludedCards.add(card);
+            }
+        }
+
+        var deckCards = Arrays.asList(testDeck.getCards());
+        assertFalse(deckCards.containsAll(excludedCards));
     }
 
 }

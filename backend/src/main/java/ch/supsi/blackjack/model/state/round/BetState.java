@@ -10,7 +10,7 @@ import ch.supsi.blackjack.model.RoundHandler;
  */
 public class BetState implements RoundState {
 
-    RoundHandler round;
+    private final RoundHandler round;
 
     public BetState(RoundHandler round){
         printStatus();

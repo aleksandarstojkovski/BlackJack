@@ -55,13 +55,15 @@ public class Card implements Serializable {
         return Objects.hash(seed, value);
     }
 
+    /**
+     * Card Builder
+     */
     public static class Builder {
-        private Value value;    // mandatory
+        private Value value = Value.ACE;
         private Seed seed = Seed.D;
         private BackColor back = BackColor.BLUE;
 
-        public Builder(Value value) {
-            this.value = value;
+        public Builder() {
         }
 
         public Builder setSeed(Seed seed) {

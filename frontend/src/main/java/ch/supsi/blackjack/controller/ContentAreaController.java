@@ -29,7 +29,6 @@ public class ContentAreaController extends AbstractController implements Initial
     @FXML private ListView<CardImage> playerCardListView;
     @FXML private ListView<CardImage> dealerCardListView;
 
-    //TODO: test controller through observables and events
     private final ObservableList<CoinImage> coins = FXCollections.observableArrayList();
     private final ObservableList<CardImage> playerCards = FXCollections.observableArrayList(CardImage.extractor());
     private final ObservableList<CardImage> dealerCards = FXCollections.observableArrayList(CardImage.extractor());
@@ -43,6 +42,7 @@ public class ContentAreaController extends AbstractController implements Initial
     private final BooleanProperty notificationAreaVisible = new SimpleBooleanProperty(false);
     private final StringProperty notificationTitle = new SimpleStringProperty();
     private final StringProperty notificationText = new SimpleStringProperty();
+
     // required for FXML binding
     public StringProperty notificationTitleProperty() {
         return notificationTitle;
@@ -51,6 +51,8 @@ public class ContentAreaController extends AbstractController implements Initial
     {
         return notificationTitle.get();
     }
+
+    // required for FXML binding
     public StringProperty notificationTextProperty() {
         return notificationText;
     }
@@ -68,10 +70,10 @@ public class ContentAreaController extends AbstractController implements Initial
         betsArea.visibleProperty().bind(betsAreaVisible);
         notificationArea.visibleProperty().bind(notificationAreaVisible);
 
-        dealerCardListView.setCellFactory(c -> new CardImageCell(model));
+        dealerCardListView.setCellFactory(c -> new CardImageCell());
         dealerCardListView.setItems(dealerCards);
 
-        playerCardListView.setCellFactory(c -> new CardImageCell(model));
+        playerCardListView.setCellFactory(c -> new CardImageCell());
         playerCardListView.setItems(playerCards);
 
         coinsListView.setCellFactory(c -> new CoinImageCell(model));
@@ -102,14 +104,14 @@ public class ContentAreaController extends AbstractController implements Initial
 
     }
 
-    public void onPlayerBlackjack(PlayerBlackjackEvent event) {
+    public void onPlayerBlackjack() {
         FadingStatusMessage.flash(this.notificationArea, "You made Blackjack!");
     }
-    public void onPlayerBusted(PlayerBustedEvent event) {
+    public void onPlayerBusted() {
         FadingStatusMessage.flash(this.notificationArea, "You busted!");
     }
 
-    public void onDealerBusted(DealerBustedEvent event) {
+    public void onDealerBusted() {
         FadingStatusMessage.flash(this.notificationArea, "Dealer busted!");
     }
 
@@ -132,7 +134,7 @@ public class ContentAreaController extends AbstractController implements Initial
         betsAmountProperty.set(betsAmountProperty.get() + event.getBetValue());
     }
 
-    public void onExitGame(GameFinishedEvent event) {
+    public void onExitGame() {
         clearTable();
         betsAreaVisible.set(false);
     }

@@ -4,7 +4,7 @@ import ch.supsi.blackjack.model.GameModel;
 
 public class RoundState implements GameState{
 
-    GameModel gameModel;
+    private final GameModel gameModel;
 
     public RoundState(GameModel gameModel){
         this.gameModel = gameModel;

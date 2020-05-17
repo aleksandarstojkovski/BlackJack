@@ -33,7 +33,7 @@ public class ContentAreaView  extends AbstractView {
 
     @EventHandler
     void handleEvent(GameFinishedEvent event) {
-        controller.onExitGame(event);
+        controller.onExitGame();
     }
 
     @EventHandler
@@ -48,12 +48,12 @@ public class ContentAreaView  extends AbstractView {
 
     @EventHandler
     void handleEvent(PlayerBustedEvent event) {
-        controller.onPlayerBusted(event);
+        controller.onPlayerBusted();
     }
 
     @EventHandler
     void handleEvent(DealerBustedEvent event) {
-        controller.onDealerBusted(event);
+        controller.onDealerBusted();
     }
 
     @EventHandler
@@ -63,7 +63,7 @@ public class ContentAreaView  extends AbstractView {
 
     @EventHandler
     void handleEvent(PlayerBlackjackEvent event) {
-        controller.onPlayerBlackjack(event);
+        controller.onPlayerBlackjack();
     }
 
     @EventHandler

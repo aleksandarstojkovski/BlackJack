@@ -5,7 +5,7 @@ import ch.supsi.blackjack.model.RoundHandler;
 
 public class InitState implements GameState{
 
-    GameModel gameModel;
+    private final GameModel gameModel;
 
     public InitState(GameModel gameModel){
     this.gameModel = gameModel;

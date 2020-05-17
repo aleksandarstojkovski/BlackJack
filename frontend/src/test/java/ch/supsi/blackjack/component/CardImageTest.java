@@ -8,9 +8,11 @@ import org.junit.Assert;
 public class CardImageTest {
     @org.junit.Test
     public void getUrl() {
+        var cardBuilder = new Card.Builder();
         for (Seed seed : Seed.values()) {
+            cardBuilder.setSeed(seed);
             for (Value val : Value.values()) {
-                var card = new Card.Builder(val).setSeed(seed).build();
+                Card card = cardBuilder.setValue(val).build();
                 CardImage cardImage = new CardImage(card, false);
                 Assert.assertNotNull(cardImage.getUrl());
             }

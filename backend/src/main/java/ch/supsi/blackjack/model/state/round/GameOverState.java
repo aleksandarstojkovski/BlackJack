@@ -1,7 +1,5 @@
 package ch.supsi.blackjack.model.state.round;
 
-import ch.supsi.blackjack.model.GameModel;
-import ch.supsi.blackjack.model.Round;
 import ch.supsi.blackjack.model.RoundHandler;
 
 /**
@@ -11,7 +9,7 @@ import ch.supsi.blackjack.model.RoundHandler;
  */
 public class GameOverState implements RoundState {
 
-    RoundHandler round;
+    private final RoundHandler round;
 
     public GameOverState(RoundHandler round) {
         this.round = round;
