@@ -7,7 +7,7 @@ import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
  */
 public interface GameHandler {
 
-    void newGame(String nickName, int numberOfDecks) throws InvalidDecksContainerSizeException;
+    void newGame();
     void exitRound();
     void hit();
     void stand();

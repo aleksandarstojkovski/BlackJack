@@ -1,7 +1,6 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.model.DecksContainer;
-import ch.supsi.blackjack.model.GameHandler;
+import ch.supsi.blackjack.model.*;
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -12,6 +11,12 @@ public class MenuController extends AbstractController  {
 
     public MenuController(GameHandler model) {
         super(model);
+        register("hitAction", new HitCommand(model));
+        register("standAction", new StandCommand(model));
+        register("betAction", new ConfirmBetCommand(model));
+        register("nextRoundAction", new NextRoundCommand(model));
+        register("newGameAction", new NewGameCommand(model));
+        register("exitGameAction", new ExitGameCommand(model));
     }
 
     private final BooleanProperty disableNextRound = new SimpleBooleanProperty(true);
@@ -65,38 +70,34 @@ public class MenuController extends AbstractController  {
     }
 
 
+
     @FXML
     void newGameAction(ActionEvent actionEvent) {
-        //TODO: ask nickname to user
-        String nickName = "Player 1";
-        try {
-            model.newGame(nickName, DecksContainer.DEFAULT_NUMBER_OF_DECKS);
-        } catch (InvalidDecksContainerSizeException e) {
-            e.printStackTrace();
-        }
+        //TODO: ask nickname to user and number of desk with a dedicated dialog
+        execute("newGameAction");
     }
 
     @FXML
     void exitGameAction(ActionEvent actionEvent) {
-        model.exitRound();
+        execute("exitGameAction");
     }
 
     @FXML
     void hitAction(ActionEvent actionEvent) {
-        model.hit();
+        execute("hitAction");
     }
 
     @FXML
     void standAction(ActionEvent actionEvent) {
-        model.stand();
+        execute("standAction");
     }
 
     @FXML
-    public void betAction(ActionEvent actionEvent) {model.confirmBet(); }
+    public void betAction(ActionEvent actionEvent) {execute("betAction"); }
 
     @FXML
     public void nextRoundAction(ActionEvent actionEvent) {
-        model.nextRound();
+        execute("nextRoundAction");
     }
 
     public void onGameStarted() {

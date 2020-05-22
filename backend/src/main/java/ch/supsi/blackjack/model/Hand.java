@@ -63,10 +63,6 @@ public class Hand {
         return cardList.size();
     }
 
-    public Card getLastCard() {
-        return cardList.get(cardList.size()-1);
-    }
-
     public boolean isBusted() {
         return value() > BLACKJACK;
     }

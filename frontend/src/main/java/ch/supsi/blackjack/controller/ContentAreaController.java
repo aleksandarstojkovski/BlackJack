@@ -151,6 +151,7 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     public void loadAvailableCoins() {
+        //ToDo: da rivedere per disaccopiare dal backend
         for (Coin c : model.getCoins()){
             CoinImage img = new CoinImage(c);
             coins.add(img);

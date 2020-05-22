@@ -1,14 +1,14 @@
 package ch.supsi.blackjack.model;
 
-public class StandCommand implements Command{
+public class ExitGameCommand implements Command{
     GameHandler receiver;
 
-    public StandCommand (GameHandler gameModel){
+    public ExitGameCommand(GameHandler gameModel){
         this.receiver = gameModel;
     }
 
     @Override
     public void execute() {
-        receiver.stand();
+        receiver.exitRound();
     }
 }

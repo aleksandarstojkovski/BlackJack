@@ -1,5 +1,5 @@
 package ch.supsi.blackjack.model;
 
-interface Command {
+public interface Command {
     void execute();
 };

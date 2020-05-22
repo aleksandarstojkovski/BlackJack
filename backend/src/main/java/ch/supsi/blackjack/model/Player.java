@@ -20,8 +20,6 @@ public class Player {
         this.coins = INITIAL_COINS;
     }
 
-
-
     public Card getLastCardPicked(){
         return this.hand.getLastCard();
     }

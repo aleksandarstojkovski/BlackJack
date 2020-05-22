@@ -72,6 +72,13 @@ public class GameModel extends AbstractModel implements GameHandler {
 
 
     @Override
+    public void newGame(){
+        try {
+            newGame("Player 1", DecksContainer.DEFAULT_NUMBER_OF_DECKS);
+        } catch (InvalidDecksContainerSizeException e) {
+            e.printStackTrace();
+        }
+    }
     public void newGame(String nickName, int numberOfDecks) throws InvalidDecksContainerSizeException {
         DecksContainer decksContainer = new DecksContainer(numberOfDecks);
         Player humanPlayer = new Player(nickName);
