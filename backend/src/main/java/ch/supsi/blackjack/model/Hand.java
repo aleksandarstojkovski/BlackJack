@@ -35,6 +35,10 @@ public class Hand {
         return currentHandValue;
     }
 
+    public Card getLastCard(){
+        return cardList.get(cardList.size()-1);
+    }
+
     public void discardCards(){
         cardList.clear();
     }

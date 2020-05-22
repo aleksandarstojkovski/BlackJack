@@ -1,8 +1,13 @@
 package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
+import ch.supsi.blackjack.model.Command;
+
+import java.util.HashMap;
 
 public class Player {
+
+    private final HashMap<String, Command> commandMap = new HashMap<>();
 
     private static final int INITIAL_COINS=1000;
     private final String nickname;
@@ -15,9 +20,16 @@ public class Player {
         this.coins = INITIAL_COINS;
     }
 
+
+
+    public Card getLastCardPicked(){
+        return this.hand.getLastCard();
+    }
+
     public void addCard (Card newCard){
         this.hand.addCard(newCard);
     }
+
     public void discardCards() { hand.discardCards(); }
 
     public String getNickname() {
