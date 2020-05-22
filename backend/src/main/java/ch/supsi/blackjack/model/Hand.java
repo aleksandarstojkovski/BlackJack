@@ -59,8 +59,8 @@ public class Hand {
         return cardList.size();
     }
 
-    public int getLastCardValue() {
-        return cardList.get(cardList.size()-1).getValue().getDefaultValue();
+    public Card getLastCard() {
+        return cardList.get(cardList.size()-1);
     }
 
     public boolean isBusted() {
