@@ -24,6 +24,10 @@ public class Card implements Serializable {
         return seed;
     }
 
+    public int getDefaultValue() {
+        return value.getDefaultValue();
+    }
+
     public Value getValue() {
         return value;
     }

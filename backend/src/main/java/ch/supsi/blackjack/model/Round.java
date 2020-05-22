@@ -63,14 +63,13 @@ public class Round implements RoundHandler {
 
     public void hit(Player player) {
         Card card = dealer.giveCard();
-        gameModel.firePropertyChange(new NewCardEvent(this, card, player));
         player.addCard(card);
 
 
         if(player instanceof Dealer){
             gameModel.firePropertyChange(new DealerHandUpdateEvent(this, player.hand, this.state));
         }else {
-            gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, player.getHandValue()));
+            gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, player.hand));
         }
     }
 

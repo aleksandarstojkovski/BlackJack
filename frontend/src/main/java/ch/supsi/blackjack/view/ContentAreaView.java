@@ -67,11 +67,6 @@ public class ContentAreaView  extends AbstractView {
     }
 
     @EventHandler
-    void handleEvent(NewCardEvent event) {
-        controller.onNewCard(event);
-    }
-
-    @EventHandler
     void handleEvent(DealerHandUpdateEvent event) {
         controller.onDealerHand(event);
     }

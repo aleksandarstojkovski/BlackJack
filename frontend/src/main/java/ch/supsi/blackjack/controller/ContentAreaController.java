@@ -167,30 +167,24 @@ public class ContentAreaController extends AbstractController implements Initial
     public void onPlayerHand(PlayerHandUpdateEvent event) {
         playerHandProperty.set(event.getValue());
         betsAreaVisible.set(false);
+        CardImage img = new CardImage(event.getLastCard());
+        playerCards.add(img);
     }
 
     public void onDealerHand(DealerHandUpdateEvent event) {
+        // dealer second card must be covered
+        boolean covered = dealerCards.size() == 1;
+        CardImage img = new CardImage(event.getLastCard(), covered);
+        dealerCards.add(img);
+
         //TODO: should we move this logic in model?
         boolean hideRealHandValue = event.getHandSize()==2 && ((event.getState() instanceof PlayerDealsState) || (event.getState() instanceof BetState));
         if(hideRealHandValue){
-            dealerHandProperty.set(event.getValue() - event.getLastCardValue());
+            dealerHandProperty.set(event.getValue() - event.getLastCard().getDefaultValue());
         }else {
             dealerHandProperty.set(event.getValue());
         }
         betsAreaVisible.set(false);
-    }
-
-    public void onNewCard(NewCardEvent event) {
-        Card card = event.getCard();
-        if (event.getPlayer() instanceof Dealer){
-            // dealer second card must be covered
-            boolean covered = dealerCards.size() == 1;
-            CardImage img = new CardImage(card, covered);
-            dealerCards.add(img);
-        } else {
-            CardImage img = new CardImage(card);
-            playerCards.add(img);
-        }
     }
 
     public void onDealerStart(){
