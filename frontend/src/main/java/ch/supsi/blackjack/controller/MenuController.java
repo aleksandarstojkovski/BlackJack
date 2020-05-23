@@ -1,7 +1,7 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.model.*;
-import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
+import ch.supsi.blackjack.command.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;

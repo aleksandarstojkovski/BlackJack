@@ -6,7 +6,6 @@ public class VirtualPlayer extends Player implements AI {
 
     public VirtualPlayer(String nickname) {
         super(nickname);
-
         this.ai = new PlayerAI(this, PlayerAI.AIType.RISKY);
     }
 

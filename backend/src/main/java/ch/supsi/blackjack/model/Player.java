@@ -1,7 +1,7 @@
 package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
-import ch.supsi.blackjack.model.Command;
+import ch.supsi.blackjack.command.Command;
 
 import java.util.HashMap;
 

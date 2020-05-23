@@ -1,6 +1,6 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.model.Command;
+import ch.supsi.blackjack.command.Command;
 import ch.supsi.blackjack.model.GameHandler;
 import java.util.HashMap;
 

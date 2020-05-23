@@ -1,7 +1,6 @@
 package ch.supsi.blackjack.component;
 
-import ch.supsi.blackjack.model.BetCommand;
-import ch.supsi.blackjack.model.Command;
+import ch.supsi.blackjack.command.BetCommand;
 import ch.supsi.blackjack.model.GameHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
