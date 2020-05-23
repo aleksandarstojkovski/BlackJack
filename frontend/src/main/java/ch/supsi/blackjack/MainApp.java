@@ -34,14 +34,15 @@ public class MainApp extends Application {
 
         // There is one single instance of Model
         GameModel gameModel = GameModel.instance();
+        CommandCatalog commandCatalog = new CommandCatalog(gameModel);
 
-        ContentAreaView contentAreaView = ContentAreaView.create(new ContentAreaController(gameModel), bundle);
+        ContentAreaView contentAreaView = ContentAreaView.create(new ContentAreaController(commandCatalog), bundle);
         gameModel.addPropertyChangeListener(contentAreaView);
 
-        MenuView menuView = MenuView.create(new MenuController(gameModel), bundle);
+        MenuView menuView = MenuView.create(new MenuController(commandCatalog), bundle);
         gameModel.addPropertyChangeListener(menuView);
 
-        LogView logView = LogView.create(new LogController(gameModel), bundle);
+        LogView logView = LogView.create(new LogController(commandCatalog), bundle);
         gameModel.addPropertyChangeListener(logView);
 
         // add components to the primary stage and show it

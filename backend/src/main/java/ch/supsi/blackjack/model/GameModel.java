@@ -19,7 +19,7 @@ public class GameModel extends AbstractModel implements GameHandler {
 
     private RoundHandler round;
 
-    private final Coin[] coins = new Coin[Coin.Values.length];
+
 
     private GameModel() {
         super();
@@ -27,7 +27,6 @@ public class GameModel extends AbstractModel implements GameHandler {
         initState = new InitState(this);
         roundState= new RoundState(this);
         setGameState(initState);
-        initCoins();
     }
 
     public RoundHandler getRound(){
@@ -54,13 +53,6 @@ public class GameModel extends AbstractModel implements GameHandler {
         return roundState;
     }
 
-    private void initCoins() {
-        List<Coin> list = new ArrayList<>();
-        for (int v : Coin.Values)
-            list.add(new Coin(v));
-
-        list.toArray(coins);
-    }
 
     // singleton
     public static GameModel instance() {
@@ -117,8 +109,4 @@ public class GameModel extends AbstractModel implements GameHandler {
         round.playerConfirmBet();
     }
 
-    @Override
-    public Coin[] getCoins() {
-        return coins;
-    }
 }

@@ -1,6 +1,6 @@
 package ch.supsi.blackjack.component;
 
-import ch.supsi.blackjack.model.Coin;
+import ch.supsi.blackjack.Coin;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,6 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.model.*;
-import ch.supsi.blackjack.command.*;
+import ch.supsi.blackjack.CommandCatalog;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -9,14 +8,8 @@ import javafx.fxml.FXML;
 
 public class MenuController extends AbstractController  {
 
-    public MenuController(GameHandler model) {
-        super(model);
-        register("hitAction", new HitCommand(model));
-        register("standAction", new StandCommand(model));
-        register("betAction", new ConfirmBetCommand(model));
-        register("nextRoundAction", new NextRoundCommand(model));
-        register("newGameAction", new NewGameCommand(model));
-        register("exitGameAction", new ExitGameCommand(model));
+    public MenuController(CommandCatalog commandCatalog) {
+        super(commandCatalog);
     }
 
     private final BooleanProperty disableNextRound = new SimpleBooleanProperty(true);
@@ -74,30 +67,32 @@ public class MenuController extends AbstractController  {
     @FXML
     void newGameAction(ActionEvent actionEvent) {
         //TODO: ask nickname to user and number of desk with a dedicated dialog
-        execute("newGameAction");
+        commandCatalog.execute("newGameAction");
     }
 
     @FXML
     void exitGameAction(ActionEvent actionEvent) {
-        execute("exitGameAction");
+        commandCatalog.execute("exitGameAction");
     }
 
     @FXML
     void hitAction(ActionEvent actionEvent) {
-        execute("hitAction");
+        commandCatalog.execute("hitAction");
     }
 
     @FXML
     void standAction(ActionEvent actionEvent) {
-        execute("standAction");
+        commandCatalog.execute("standAction");
     }
 
     @FXML
-    public void betAction(ActionEvent actionEvent) {execute("betAction"); }
+    public void betAction(ActionEvent actionEvent) {
+        commandCatalog.execute("betAction");
+    }
 
     @FXML
     public void nextRoundAction(ActionEvent actionEvent) {
-        execute("nextRoundAction");
+        commandCatalog.execute("nextRoundAction");
     }
 
     public void onGameStarted() {

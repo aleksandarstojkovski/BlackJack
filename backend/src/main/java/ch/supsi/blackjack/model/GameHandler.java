@@ -14,6 +14,4 @@ public interface GameHandler {
     void bet(int betValue);
     void confirmBet();
     void nextRound();
-    Coin[] getCoins();
-
 }

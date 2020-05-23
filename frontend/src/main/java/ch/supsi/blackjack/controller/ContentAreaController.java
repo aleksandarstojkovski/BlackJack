@@ -1,5 +1,7 @@
 package ch.supsi.blackjack.controller;
 
+import ch.supsi.blackjack.Coin;
+import ch.supsi.blackjack.CommandCatalog;
 import ch.supsi.blackjack.component.*;
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.*;
@@ -15,6 +17,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ContentAreaController extends AbstractController implements Initializable {
@@ -29,7 +33,7 @@ public class ContentAreaController extends AbstractController implements Initial
     @FXML private ListView<CardImage> playerCardListView;
     @FXML private ListView<CardImage> dealerCardListView;
 
-    private final ObservableList<CoinImage> coins = FXCollections.observableArrayList();
+    private final ObservableList<CoinImage> coinImages = FXCollections.observableArrayList();
     private final ObservableList<CardImage> playerCards = FXCollections.observableArrayList(CardImage.extractor());
     private final ObservableList<CardImage> dealerCards = FXCollections.observableArrayList(CardImage.extractor());
 
@@ -60,9 +64,11 @@ public class ContentAreaController extends AbstractController implements Initial
     {
         return notificationText.get();
     }
+    private final Coin[] coins = new Coin[Coin.Values.length];
 
-    public ContentAreaController(GameHandler model) {
-        super(model);
+    public ContentAreaController(CommandCatalog commandCatalog) {
+        super(commandCatalog);
+        initCoins();
     }
 
     @Override
@@ -76,13 +82,21 @@ public class ContentAreaController extends AbstractController implements Initial
         playerCardListView.setCellFactory(c -> new CardImageCell());
         playerCardListView.setItems(playerCards);
 
-        coinsListView.setCellFactory(c -> new CoinImageCell(model));
-        coinsListView.setItems(coins);
+        coinsListView.setCellFactory(c -> new CoinImageCell(commandCatalog));
+        coinsListView.setItems(coinImages);
 
         betsAmount.textProperty().bind(betsAmountProperty.asString());
         playerBalance.textProperty().bind(playerBalanceProperty.asString());
         playerHand.textProperty().bind(playerHandProperty.asString());
         dealerHand.textProperty().bind(dealerHandProperty.asString());
+    }
+
+    private void initCoins() {
+        List<Coin> list = new ArrayList<>();
+        for (int v : Coin.Values)
+            list.add(new Coin(v));
+
+        list.toArray(coins);
     }
 
     public void onGameOver() {
@@ -141,7 +155,7 @@ public class ContentAreaController extends AbstractController implements Initial
 
     private void clearTable() {
         playerCards.clear();
-        coins.clear();
+        coinImages.clear();
         dealerCards.clear();
 
         betsAmountProperty.set(0);
@@ -152,9 +166,9 @@ public class ContentAreaController extends AbstractController implements Initial
 
     public void loadAvailableCoins() {
         //ToDo: da rivedere per disaccopiare dal backend
-        for (Coin c : model.getCoins()){
+        for (Coin c : coins){
             CoinImage img = new CoinImage(c);
-            coins.add(img);
+            coinImages.add(img);
           }
     }
 
@@ -177,8 +191,7 @@ public class ContentAreaController extends AbstractController implements Initial
         boolean covered = dealerCards.size() == 1;
         CardImage img = new CardImage(event.getLastCard(), covered);
         dealerCards.add(img);
-
-        //TODO: should we move this logic in model?
+        //ToDo: move to Backend
         boolean hideRealHandValue = event.getHandSize()==2 && ((event.getState() instanceof PlayerDealsState) || (event.getState() instanceof BetState));
         if(hideRealHandValue){
             dealerHandProperty.set(event.getValue() - event.getLastCard().getDefaultValue());

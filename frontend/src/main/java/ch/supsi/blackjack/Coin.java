@@ -1,4 +1,4 @@
-package ch.supsi.blackjack.model;
+package ch.supsi.blackjack;
 
 public class Coin {
 

@@ -1,6 +1,6 @@
 package ch.supsi.blackjack.component;
 
-import ch.supsi.blackjack.model.Coin;
+import ch.supsi.blackjack.Coin;
 import javafx.scene.image.Image;
 
 import java.net.URL;

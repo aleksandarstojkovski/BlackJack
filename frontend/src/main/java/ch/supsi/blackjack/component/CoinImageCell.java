@@ -1,7 +1,6 @@
 package ch.supsi.blackjack.component;
 
-import ch.supsi.blackjack.command.BetCommand;
-import ch.supsi.blackjack.model.GameHandler;
+import ch.supsi.blackjack.CommandCatalog;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
@@ -9,13 +8,12 @@ import javafx.scene.layout.Region;
 
 public class CoinImageCell extends ListCell<CoinImage> {
 
-    final GameHandler model;
+    final CommandCatalog commandCatalog;
 
     public final static String[] coinFxIds = { "#coin100", "#coin200", "#coin300", "#coin400", "#coin500" };
-    private final BetCommand betAction;
-    public CoinImageCell(GameHandler model) {
-        this.model = model;
-        betAction = new BetCommand(model);
+
+    public CoinImageCell(CommandCatalog commandCatalog) {
+        this.commandCatalog = commandCatalog;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class CoinImageCell extends ListCell<CoinImage> {
 
             button.setGraphic(imageView);
             //Todo: da cambiare per disaccopiare meglio (forzato la classe)
-            button.setOnAction(e -> betAction.execute(coin.getValue()) );
+            button.setOnAction(e -> commandCatalog.execute("bet"+coin.getValue()+"Action") );
             button.setId("coin"+coin.getValue());
 
             setText(null);

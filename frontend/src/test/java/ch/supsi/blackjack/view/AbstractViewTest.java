@@ -1,5 +1,6 @@
 package ch.supsi.blackjack.view;
 
+import ch.supsi.blackjack.CommandCatalog;
 import ch.supsi.blackjack.UITest;
 import ch.supsi.blackjack.controller.ContentAreaController;
 import ch.supsi.blackjack.controller.LogController;
@@ -19,11 +20,13 @@ import java.util.ResourceBundle;
 public class AbstractViewTest extends ApplicationTest {
     private ResourceBundle bundle;
     private GameHandler model;
+    private CommandCatalog commandCatalog;
 
     @Before
     public void Setup() {
         bundle = ResourceBundle.getBundle("ch/supsi/blackjack/bundles/blackjack");
         model = Mockito.mock(GameHandler.class);
+        commandCatalog = new CommandCatalog(model);
     }
 
     @org.junit.Test
@@ -31,7 +34,7 @@ public class AbstractViewTest extends ApplicationTest {
         step("create ContentAreaView", () -> {
             AbstractView view = null;
             try {
-                ContentAreaController controller = new ContentAreaController(model);
+                ContentAreaController controller = new ContentAreaController(commandCatalog);
                 view = ContentAreaView.create(controller, bundle);
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IOException e) {
                 e.printStackTrace();
@@ -46,7 +49,7 @@ public class AbstractViewTest extends ApplicationTest {
         step("create LogView", () -> {
             AbstractView view = null;
             try {
-                LogController controller = new LogController(model);
+                LogController controller = new LogController(commandCatalog);
                 view = LogView.create(controller, bundle);
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IOException e) {
                 e.printStackTrace();
@@ -61,7 +64,7 @@ public class AbstractViewTest extends ApplicationTest {
         step("create MenuView", () -> {
             AbstractView view = null;
             try {
-                MenuController controller = new MenuController(model);
+                MenuController controller = new MenuController(commandCatalog);
                 view = MenuView.create(controller, bundle);
             } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IOException e) {
                 e.printStackTrace();

@@ -1,28 +1,16 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.command.Command;
-import ch.supsi.blackjack.model.GameHandler;
-import java.util.HashMap;
+import ch.supsi.blackjack.CommandCatalog;
 
 abstract public class AbstractController {
 
-    protected final GameHandler model;
-    protected final HashMap<String, Command> commandMap;
-    public AbstractController(GameHandler model) {
-        this.model = model;
-        commandMap = new HashMap<>();
-    }
+    protected final CommandCatalog commandCatalog;
 
-    protected void register(String commandName, Command command) {
-        commandMap.put(commandName, command);
-    }
+    public AbstractController(CommandCatalog commandCatalog) {
+        this.commandCatalog = commandCatalog;
 
-    protected void execute(String commandName) {
-        Command command = commandMap.get(commandName);
-        if (command == null) {
-            throw new IllegalStateException("no command registered for " + commandName);
-        }
-        command.execute();
     }
 }
+
+
 

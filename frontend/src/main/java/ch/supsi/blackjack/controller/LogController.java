@@ -1,5 +1,6 @@
 package ch.supsi.blackjack.controller;
 
+import ch.supsi.blackjack.CommandCatalog;
 import ch.supsi.blackjack.model.GameHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -8,8 +9,8 @@ import java.beans.PropertyChangeEvent;
 
 public class LogController extends AbstractController {
 
-    public LogController(GameHandler model) {
-        super(model);
+    public LogController(CommandCatalog commandCatalog) {
+        super(commandCatalog);
     }
     @FXML private TextArea textArea;
 
