@@ -13,7 +13,6 @@
           <includes>
             <include>**/*.class</include>
           </includes>
-          <excludedGroups>ch.supsi.blackjack.UITest</excludedGroups>
         </configuration>
       </plugin>
       <plugin>
@@ -96,7 +95,7 @@
   </build>
   <profiles>
     <profile>
-      <id>include-ui-tests</id>
+      <id>exclude-ui-tests</id>
       <build>
         <plugins>
           <plugin>
@@ -105,6 +104,7 @@
               <includes>
                 <include>**/*.class</include>
               </includes>
+              <excludedGroups>ch.supsi.blackjack.UITest</excludedGroups>
             </configuration>
           </plugin>
         </plugins>
