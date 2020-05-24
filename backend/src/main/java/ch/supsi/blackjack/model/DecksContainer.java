@@ -21,7 +21,7 @@ public class DecksContainer implements Serializable {
         if (numberOfDecks > MIN_NUMBER_OF_DECKS  && numberOfDecks < MAX_NUMBER_OF_DECKS){
             this.numberOfDecks=numberOfDecks;
             for (int i=0; i<numberOfDecks; i++){
-                Card.BackColor backColor = (numberOfDecks%2 == 0) ? Card.BackColor.RED : Card.BackColor.BLUE;
+                Card.BackColor backColor = (i%2 == 0) ? Card.BackColor.RED : Card.BackColor.BLUE;
 
                 Deck deck = new Deck.Builder()
                         .setBackColor(backColor)
