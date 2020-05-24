@@ -17,9 +17,8 @@ import static org.testfx.matcher.base.NodeMatchers.*;
 @Category(UITest.class)
 public class GuiTest extends ApplicationTest {
 
+    // sleep interval (milliseconds)
     private static final int SLEEP_INTERVAL = 1;
-
-    private int stepNo;
 
     MainApp main;
 
@@ -34,7 +33,6 @@ public class GuiTest extends ApplicationTest {
 
     private void step(final String step, final Runnable runnable) {
         System.out.print(step);
-        ++stepNo;
         runnable.run();
     }
 
@@ -205,8 +203,6 @@ public class GuiTest extends ApplicationTest {
         verifyExitIsVisibleAndEnabled();
         verifyCoinsAreVisibleAndEnabled();
     }
-
-
 
     private void verifyCoinsAreVisibleAndEnabled(){
         for (String coinFxId : CoinImageCell.coinFxIds){

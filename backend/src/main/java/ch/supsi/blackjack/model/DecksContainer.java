@@ -21,7 +21,7 @@ public class DecksContainer implements Serializable {
         if (numberOfDecks > MIN_NUMBER_OF_DECKS  && numberOfDecks < MAX_NUMBER_OF_DECKS){
             this.numberOfDecks=numberOfDecks;
             for (int i=0; i<numberOfDecks; i++){
-                Card.BackColor backColor = (Math.random() < 0.5) ? Card.BackColor.RED : Card.BackColor.BLUE;
+                Card.BackColor backColor = (numberOfDecks%2 == 0) ? Card.BackColor.RED : Card.BackColor.BLUE;
 
                 Deck deck = new Deck.Builder()
                         .setBackColor(backColor)
@@ -37,18 +37,20 @@ public class DecksContainer implements Serializable {
         Collections.shuffle(availableCards);
     }
 
-    // TODO verify empty availableCards (define strategy)
     public Card getCard(){
+        if(availableCards.size() == 0)
+            pushBackUsedCards();
+
         Card c = availableCards.remove(0);
         usedCards.add(c);
         return c;
     }
 
-    public int getAvailableCardsCount(){
+    int getAvailableCardsCount(){
         return availableCards.size();
     }
 
-    public void pushBackUsedCards(){
+    private void pushBackUsedCards(){
         availableCards.addAll(usedCards);
         usedCards.clear();
         this.shuffle();
