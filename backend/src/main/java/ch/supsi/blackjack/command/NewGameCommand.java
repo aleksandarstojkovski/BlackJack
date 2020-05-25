@@ -4,7 +4,7 @@ import ch.supsi.blackjack.model.GameHandler;
 
 public class NewGameCommand implements Command {
 
-    GameHandler receiver;
+    private final GameHandler receiver;
 
     public NewGameCommand(GameHandler gameModel){
         this.receiver = gameModel;

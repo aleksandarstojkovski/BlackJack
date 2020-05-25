@@ -1,6 +1,5 @@
 package ch.supsi.blackjack.component;
 
-import ch.supsi.blackjack.model.GameHandler;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;

@@ -5,6 +5,7 @@ import ch.supsi.blackjack.CommandCatalog;
 import ch.supsi.blackjack.component.*;
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.*;
+import ch.supsi.blackjack.model.exception.InvalidCoinValueException;
 import ch.supsi.blackjack.model.state.round.BetState;
 import ch.supsi.blackjack.model.state.round.PlayerDealsState;
 import javafx.beans.property.*;
@@ -68,7 +69,6 @@ public class ContentAreaController extends AbstractController implements Initial
 
     public ContentAreaController(CommandCatalog commandCatalog) {
         super(commandCatalog);
-        initCoins();
     }
 
     @Override
@@ -89,12 +89,19 @@ public class ContentAreaController extends AbstractController implements Initial
         playerBalance.textProperty().bind(playerBalanceProperty.asString());
         playerHand.textProperty().bind(playerHandProperty.asString());
         dealerHand.textProperty().bind(dealerHandProperty.asString());
+
+        initCoins();
     }
 
     private void initCoins() {
         List<Coin> list = new ArrayList<>();
-        for (int v : Coin.Values)
-            list.add(new Coin(v));
+        for (int v : Coin.Values) {
+            try {
+                list.add(new Coin(v));
+            } catch (InvalidCoinValueException e) {
+                e.printStackTrace();
+            }
+        }
 
         list.toArray(coins);
     }
@@ -164,8 +171,9 @@ public class ContentAreaController extends AbstractController implements Initial
         notificationAreaVisible.set(false);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     public void loadAvailableCoins() {
-        //ToDo: da rivedere per disaccopiare dal backend
+        // TODO: da rivedere per disaccopiare dal backend
         for (Coin c : coins){
             CoinImage img = new CoinImage(c);
             coinImages.add(img);

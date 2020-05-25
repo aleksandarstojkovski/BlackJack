@@ -42,6 +42,7 @@ public class MenuControllerTest {
         CommandCatalog commandCatalog = new CommandCatalog(mockGameModel);
         MenuController controller = new MenuController(commandCatalog);
         controller.onGameFinished();
+
         Assert.assertFalse(controller.getDisableNewGame());
         Assert.assertTrue(controller.getDisableExitGame());
         Assert.assertTrue(controller.getDisableHitAndStand());
@@ -57,6 +58,7 @@ public class MenuControllerTest {
         CommandCatalog commandCatalog = new CommandCatalog(mockGameModel);
         MenuController controller = new MenuController(commandCatalog);
         controller.onNewRound();
+
         Assert.assertTrue(controller.getDisableNextRound());
     }
 

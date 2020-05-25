@@ -11,6 +11,7 @@ public class RoundState implements GameState{
     }
 
     @Override
+    @SuppressWarnings("SpellCheckingInspection")
     public void startGame() {
         System.out.println("Partita già avviata");
     }
@@ -19,4 +20,5 @@ public class RoundState implements GameState{
     public void exitGame() {
         gameModel.setGameState(gameModel.getInitState());
     }
+
 }

@@ -27,7 +27,7 @@ public class Hand {
 
     private int getCardValue(int currentHandValue, Card card) {
         if (card.getValue().equals(Value.ACE) && currentHandValue > 10){
-            //ToDo: far scegliere al giocatore il valore da attribuire all'asso.
+            // TODO: let the user chose the values of ace
             currentHandValue += 1;
         } else {
             currentHandValue += card.getValue().getDefaultValue();
@@ -44,6 +44,7 @@ public class Hand {
     }
 
     @Override
+    @SuppressWarnings("SpellCheckingInspection")
     public String toString() {
         return "Valore Mano = " + this.value();
     }
@@ -52,6 +53,7 @@ public class Hand {
         this.betValue += amount;
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     public int takeBets(){
         int bettedCoins = betValue;
         betValue=0;

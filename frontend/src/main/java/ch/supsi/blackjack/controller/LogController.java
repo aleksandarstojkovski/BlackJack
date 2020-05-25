@@ -1,7 +1,6 @@
 package ch.supsi.blackjack.controller;
 
 import ch.supsi.blackjack.CommandCatalog;
-import ch.supsi.blackjack.model.GameHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 

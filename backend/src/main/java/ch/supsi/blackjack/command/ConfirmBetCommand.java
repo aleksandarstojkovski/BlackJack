@@ -4,7 +4,7 @@ import ch.supsi.blackjack.model.GameHandler;
 
 public class ConfirmBetCommand implements Command {
 
-    GameHandler receiver;
+    private final GameHandler receiver;
 
     public ConfirmBetCommand(GameHandler gameModel){
         this.receiver = gameModel;

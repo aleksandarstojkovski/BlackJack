@@ -17,6 +17,7 @@ import java.util.List;
  * Over 21 the player loose the round automatically (Bust)
  * If still in game the turn pass to the next player/dealer
  */
+
 public class Round implements RoundHandler {
     private final GameModel gameModel;
     private RoundState state;
@@ -157,9 +158,10 @@ public class Round implements RoundHandler {
     }
 
     public void setPlayerTwentyOne() {
-        gameModel.firePropertyChange(new PlayerTwentyoneEvent(this));
+        gameModel.firePropertyChange(new PlayerTwentyOneEvent(this));
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     public void setRoundCompleted() {
 
         int dealerValue = dealer.getHandValue();
@@ -243,12 +245,13 @@ public class Round implements RoundHandler {
         gameModel.firePropertyChange(new GameOverEvent(this));
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     public void compute(Player player){
         if(player instanceof Dealer){
             dealer.compute(this);
             goNextState();
         } else {
-            //ToDo: futura implementazione del PlayerAI
+            // TODO: futura implementazione del PlayerAI
             System.out.println("Questa è instanceof Player, Player = " + player.getNickname()); //Print diagnostico
         }
     }

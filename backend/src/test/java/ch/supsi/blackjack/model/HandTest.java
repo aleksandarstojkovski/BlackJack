@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HandTest {
+
     Hand testHand;
 
     @BeforeEach
@@ -79,4 +80,5 @@ class HandTest {
         testHand.addCard(cardBuilder.build());
         assertEquals(cards, testHand.size());
     }
+
 }

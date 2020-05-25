@@ -4,7 +4,7 @@ import ch.supsi.blackjack.model.GameHandler;
 
 public class ExitGameCommand implements Command {
 
-    GameHandler receiver;
+    private final GameHandler receiver;
 
     public ExitGameCommand(GameHandler gameModel){
         this.receiver = gameModel;

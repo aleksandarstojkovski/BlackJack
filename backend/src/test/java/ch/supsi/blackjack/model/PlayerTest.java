@@ -47,7 +47,6 @@ class PlayerTest {
         var testCard = new Card.Builder().setValue(Value.TEN).build();
         testPlayer.hand.addCard(testCard);
         assertEquals(10, testPlayer.getHandValue());
-
     }
 
 }

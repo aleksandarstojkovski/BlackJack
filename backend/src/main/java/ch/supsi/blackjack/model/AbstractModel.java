@@ -23,4 +23,5 @@ abstract public class AbstractModel{
     public void firePropertyChange(PropertyChangeEvent event){
         pcs.firePropertyChange(event);
     }
+
 }

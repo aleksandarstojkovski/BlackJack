@@ -23,6 +23,7 @@ public class AbstractViewTest extends ApplicationTest {
     private CommandCatalog commandCatalog;
 
     @Before
+    @SuppressWarnings("SpellCheckingInspection")
     public void Setup() {
         bundle = ResourceBundle.getBundle("ch/supsi/blackjack/bundles/blackjack");
         model = Mockito.mock(GameHandler.class);

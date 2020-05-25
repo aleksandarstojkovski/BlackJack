@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class MainApp extends Application {
     public static void main(String[] args) {
         MainApp.launch(args);

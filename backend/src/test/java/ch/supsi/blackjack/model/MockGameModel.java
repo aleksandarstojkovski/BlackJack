@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class MockGameModel {
     public static GameModel build() {
+
         GameModel mockGameModel = Mockito.mock(GameModel.class);
         PropertyChangeSupport pcs = new PropertyChangeSupport(mockGameModel);
 
@@ -54,5 +55,6 @@ public class MockGameModel {
         }).when(mockGameModel).stand();
 
         return mockGameModel;
+
     }
 }

@@ -1,18 +1,15 @@
 package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
+import ch.supsi.blackjack.model.state.game.GameState;
 import ch.supsi.blackjack.model.state.game.InitState;
 import ch.supsi.blackjack.model.state.game.RoundState;
-import ch.supsi.blackjack.model.state.game.GameState;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameModel extends AbstractModel implements GameHandler {
 
     // singleton
     private static GameModel instance;
-    // Macchina a stati di Game
+    // game state machine
     private GameState gameState;
     private final GameState initState;
     private final GameState roundState;

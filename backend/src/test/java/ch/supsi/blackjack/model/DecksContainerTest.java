@@ -1,8 +1,8 @@
 package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
-import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DecksContainerTest {
@@ -36,8 +36,8 @@ class DecksContainerTest {
 
     @Test
     public void invalidSize(){
-        InvalidDecksContainerSizeException thrown1 = assertThrows(InvalidDecksContainerSizeException.class, ()->new DecksContainer(-1));
-        InvalidDecksContainerSizeException thrown2 = assertThrows(InvalidDecksContainerSizeException.class, ()->new DecksContainer(6));
+        assertThrows(InvalidDecksContainerSizeException.class, ()->new DecksContainer(-1));
+        assertThrows(InvalidDecksContainerSizeException.class, ()->new DecksContainer(6));
     }
 
     @Test

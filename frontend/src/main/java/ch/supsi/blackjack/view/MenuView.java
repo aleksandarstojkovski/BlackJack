@@ -11,7 +11,10 @@ import java.util.ResourceBundle;
  * The View is associated to an FXML resource for the definition of the components
  * Methods annotated with @EventHandler are executed through reflection
  */
+
+@SuppressWarnings("SpellCheckingInspection")
 public class MenuView extends AbstractView {
+
     private final static String FXML = "ch/supsi/blackjack/view/Menu.fxml";
     private final MenuController controller;
 

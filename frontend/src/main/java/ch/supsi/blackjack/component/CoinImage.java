@@ -14,6 +14,7 @@ public class CoinImage implements Drawable {
         this.coin = coin;
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private String getFileName() {
         return String.format("/ch/supsi/blackjack/images/coins/%d.png", coin.getValue());
     }

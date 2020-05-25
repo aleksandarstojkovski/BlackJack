@@ -17,6 +17,7 @@ public class CoinImageCell extends ListCell<CoinImage> {
     }
 
     @Override
+    @SuppressWarnings("SpellCheckingInspection")
     public void updateItem(CoinImage coin, boolean empty) {
         super.updateItem(coin, empty);
         if (empty) {
@@ -32,7 +33,7 @@ public class CoinImageCell extends ListCell<CoinImage> {
             imageView.setImage(coin.getImage());
 
             button.setGraphic(imageView);
-            //Todo: da cambiare per disaccopiare meglio (forzato la classe)
+            // TODO: da cambiare per disaccopiare meglio (forzato la classe)
             button.setOnAction(e -> commandCatalog.execute("bet"+coin.getValue()+"Action") );
             button.setId("coin"+coin.getValue());
 

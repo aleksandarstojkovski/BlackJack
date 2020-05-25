@@ -29,6 +29,7 @@ public class CardImage implements Drawable {
         return (CardImage c) -> new Observable[]{ c.covered };
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private String getFileName() {
         if(covered.get()){
             return String.format("/ch/supsi/blackjack/images/cards/back_%s.png", card.getBack().toString().toLowerCase());

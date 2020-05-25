@@ -1,6 +1,5 @@
 package ch.supsi.blackjack.model.state.round;
 
-import ch.supsi.blackjack.model.Round;
 import ch.supsi.blackjack.model.RoundHandler;
 
 /**
@@ -9,6 +8,7 @@ import ch.supsi.blackjack.model.RoundHandler;
  * Otherwise the game is over
  * Next State: BetState,GameOverState
  */
+
 public class UpdateTableState implements RoundState {
 
     private final RoundHandler round;
@@ -42,8 +42,9 @@ public class UpdateTableState implements RoundState {
             next();
         } else {
             round.setGameOver();
-            round.setState(new GameOverState((Round) round));
+            round.setState(new GameOverState(round));
             round.goNextState();
         }
     }
+
 }

@@ -19,6 +19,7 @@ public class InitState implements GameState{
     }
 
     @Override
+    @SuppressWarnings("SpellCheckingInspection")
     public void exitGame() {
         System.out.println("Gioco non in esecuzione, impossibile uscire");
     }

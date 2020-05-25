@@ -19,10 +19,10 @@ public class GuiTest extends ApplicationTest {
 
     // sleep interval (milliseconds)
     private static final int SLEEP_INTERVAL = 1;
+    // random
+    private final Random rand = new Random();
 
     MainApp main;
-
-    Random rand = new Random();
 
     @After
     public void tearDown () throws Exception {
