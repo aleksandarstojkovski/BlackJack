@@ -13,14 +13,10 @@ public class GameModel extends AbstractModel implements GameHandler {
     private GameState gameState;
     private final GameState initState;
     private final GameState roundState;
-
     private RoundHandler round;
-
-
 
     private GameModel() {
         super();
-
         initState = new InitState(this);
         roundState= new RoundState(this);
         setGameState(initState);
@@ -50,7 +46,6 @@ public class GameModel extends AbstractModel implements GameHandler {
         return roundState;
     }
 
-
     // singleton
     public static GameModel instance() {
         if (instance == null) {
@@ -58,7 +53,6 @@ public class GameModel extends AbstractModel implements GameHandler {
         }
         return instance;
     }
-
 
     @Override
     public void newGame(){
@@ -68,6 +62,7 @@ public class GameModel extends AbstractModel implements GameHandler {
             e.printStackTrace();
         }
     }
+
     public void newGame(String nickName, int numberOfDecks) throws InvalidDecksContainerSizeException {
         DecksContainer decksContainer = new DecksContainer(numberOfDecks);
         Player humanPlayer = new Player(nickName);

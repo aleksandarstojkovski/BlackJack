@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 public class CardImageCell extends ListCell<CardImage> {
+
     @Override
     public void updateItem(CardImage card, boolean empty) {
         super.updateItem(card, empty);
@@ -22,4 +23,5 @@ public class CardImageCell extends ListCell<CardImage> {
             setGraphic(imageView);
         }
     }
+
 }

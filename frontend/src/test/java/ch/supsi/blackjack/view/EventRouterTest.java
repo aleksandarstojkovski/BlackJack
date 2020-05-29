@@ -9,7 +9,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class EventRouterTest {
+
     static class Listener implements PropertyChangeListener {
+
         private final EventRouter router = new EventRouter(this);
         public boolean eventHandled = false;
 

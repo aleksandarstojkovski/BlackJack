@@ -2,7 +2,6 @@ package ch.supsi.blackjack.component;
 
 import ch.supsi.blackjack.Coin;
 import javafx.scene.image.Image;
-
 import java.net.URL;
 
 public class CoinImage implements Drawable {

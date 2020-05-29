@@ -12,4 +12,5 @@ public class NewBetEvent extends AbstractEvent {
     public int getBetValue() {
         return betValue;
     }
+
 }

@@ -77,4 +77,5 @@ public class CardImage implements Drawable {
     private boolean isCovered() {
         return covered.get();
     }
+
 }

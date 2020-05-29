@@ -4,21 +4,23 @@ import ch.supsi.blackjack.controller.ContentAreaController;
 import ch.supsi.blackjack.controller.LogController;
 import ch.supsi.blackjack.controller.MenuController;
 import ch.supsi.blackjack.model.GameModel;
+import ch.supsi.blackjack.view.AbstractView;
 import ch.supsi.blackjack.view.ContentAreaView;
 import ch.supsi.blackjack.view.LogView;
 import ch.supsi.blackjack.view.MenuView;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class MainApp extends Application {
+
     public static void main(String[] args) {
         MainApp.launch(args);
     }
@@ -36,21 +38,21 @@ public class MainApp extends Application {
         // There is one single instance of Model
         GameModel gameModel = GameModel.instance();
         CommandCatalog commandCatalog = new CommandCatalog(gameModel);
+        // List of views
+        List<AbstractView> views = new ArrayList<>();
 
-        ContentAreaView contentAreaView = ContentAreaView.create(new ContentAreaController(commandCatalog), bundle);
-        gameModel.addPropertyChangeListener(contentAreaView);
+        views.add(ContentAreaView.create(new ContentAreaController(commandCatalog), bundle));
+        views.add(MenuView.create(new MenuController(commandCatalog), bundle));
+        views.add(LogView.create(new LogController(commandCatalog), bundle));
 
-        MenuView menuView = MenuView.create(new MenuController(commandCatalog), bundle);
-        gameModel.addPropertyChangeListener(menuView);
-
-        LogView logView = LogView.create(new LogController(commandCatalog), bundle);
-        gameModel.addPropertyChangeListener(logView);
+        for (AbstractView view : views)
+            gameModel.addPropertyChangeListener(view);
 
         // add components to the primary stage and show it
-        setupStage(primaryStage, contentAreaView.getComponent(), menuView.getComponent(), logView.getComponent());
+        setupStage(primaryStage, views);
     }
 
-    private void setupStage(Stage primaryStage, Parent... components) {
+    private void setupStage(Stage primaryStage, List<AbstractView> views) {
         VBox vbox = new VBox();
         AnchorPane.setBottomAnchor(vbox, 0.0);
         AnchorPane.setTopAnchor(vbox, 0.0);
@@ -62,8 +64,8 @@ public class MainApp extends Application {
         root.getChildren().add(vbox);
 
         // VBox children are the components of the following views: ContentAreaView, MenuView, LogView
-        for (Parent component : components)
-            vbox.getChildren().add(component);
+        for (AbstractView view : views)
+            vbox.getChildren().add(view.getComponent());
 
         Scene scene = new Scene(root, 800, 600);
         scene.getStylesheets().add("/ch/supsi/blackjack/css/style.css");

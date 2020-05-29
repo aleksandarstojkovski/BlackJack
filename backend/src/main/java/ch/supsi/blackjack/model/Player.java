@@ -1,14 +1,11 @@
 package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
-import ch.supsi.blackjack.command.Command;
-import java.util.HashMap;
 
 public class Player {
 
-    private final HashMap<String, Command> commandMap = new HashMap<>();
-
     private static final int INITIAL_COINS=1000;
+    
     private final String nickname;
     protected final Hand hand;
     private int coins;

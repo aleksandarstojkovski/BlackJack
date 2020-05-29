@@ -41,4 +41,5 @@ public class CoinImageCell extends ListCell<CoinImage> {
             setGraphic(button);
         }
     }
+
 }

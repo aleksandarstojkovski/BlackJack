@@ -18,15 +18,15 @@ import java.util.ResourceBundle;
 
 @Category(UITest.class)
 public class AbstractViewTest extends ApplicationTest {
+
     private ResourceBundle bundle;
-    private GameHandler model;
     private CommandCatalog commandCatalog;
 
     @Before
     @SuppressWarnings("SpellCheckingInspection")
     public void Setup() {
         bundle = ResourceBundle.getBundle("ch/supsi/blackjack/bundles/blackjack");
-        model = Mockito.mock(GameHandler.class);
+        GameHandler model = Mockito.mock(GameHandler.class);
         commandCatalog = new CommandCatalog(model);
     }
 

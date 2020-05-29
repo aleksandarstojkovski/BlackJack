@@ -13,7 +13,6 @@ public class DecksContainer implements Serializable {
     private static final int MAX_NUMBER_OF_DECKS=5;
 
     private final int numberOfDecks;
-
     private final List<Card> availableCards = new ArrayList<>();
     private final List<Card> usedCards = new ArrayList<>();
 

@@ -63,7 +63,6 @@ public class MenuController extends AbstractController  {
     }
 
 
-
     @FXML
     void newGameAction(ActionEvent actionEvent) {
         //TODO: ask nickname to user and number of desk with a dedicated dialog
@@ -141,4 +140,5 @@ public class MenuController extends AbstractController  {
         disableBet.set(true);
         disableNextRound.set(true);
     }
+
 }

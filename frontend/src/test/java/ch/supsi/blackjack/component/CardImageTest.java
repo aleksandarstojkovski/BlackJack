@@ -4,9 +4,11 @@ import ch.supsi.blackjack.model.Card;
 import ch.supsi.blackjack.model.Seed;
 import ch.supsi.blackjack.model.Value;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class CardImageTest {
-    @org.junit.Test
+
+    @Test
     public void getUrl() {
         var cardBuilder = new Card.Builder();
         for (Seed seed : Seed.values()) {
@@ -18,4 +20,5 @@ public class CardImageTest {
             }
         }
     }
+
 }

@@ -72,4 +72,5 @@ public class Hand {
     public boolean isBlackJack() {
         return value() == BLACKJACK;
     }
+
 }

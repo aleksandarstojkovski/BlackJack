@@ -3,7 +3,6 @@ package ch.supsi.blackjack.controller;
 import ch.supsi.blackjack.CommandCatalog;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
-
 import java.beans.PropertyChangeEvent;
 
 public class LogController extends AbstractController {
@@ -17,4 +16,5 @@ public class LogController extends AbstractController {
         // log
         textArea.appendText(evt.getClass().getCanonicalName() + "\n");
     }
+
 }

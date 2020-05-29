@@ -10,6 +10,7 @@ abstract public class AbstractController {
         this.commandCatalog = commandCatalog;
 
     }
+
 }
 
 

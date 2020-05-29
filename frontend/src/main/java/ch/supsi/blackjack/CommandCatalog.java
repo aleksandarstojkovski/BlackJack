@@ -2,7 +2,6 @@ package ch.supsi.blackjack;
 
 import ch.supsi.blackjack.command.*;
 import ch.supsi.blackjack.model.GameHandler;
-
 import java.util.HashMap;
 
 public class CommandCatalog {
@@ -35,4 +34,5 @@ public class CommandCatalog {
         }
         command.execute();
     }
+
 }

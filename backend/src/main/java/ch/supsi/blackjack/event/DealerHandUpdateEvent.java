@@ -5,6 +5,7 @@ import ch.supsi.blackjack.model.Hand;
 import ch.supsi.blackjack.model.state.round.RoundState;
 
 public class DealerHandUpdateEvent extends AbstractEvent {
+
     private final int handValue;
     private final int handSize;
     private final Card lastCard;
@@ -33,4 +34,5 @@ public class DealerHandUpdateEvent extends AbstractEvent {
     public Card getLastCard() {
         return lastCard;
     }
+
 }

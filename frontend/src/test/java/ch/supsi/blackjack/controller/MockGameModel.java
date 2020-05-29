@@ -5,7 +5,6 @@ import ch.supsi.blackjack.model.GameModel;
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
-
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 

@@ -4,6 +4,7 @@ import ch.supsi.blackjack.model.Card;
 import ch.supsi.blackjack.model.Hand;
 
 public class PlayerHandUpdateEvent extends AbstractEvent {
+
     private final Card lastCard;
     private final int handValue;
 
@@ -20,4 +21,5 @@ public class PlayerHandUpdateEvent extends AbstractEvent {
     public Card getLastCard() {
         return lastCard;
     }
+
 }

@@ -19,6 +19,7 @@ import java.util.List;
  */
 
 public class Round implements RoundHandler {
+
     private final GameModel gameModel;
     private RoundState state;
     private final List<Player> allPlayers = new ArrayList<>();
@@ -37,10 +38,12 @@ public class Round implements RoundHandler {
         allPlayers.add(dealer);
         this.gameModel = gameModel;
     }
+
     @Override
     public void setState(RoundState state){
         this.state = state;
     }
+
     @Override
     public RoundState getState(){
         return state;
@@ -255,4 +258,5 @@ public class Round implements RoundHandler {
             System.out.println("Questa è instanceof Player, Player = " + player.getNickname()); //Print diagnostico
         }
     }
+
 }

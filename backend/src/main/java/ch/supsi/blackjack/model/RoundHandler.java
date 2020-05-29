@@ -5,6 +5,7 @@ import ch.supsi.blackjack.model.Player;
 import ch.supsi.blackjack.model.state.round.RoundState;
 
 public interface RoundHandler {
+
     void setState(RoundState state);
     RoundState getState();
 
@@ -37,4 +38,5 @@ public interface RoundHandler {
     void computeDealer();
     void setRoundCompleted();
     void setGameOver();
+
 }
