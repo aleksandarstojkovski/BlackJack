@@ -2,17 +2,20 @@ package ch.supsi.blackjack.command;
 
 import ch.supsi.blackjack.model.GameHandler;
 
-public class Bet400Command implements Command {
+public class BetCommand implements Command {
+
+    private final int bet;
 
     private final GameHandler receiver;
 
-    public Bet400Command(GameHandler gameModel){
+    public BetCommand(GameHandler gameModel, int bet){
         this.receiver = gameModel;
+        this.bet = bet;
     }
 
     @Override
     public void execute() {
-        receiver.bet(400);
+        receiver.bet(bet);
     }
 
 }

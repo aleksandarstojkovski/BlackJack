@@ -15,12 +15,11 @@ public class CommandCatalog {
         register("nextRoundAction", new NextRoundCommand(model));
         register("newGameAction", new NewGameCommand(model));
         register("exitGameAction", new ExitGameCommand(model));
-        register("bet100Action", new Bet100Command(model));
-        register("bet200Action", new Bet200Command(model));
-        register("bet300Action", new Bet300Command(model));
-        register("bet400Action", new Bet400Command(model));
-        register("bet500Action", new Bet500Command(model));
-
+        register("bet100Action", new BetCommand(model, 100));
+        register("bet200Action", new BetCommand(model, 200));
+        register("bet300Action", new BetCommand(model, 300));
+        register("bet400Action", new BetCommand(model, 400));
+        register("bet500Action", new BetCommand(model, 500));
     }
 
     private void register(String commandName, Command command) {
