@@ -71,7 +71,7 @@ public class CardImage implements Drawable {
     }
 
     public void flipCard(){
-        covered.set(!isCovered());
+        covered.set(false);
     }
 
     private boolean isCovered() {

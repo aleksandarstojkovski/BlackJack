@@ -106,10 +106,12 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     public void onGameOver() {
+        clearTable();
         FadingStatusMessage.flash(this.notificationArea, "Ouch! You've lost every penny.");
     }
 
     public void onRoundCompleted(RoundCompletedEvent event) {
+        dealerCards.get(1).flipCard();
         switch (event.getRoundResult()) {
             case WIN:
                 showMessage("Win", "You win.", event.getRoundResult());

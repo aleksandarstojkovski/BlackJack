@@ -39,8 +39,8 @@ public class PlayerDealsState implements RoundState {
         if (round.isPlayerStand()){
             //Order of call is important
             next();
-            round.computeDealer();
             round.updateDealer();
+            round.computeDealer();
         } else {
             Hand hand = round.getPlayerHand();
             if (hand.isBusted()){
