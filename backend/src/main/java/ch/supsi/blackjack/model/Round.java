@@ -184,23 +184,31 @@ public class Round implements RoundHandler {
             mainPlayerResult = RoundResult.LOOSE;
         } else if (dealerHand.isBusted()){
             // player wins
-            int bettedCoins = playerHand.takeBets();
-            mainPlayer.giveCoins(bettedCoins * 2);
+            for (Player p : playerHandMap.keySet()){
+                int bettedCoins = getHand(p).takeBets();
+                p.giveCoins(bettedCoins * 2);
+            }
             mainPlayerResult = RoundResult.WIN;
         } else if (dealerValue > playerValue){
             // no-one busted
             // dealer wins
-            playerHand.takeBets();
+            for (Player p : playerHandMap.keySet()){
+                getHand(p).takeBets();
+            }
             mainPlayerResult = RoundResult.LOOSE;
         } else if (dealerValue < playerValue) {
             // player wins
-            int bettedCoins=playerHand.takeBets();
-            mainPlayer.giveCoins(bettedCoins*2);
+            for (Player p : playerHandMap.keySet()){
+                int bettedCoins=getHand(p).takeBets();
+                p.giveCoins(bettedCoins*2);
+            }
             mainPlayerResult = RoundResult.WIN;
         } else {
             //dealerValue == playerValue
-            int bettedCoins = playerHand.takeBets();
-            mainPlayer.giveCoins(bettedCoins);
+            for (Player p : playerHandMap.keySet()){
+                int bettedCoins = getHand(p).takeBets();
+                p.giveCoins(bettedCoins);
+            }
             mainPlayerResult = RoundResult.WIN;
         }
         // removes bets from the dealer
