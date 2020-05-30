@@ -7,46 +7,48 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-    private Player testPlayer;
+    private final int initialCoins = 1000;
 
     @Test
-    void addCard() {
-        testPlayer = new Player("TestPlayer");
-        var testCard = new Card.Builder().build();
-        testPlayer.addCard(testCard);
-        assertEquals(1, testPlayer.hand.size());
+    void getNickname() {
+        String nickName = "TestPlayer";
+        Player testPlayer = new Player(nickName, initialCoins);
+        assertEquals(nickName, testPlayer.getNickname());
     }
 
     @Test
-    void getCoins() {
-        testPlayer = new Player("TestPlayer");
-        int startingCoin = testPlayer.getCoins();
-        assertEquals(startingCoin,testPlayer.getCoins());
+    void hasMoney() {
+        String nickName = "TestPlayer";
+        Player testPlayer = new Player(nickName,initialCoins);
+        assertTrue(testPlayer.hasMoney());
     }
 
     @Test
     void giveCoins() {
-        testPlayer = new Player("TestPlayer");
-        int startingCoin = testPlayer.getCoins();
-        testPlayer.giveCoins(100);
-        assertEquals(startingCoin+100,testPlayer.getCoins());
-
+        String nickName = "TestPlayer";
+        Player testPlayer = new Player(nickName,initialCoins);
+        testPlayer.giveCoins(initialCoins);
+        assertEquals(initialCoins*2, testPlayer.getCoinsAmount());
     }
 
     @Test
-    void bet() throws InsufficientCoinsException {
-        testPlayer = new Player("TestPlayer");
-        int startingCoin = testPlayer.getCoins();
-        testPlayer.bet(50);
-        assertEquals(startingCoin-50,testPlayer.getCoins());
+    void takeCoins() {
+        String nickName = "TestPlayer";
+        Player testPlayer = new Player(nickName,initialCoins);
+        try {
+            testPlayer.takeCoins(initialCoins);
+        } catch (InsufficientCoinsException e) {
+            fail();
+        }
+        assertFalse(testPlayer.hasMoney());
     }
 
     @Test
-    void getHandValue() {
-        testPlayer = new Player("TestPlayer");
-        var testCard = new Card.Builder().setValue(Value.TEN).build();
-        testPlayer.hand.addCard(testCard);
-        assertEquals(10, testPlayer.getHandValue());
+    void coinsException() {
+        String nickName = "TestPlayer";
+        Player testPlayer = new Player(nickName,initialCoins);
+        assertThrows(InsufficientCoinsException .class, ()->testPlayer.takeCoins(initialCoins*2));
     }
+
 
 }

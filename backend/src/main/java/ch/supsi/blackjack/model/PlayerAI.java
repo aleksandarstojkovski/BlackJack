@@ -26,13 +26,11 @@ public class PlayerAI implements AI {
                 limit = 16;
                 break;
         }
-        while (aiEntity.getHandValue() < limit) {
+        // TODO: not really nice
+        while (model.getHand(aiEntity).value() < limit) {
             model.hit(aiEntity);
         }
     }
 
-    public void bet(GameModel gameModel){
-        int currentCoins=aiEntity.getCoins();
-    }
 }
 

@@ -14,6 +14,8 @@ public class GameModel extends AbstractModel implements GameHandler {
     private final GameState initState;
     private final GameState roundState;
     private RoundHandler round;
+    public static final int PLAYER_INITIAL_COINS = 1000;
+    public static final int DEALER_INITIAL_COINS = 1000000;
 
     private GameModel() {
         super();
@@ -57,17 +59,17 @@ public class GameModel extends AbstractModel implements GameHandler {
     @Override
     public void newGame(){
         try {
-            newGame("Player 1", DecksContainer.DEFAULT_NUMBER_OF_DECKS);
+            newGame("Player 1","Dealer", DecksContainer.DEFAULT_NUMBER_OF_DECKS);
         } catch (InvalidDecksContainerSizeException e) {
             e.printStackTrace();
         }
     }
 
-    public void newGame(String nickName, int numberOfDecks) throws InvalidDecksContainerSizeException {
+    public void newGame(String playerNickname,String dealerNickname, int numberOfDecks) throws InvalidDecksContainerSizeException {
         DecksContainer decksContainer = new DecksContainer(numberOfDecks);
-        Player humanPlayer = new Player(nickName);
-        Dealer dealer = new Dealer(decksContainer);
-        round = new Round(this, humanPlayer, dealer);
+        Player humanPlayer = new Player(playerNickname, PLAYER_INITIAL_COINS);
+        Dealer dealer = new Dealer(dealerNickname, DEALER_INITIAL_COINS);
+        round = new Round(this, humanPlayer, dealer,decksContainer);
         startGame();
     }
 

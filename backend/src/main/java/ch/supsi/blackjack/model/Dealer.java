@@ -2,17 +2,9 @@ package ch.supsi.blackjack.model;
 
 public class Dealer extends VirtualPlayer {
 
-    private final DecksContainer decksContainer;
-
-    public Dealer(DecksContainer decksContainer) {
-        super("Dealer");
+    public Dealer(String nickname, int initialCoins) {
+        super(nickname, initialCoins);
         this.ai = new DealerAI(this);
-        this.decksContainer = decksContainer;
-        this.decksContainer.shuffle();
-    }
-
-    public Card giveCard(){
-        return decksContainer.getCard();
     }
 
 }
