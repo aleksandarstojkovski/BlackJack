@@ -19,7 +19,7 @@ public class MockGameModel {
             Mockito.doAnswer((Answer<Void>) invocation -> {
                 pcs.firePropertyChange(new GameStartedEvent(mockGameModel, null));
                 return null;
-            }).when(mockGameModel).newGame(Mockito.anyString(), Mockito.anyInt());
+            }).when(mockGameModel).newGame(Mockito.anyString(),Mockito.anyString(), Mockito.anyInt());
         } catch (InvalidDecksContainerSizeException e) {
             e.printStackTrace();
         }

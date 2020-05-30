@@ -146,7 +146,7 @@ public class ContentAreaController extends AbstractController implements Initial
     public void onNewRound(NewRoundEvent event) {
         clearTable();
         loadAvailableCoins();
-        playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
+        playerBalanceProperty.set(event.getPlayerList().get(0).getCoinsAmount());
         betsAreaVisible.set(true);
     }
 
@@ -182,7 +182,7 @@ public class ContentAreaController extends AbstractController implements Initial
     public void onNewGame(GameStartedEvent event) {
         clearTable();
         loadAvailableCoins();
-        playerBalanceProperty.set(event.getPlayerList().get(0).getCoins());
+        playerBalanceProperty.set(event.getPlayerList().get(0).getCoinsAmount());
         betsAreaVisible.set(true);
     }
 

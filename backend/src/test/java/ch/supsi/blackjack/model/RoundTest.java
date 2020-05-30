@@ -13,25 +13,30 @@ class RoundTest {
     GameModel model;
     Player player;
     Dealer dealer;
+    DecksContainer decks;
 
     @BeforeEach
-    void setup() throws InvalidDecksContainerSizeException {
-        DecksContainer decks = new DecksContainer(DecksContainer.DEFAULT_NUMBER_OF_DECKS);
-        dealer = new Dealer(decks);
-        player = new Player("Test");
+    void setup() {
+        try {
+            decks = new DecksContainer(DecksContainer.DEFAULT_NUMBER_OF_DECKS);
+        } catch (InvalidDecksContainerSizeException e) {
+            fail();
+        }
+        dealer = new Dealer("dealer",1000);
+        player = new Player("player",1000);
         model = MockGameModel.build();
     }
 
     @Test
     void setState()  {
-        round = new Round(model, player, dealer);
+        round = new Round(model,player,dealer, decks);
         round.setState(new BetState(round));
         assertNotEquals(new BetState(round), round.getState());
     }
 
     @Test
     void getGameModel() {
-        round = new Round(model, player, dealer);
+        round = new Round(model,player,dealer, decks);
         assertEquals(model, round.getGameModel());
     }
 
