@@ -16,7 +16,7 @@ class RoundTest {
 
     @BeforeEach
     void setup()  {
-        DecksContainer decks = new DecksContainer.Builder().build();
+        decks = new DecksContainer.Builder().build();
         dealer = new Dealer("dealer",1000);
         player = new Player("player",1000);
         model = MockGameModel.build();
