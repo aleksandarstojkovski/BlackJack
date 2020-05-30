@@ -106,6 +106,7 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     public void onGameOver() {
+        playerBalanceProperty.set(0);
         clearTable();
         FadingStatusMessage.flash(this.notificationArea, "Ouch! You've lost every penny.");
     }
