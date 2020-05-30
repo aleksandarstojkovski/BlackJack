@@ -1,6 +1,5 @@
 package ch.supsi.blackjack.model;
 
-import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import ch.supsi.blackjack.model.state.round.BetState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,8 @@ class RoundTest {
     Dealer dealer;
 
     @BeforeEach
-    void setup() throws InvalidDecksContainerSizeException {
-        DecksContainer decks = new DecksContainer(DecksContainer.DEFAULT_NUMBER_OF_DECKS);
+    void setup()  {
+        DecksContainer decks = new DecksContainer.Builder().build();
         dealer = new Dealer(decks);
         player = new Player("Test");
         model = MockGameModel.build();

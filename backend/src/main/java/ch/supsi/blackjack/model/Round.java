@@ -236,10 +236,11 @@ public class Round implements RoundHandler {
     public boolean isPlayerStand() {
         return playerStand;
     }
-    public void updateDealer(){
-        gameModel.firePropertyChange(new DealerStartEvent(this,dealer));
-        gameModel.firePropertyChange(new DealerHandUpdateEvent(this, dealer.hand, this.state));
+
+    public void updateDealer() {
+        gameModel.firePropertyChange(new DealerCompletedEvent(this));
     }
+
     public void computeDealer() {
         compute(dealer);
     }

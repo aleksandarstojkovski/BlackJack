@@ -1,69 +1,57 @@
 package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DecksContainerTest {
 
+    DecksContainer.Builder decksBuilder;
+
+    @BeforeEach
+    void setup() {
+        decksBuilder = new DecksContainer.Builder();
+    }
+
     @Test
     void equals() {
-        DecksContainer decksContainer1;
-        DecksContainer decksContainer2;
-        try {
-            decksContainer1 = new DecksContainer(3);
-            decksContainer2 = new DecksContainer(3);
-            assertEquals(decksContainer1, decksContainer2);
-        } catch (InvalidDecksContainerSizeException e) {
-            fail();
-        }
+        var decksContainer1 = decksBuilder.build();
+        var decksContainer2 = decksBuilder.build();
+        assertEquals(decksContainer1, decksContainer2);
     }
 
     @Test
     void shuffle() {
-        DecksContainer decksContainer1;
-        DecksContainer decksContainer2;
-        try {
-            decksContainer1 = new DecksContainer(3);
-            decksContainer2 = new DecksContainer(3);
-            decksContainer1.shuffle();
-            assertNotEquals(decksContainer1,decksContainer2);
-        } catch (InvalidDecksContainerSizeException e) {
-            fail();
-        }
+        var decksContainer1 = decksBuilder.build();
+        var decksContainer2 = decksBuilder.build();
+        decksContainer1.shuffle();
+        assertNotEquals(decksContainer1,decksContainer2);
     }
 
     @Test
     public void invalidSize(){
-        assertThrows(InvalidDecksContainerSizeException.class, ()->new DecksContainer(-1));
-        assertThrows(InvalidDecksContainerSizeException.class, ()->new DecksContainer(6));
+        assertThrows(InvalidDecksContainerSizeException.class, () -> decksBuilder.numberOfDecks(-1) );
+        assertThrows(InvalidDecksContainerSizeException.class, () -> decksBuilder.numberOfDecks(6) );
     }
 
     @Test
     public void getCard(){
-        DecksContainer dk = null;
-        try {
-            dk = new DecksContainer(3);
-        } catch (InvalidDecksContainerSizeException e) {
-            fail();
-        }
+        DecksContainer dk = decksBuilder.build();
         int initialSize = dk.getAvailableCardsCount();
         dk.getCard();
         dk.getCard();
-        assertEquals(initialSize-2,dk.getAvailableCardsCount());
+        assertEquals(initialSize-2, dk.getAvailableCardsCount());
     }
 
     @Test
     public void size(){
-        DecksContainer dk = null;
-        int numberOfDecks = 3;
-        try {
-            dk = new DecksContainer(numberOfDecks);
-        } catch (InvalidDecksContainerSizeException e) {
-            fail();
-        }
-        assertEquals(52*numberOfDecks,dk.getAvailableCardsCount());
-    }
+        DecksContainer dk = decksBuilder.build();
 
+        int size = Value.values().length * Seed.values().length * DecksContainer.DEFAULT_NUMBER_OF_DECKS;
+        assertEquals(size, dk.getAvailableCardsCount());
+    }
 }

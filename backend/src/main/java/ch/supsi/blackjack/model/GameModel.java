@@ -64,7 +64,10 @@ public class GameModel extends AbstractModel implements GameHandler {
     }
 
     public void newGame(String nickName, int numberOfDecks) throws InvalidDecksContainerSizeException {
-        DecksContainer decksContainer = new DecksContainer(numberOfDecks);
+        DecksContainer decksContainer = new DecksContainer.Builder()
+                                .numberOfDecks(numberOfDecks)
+                                .build();
+
         Player humanPlayer = new Player(nickName);
         Dealer dealer = new Dealer(decksContainer);
         round = new Round(this, humanPlayer, dealer);

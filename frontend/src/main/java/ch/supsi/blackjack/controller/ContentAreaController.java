@@ -106,7 +106,7 @@ public class ContentAreaController extends AbstractController implements Initial
     }
 
     public void onGameOver() {
-        showMessage("Game Over", "Ouch! You've lost every penny.", RoundResult.LOOSE);
+        FadingStatusMessage.flash(this.notificationArea, "Ouch! You've lost every penny.");
     }
 
     public void onRoundCompleted(RoundCompletedEvent event) {
@@ -173,10 +173,10 @@ public class ContentAreaController extends AbstractController implements Initial
     @SuppressWarnings("SpellCheckingInspection")
     public void loadAvailableCoins() {
         // TODO: da rivedere per disaccopiare dal backend
-        for (Coin c : coins){
+        for (Coin c : coins) {
             CoinImage img = new CoinImage(c);
             coinImages.add(img);
-          }
+        }
     }
 
     public void onNewGame(GameStartedEvent event) {
@@ -208,7 +208,7 @@ public class ContentAreaController extends AbstractController implements Initial
         betsAreaVisible.set(false);
     }
 
-    public void onDealerStart(){
+    public void onDealerCompleted(){
         // show covered card
         dealerCards.get(1).flipCard();
     }

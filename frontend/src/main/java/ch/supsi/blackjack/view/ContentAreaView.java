@@ -84,8 +84,8 @@ public class ContentAreaView  extends AbstractView {
     }
 
     @EventHandler
-    void handleEvent(DealerStartEvent event) {
-        controller.onDealerStart();
+    void handleEvent(DealerCompletedEvent event) {
+        controller.onDealerCompleted();
     }
 
 }
