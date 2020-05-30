@@ -20,7 +20,7 @@ import java.util.Map;
  * If still in game the turn pass to the next player/dealer
  */
 
-public class Round implements RoundHandler {
+public class RoundMediator implements RoundHandler {
 
     private final GameModel gameModel;
     private RoundState state;
@@ -34,7 +34,7 @@ public class Round implements RoundHandler {
     // updated by model  - indicates that the user chose to stand
     private boolean playerStand = false;
 
-    public Round(GameModel gameModel, Player mainPlayer, Dealer dealer, DecksContainer decksContainer){
+    public RoundMediator(GameModel gameModel, Player mainPlayer, Dealer dealer, DecksContainer decksContainer){
         playerHandMap.put(mainPlayer, new Hand());
         playerHandMap.put(dealer, new Hand());
 

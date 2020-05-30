@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
 
-    Round round;
+    RoundMediator round;
     GameModel model;
     Player player;
     Dealer dealer;
@@ -24,14 +24,14 @@ class RoundTest {
 
     @Test
     void setState()  {
-        round = new Round(model,player,dealer, decks);
+        round = new RoundMediator(model,player,dealer, decks);
         round.setState(new BetState(round));
         assertNotEquals(new BetState(round), round.getState());
     }
 
     @Test
     void getGameModel() {
-        round = new Round(model,player,dealer, decks);
+        round = new RoundMediator(model,player,dealer, decks);
         assertEquals(model, round.getGameModel());
     }
 

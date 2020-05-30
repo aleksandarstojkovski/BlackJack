@@ -72,7 +72,7 @@ public class GameModel extends AbstractModel implements GameHandler {
 
         Player humanPlayer = new Player(playerNickname, PLAYER_INITIAL_COINS);
         Dealer dealer = new Dealer(dealerNickname, DEALER_INITIAL_COINS);
-        round = new Round(this, humanPlayer, dealer,decksContainer);
+        round = new RoundMediator(this, humanPlayer, dealer,decksContainer);
         startGame();
     }
 

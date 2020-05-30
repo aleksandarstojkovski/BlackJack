@@ -43,20 +43,11 @@ public class GuiTest extends ApplicationTest {
     }
 
     @Test
-    public void walkThrough() {
-        testInitialState();
-        testStartAndExit();
-        testAllCoins();
-        testStartBetAndExit();
-        testStartBetHitAndExit();
-        testStartBetStandAndExit();
-        testNextRound();
-    }
-
     public void testInitialState() {
         step("testInitialState", this::initialState);
     }
 
+    @Test
     public void testStartAndExit() {
         step("testStartAndExit", () -> {
             newGame();
@@ -64,6 +55,7 @@ public class GuiTest extends ApplicationTest {
         });
     }
 
+    @Test
     public void testAllCoins(){
         step("testAllCoins", () -> {
             for (String coinFxId : CoinImageCell.coinFxIds) {
@@ -78,6 +70,7 @@ public class GuiTest extends ApplicationTest {
         });
     }
 
+    @Test
     public void testStartBetAndExit() {
         step("testStartBetAndExit", () -> {
             newGame();
@@ -87,6 +80,7 @@ public class GuiTest extends ApplicationTest {
         });
     }
 
+    @Test
     public void testStartBetHitAndExit() {
         step("testStartBetHitAndExit", () -> {
             newGame();
@@ -97,6 +91,7 @@ public class GuiTest extends ApplicationTest {
         });
     }
 
+    @Test
     public void testStartBetStandAndExit() {
         step("testStartBetStandAndExit", () -> {
             newGame();
@@ -107,6 +102,7 @@ public class GuiTest extends ApplicationTest {
         });
     }
 
+    @Test
     public void testNextRound() {
         step("testStartBetStandAndExit", () -> {
             newGame();
