@@ -28,8 +28,9 @@ public interface RoundHandler {
     void setPlayerBlackjack();
     void setPlayerBusted();
 
-    Hand getDealerHand();
+    Hand getHand(Player player);
     Hand getPlayerHand();
+    Hand getDealerHand();
 
     boolean isPlayerStand();
     boolean isPlayerWithMoney();

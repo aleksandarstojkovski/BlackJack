@@ -5,7 +5,9 @@ import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 import ch.supsi.blackjack.model.state.round.BetState;
 import ch.supsi.blackjack.model.state.round.RoundState;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Here is the main logic of the round.
@@ -22,8 +24,9 @@ public class Round implements RoundHandler {
 
     private final GameModel gameModel;
     private RoundState state;
-    private final List<Player> allPlayers = new ArrayList<>();
-    private final Player mainPlayer;
+    private final DecksContainer decksContainer;
+    private final Map<Player,Hand> playerHandMap = new HashMap<>();
+    private final List<Player> playersOnly = new ArrayList<>();
     private final Dealer dealer;
 
     // updated by model  - indicates that user confirmed the bte
@@ -31,12 +34,18 @@ public class Round implements RoundHandler {
     // updated by model  - indicates that the user chose to stand
     private boolean playerStand = false;
 
-    public Round(GameModel gameModel, Player mainPlayer, Dealer dealer){
-        this.mainPlayer = mainPlayer;
-        this.dealer = dealer;
-        allPlayers.add(mainPlayer);
-        allPlayers.add(dealer);
+    public Round(GameModel gameModel, Player mainPlayer, Dealer dealer, DecksContainer decksContainer){
+        playerHandMap.put(mainPlayer, new Hand());
+        playerHandMap.put(dealer, new Hand());
+
+        playersOnly.add(mainPlayer);
+
         this.gameModel = gameModel;
+        this.dealer = dealer;
+        this.decksContainer = decksContainer;
+
+        // TODO: we should put this somewhere else in the future
+        this.decksContainer.shuffle();
     }
 
     @Override
@@ -59,22 +68,23 @@ public class Round implements RoundHandler {
 
     public void openRound() {
         // at the beginning of the round, each player receives two cards
-        for (Player player : allPlayers) {
+        for (Player player : playerHandMap.keySet()) {
             hit(player);
             hit(player);
         }
     }
 
     public void hit(Player player) {
-        Card card = dealer.giveCard();
-        player.addCard(card);
-
+        Card card = decksContainer.getCard();
+        Hand currentHand = playerHandMap.get(player);
+        currentHand.addCard(card);
 
         if(player instanceof Dealer){
-            gameModel.firePropertyChange(new DealerHandUpdateEvent(this, player.hand, this.state));
+            gameModel.firePropertyChange(new DealerHandUpdateEvent(this, currentHand, this.state));
         }else {
-            gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, player.hand));
+            gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, currentHand));
         }
+
     }
 
     public void exitRound() {
@@ -87,11 +97,11 @@ public class Round implements RoundHandler {
         // calling updateState on Continue
         // case1: BetState (user can start to bet)
         goNextState();
-        gameModel.firePropertyChange(new NewRoundEvent(this, allPlayers));
+        gameModel.firePropertyChange(new NewRoundEvent(this, playersOnly));
     }
 
     public void playerHit() {
-        hit(mainPlayer);
+        hit(getPlayer());
         // calling updateState on PlayerDealsState
         // case1: PlayerDealsState (Player didn't bust)
         // case2: PlayerBustState (Player has busted)
@@ -103,7 +113,7 @@ public class Round implements RoundHandler {
         // case1: BetState (user can start to bet)
         goNextState();
 
-        gameModel.firePropertyChange(new GameStartedEvent(this, allPlayers));
+        gameModel.firePropertyChange(new GameStartedEvent(this, playersOnly));
     }
 
     public void setPlayerStand() {
@@ -117,7 +127,7 @@ public class Round implements RoundHandler {
 
     public void playerBet(int amount) {
         try {
-            mainPlayer.bet(amount);
+            getHand(getPlayer()).addBet(getPlayer().takeCoins(amount));
             gameModel.firePropertyChange(new NewBetEvent(this, amount));
 
             // calling updateState on BetState
@@ -146,16 +156,6 @@ public class Round implements RoundHandler {
         gameModel.firePropertyChange(new PlayerBustedEvent(this));
     }
 
-    @Override
-    public Hand getDealerHand() {
-        return dealer.hand;
-    }
-
-    @Override
-    public Hand getPlayerHand() {
-        return mainPlayer.hand;
-    }
-
     public void setPlayerBlackjack() {
         gameModel.firePropertyChange(new PlayerBlackjackEvent(this));
     }
@@ -167,46 +167,44 @@ public class Round implements RoundHandler {
     @SuppressWarnings("SpellCheckingInspection")
     public void setRoundCompleted() {
 
-        int dealerValue = dealer.getHandValue();
-        int playerValue = mainPlayer.getHandValue();
+        Player mainPlayer = getPlayer();
+        Player dealer = getDealer();
+
+        Hand playerHand = getHand(mainPlayer);
+        Hand dealerHand = getHand(dealer);
+
+        int dealerValue = dealerHand.value();
+        int playerValue = playerHand.value();
 
         RoundResult mainPlayerResult;
 
-        if (mainPlayer.hand.isBusted()){
+        if (playerHand.isBusted()){
             // dealer wins
-            mainPlayer.hand.takeBets();
+            playerHand.takeBets();
             mainPlayerResult = RoundResult.LOOSE;
-        } else if (dealer.hand.isBusted()){
+        } else if (dealerHand.isBusted()){
             // player wins
-            for (Player p : allPlayers){
-                int bettedCoins = p.hand.takeBets();
-                p.giveCoins(bettedCoins * 2);
-            }
+            int bettedCoins = playerHand.takeBets();
+            mainPlayer.giveCoins(bettedCoins * 2);
             mainPlayerResult = RoundResult.WIN;
         } else if (dealerValue > playerValue){
             // no-one busted
             // dealer wins
-            for (Player p : allPlayers){
-                p.hand.takeBets();
-            }
+            playerHand.takeBets();
             mainPlayerResult = RoundResult.LOOSE;
         } else if (dealerValue < playerValue) {
             // player wins
-            for (Player p : allPlayers){
-                int bettedCoins=p.hand.takeBets();
-                p.giveCoins(bettedCoins*2);
-            }
+            int bettedCoins=playerHand.takeBets();
+            mainPlayer.giveCoins(bettedCoins*2);
             mainPlayerResult = RoundResult.WIN;
         } else {
             //dealerValue == playerValue
-            for (Player p : allPlayers){
-                int bettedCoins = p.hand.takeBets();
-                p.giveCoins(bettedCoins);
-            }
+            int bettedCoins = playerHand.takeBets();
+            mainPlayer.giveCoins(bettedCoins);
             mainPlayerResult = RoundResult.WIN;
         }
         // removes bets from the dealer
-        dealer.hand.takeBets();
+        dealerHand.takeBets();
 
         gameModel.firePropertyChange(new RoundCompletedEvent(this, mainPlayerResult));
 
@@ -214,8 +212,8 @@ public class Round implements RoundHandler {
     }
 
     private void clear() {
-        mainPlayer.discardCards();
-        dealer.discardCards();
+        for (Hand hand : playerHandMap.values())
+            hand.discardCards();
 
         betConfirmed = false;
         playerStand = false;
@@ -230,14 +228,13 @@ public class Round implements RoundHandler {
     }
 
     public boolean isPlayerWithMoney() {
-        return mainPlayer.getCoins() > 0;
+        return getPlayer().hasMoney();
     }
 
     public boolean isPlayerStand() {
         return playerStand;
     }
-
-    public void updateDealer() {
+    public void updateDealer(){
         gameModel.firePropertyChange(new DealerCompletedEvent(this));
     }
 
@@ -258,6 +255,29 @@ public class Round implements RoundHandler {
             // TODO: futura implementazione del PlayerAI
             System.out.println("Questa è instanceof Player, Player = " + player.getNickname()); //Print diagnostico
         }
+    }
+
+    @Override
+    public Hand getHand(Player player){
+        return playerHandMap.get(player);
+    }
+
+    @Override
+    public Hand getPlayerHand(){
+        return getHand(getPlayer());
+    }
+
+    @Override
+    public Hand getDealerHand(){
+        return getHand(getDealer());
+    }
+
+    private Player getPlayer(){
+        return playersOnly.get(0);
+    }
+
+    private Player getDealer(){
+        return dealer;
     }
 
 }

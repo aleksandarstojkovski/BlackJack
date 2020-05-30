@@ -10,7 +10,7 @@ public class DealerAI implements AI {
 
     @Override
     public void compute(RoundHandler model) {
-        while(aiEntity.getHandValue() < 17){
+        while(model.getHand(aiEntity).value() < 17){
             model.hit(aiEntity);
         }
     }

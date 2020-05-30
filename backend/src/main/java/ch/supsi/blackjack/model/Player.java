@@ -3,52 +3,39 @@ package ch.supsi.blackjack.model;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 
 public class Player {
-
-    private static final int INITIAL_COINS=1000;
     
     private final String nickname;
-    protected final Hand hand;
     private int coins;
 
-    Player(String nickname) {
+    Player(String nickname, int initialCoins) {
         this.nickname = nickname;
-        this.hand = new Hand();
-        this.coins = INITIAL_COINS;
+        this.coins = initialCoins;
     }
-
-    public Card getLastCardPicked(){
-        return this.hand.getLastCard();
-    }
-
-    public void addCard (Card newCard){
-        this.hand.addCard(newCard);
-    }
-
-    public void discardCards() { hand.discardCards(); }
 
     public String getNickname() {
         return nickname;
     }
 
-    public int getCoins() {
-        return coins;
+    public boolean hasMoney() {
+        return coins>0;
     }
 
     public void giveCoins(int amount) {
         coins+=amount;
     }
 
-    public void bet(int amount) throws InsufficientCoinsException{
-        if (coins >= amount){
+    public int takeCoins(int amount) throws InsufficientCoinsException{
+        if (amount<=coins) {
             coins -= amount;
-            hand.addBet(amount);
-        } else{
+        } else {
             throw new InsufficientCoinsException(nickname + " has " + coins + " coins and tries to bet " + amount + " coins.");
         }
+        return amount;
     }
 
-    public int getHandValue() {
-        return hand.value();
+    public int getCoinsAmount(){
+        return coins;
     }
+
 }
 
