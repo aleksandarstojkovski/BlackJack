@@ -2,6 +2,7 @@ package ch.supsi.blackjack.model;
 
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
+import ch.supsi.blackjack.model.exception.InvalidDecksContainerSizeException;
 import ch.supsi.blackjack.model.state.round.BetState;
 import ch.supsi.blackjack.model.state.round.RoundState;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class RoundMediator implements RoundHandler {
 
     private final GameModel gameModel;
     private RoundState state;
-    private final DecksContainer decksContainer;
+    private DecksContainer decksContainer;
     private final Map<Player,Hand> playerHandMap = new HashMap<>();
     private final List<Player> playersOnly = new ArrayList<>();
     private final Dealer dealer;
@@ -34,18 +35,28 @@ public class RoundMediator implements RoundHandler {
     // updated by model  - indicates that the user chose to stand
     private boolean playerStand = false;
 
-    public RoundMediator(GameModel gameModel, Player mainPlayer, Dealer dealer, DecksContainer decksContainer){
-        playerHandMap.put(mainPlayer, new Hand());
+    public RoundMediator(GameModel gameModel, String playerNickname, String dealerNickname){
+
+        Player humanPlayer = new Player(playerNickname, Player.DEFAULT_INITIAL_COINS);
+        Dealer dealer = new Dealer(dealerNickname, Dealer.DEFAULT_INITIAL_COINS);
+
+        playerHandMap.put(humanPlayer, new Hand());
         playerHandMap.put(dealer, new Hand());
 
-        playersOnly.add(mainPlayer);
+        playersOnly.add(humanPlayer);
 
         this.gameModel = gameModel;
         this.dealer = dealer;
-        this.decksContainer = decksContainer;
+
+        try {
+            this.decksContainer = new DecksContainer.Builder().numberOfDecks(DecksContainer.DEFAULT_NUMBER_OF_DECKS).build();
+        } catch (InvalidDecksContainerSizeException e) {
+            e.printStackTrace();
+        }
 
         // TODO: we should put this somewhere else in the future
         this.decksContainer.shuffle();
+
     }
 
     @Override
@@ -167,11 +178,8 @@ public class RoundMediator implements RoundHandler {
     @SuppressWarnings("SpellCheckingInspection")
     public void setRoundCompleted() {
 
-        Player mainPlayer = getPlayer();
-        Player dealer = getDealer();
-
-        Hand playerHand = getHand(mainPlayer);
-        Hand dealerHand = getHand(dealer);
+        Hand playerHand = getHand(getPlayer());
+        Hand dealerHand = getHand(getDealer());
 
         int dealerValue = dealerHand.value();
         int playerValue = playerHand.value();

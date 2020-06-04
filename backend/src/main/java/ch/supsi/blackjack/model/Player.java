@@ -3,9 +3,10 @@ package ch.supsi.blackjack.model;
 import ch.supsi.blackjack.model.exception.InsufficientCoinsException;
 
 public class Player {
-    
-    private final String nickname;
+
     private int coins;
+    private final String nickname;
+    public static final int DEFAULT_INITIAL_COINS=1000;
 
     Player(String nickname, int initialCoins) {
         this.nickname = nickname;

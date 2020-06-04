@@ -10,28 +10,22 @@ class RoundTest {
 
     RoundMediator round;
     GameModel model;
-    Player player;
-    Dealer dealer;
-    DecksContainer decks;
 
     @BeforeEach
     void setup()  {
-        decks = new DecksContainer.Builder().build();
-        dealer = new Dealer("dealer",1000);
-        player = new Player("player",1000);
         model = MockGameModel.build();
     }
 
     @Test
     void setState()  {
-        round = new RoundMediator(model,player,dealer, decks);
+        round = new RoundMediator(model,"Player1","Dealer1");
         round.setState(new BetState(round));
         assertNotEquals(new BetState(round), round.getState());
     }
 
     @Test
     void getGameModel() {
-        round = new RoundMediator(model,player,dealer, decks);
+        round = new RoundMediator(model,"Player1","Dealer1");
         assertEquals(model, round.getGameModel());
     }
 
