@@ -13,6 +13,11 @@ public class Player {
         this.coins = initialCoins;
     }
 
+    Player(String nickname) {
+        this.nickname = nickname;
+        this.coins = DEFAULT_INITIAL_COINS;
+    }
+
     public String getNickname() {
         return nickname;
     }

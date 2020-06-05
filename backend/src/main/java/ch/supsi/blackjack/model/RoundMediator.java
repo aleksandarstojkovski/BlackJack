@@ -35,10 +35,10 @@ public class RoundMediator implements RoundHandler {
     // updated by model  - indicates that the user chose to stand
     private boolean playerStand = false;
 
-    public RoundMediator(GameModel gameModel, String playerNickname, String dealerNickname){
+    public RoundMediator(GameModel gameModel, String playerNick, String dealerNick){
 
-        Player humanPlayer = new Player(playerNickname, Player.DEFAULT_INITIAL_COINS);
-        Dealer dealer = new Dealer(dealerNickname, Dealer.DEFAULT_INITIAL_COINS);
+        Player humanPlayer = new Player(playerNick);
+        Dealer dealer = new Dealer(dealerNick);
 
         playerHandMap.put(humanPlayer, new Hand());
         playerHandMap.put(dealer, new Hand());
@@ -91,7 +91,7 @@ public class RoundMediator implements RoundHandler {
         currentHand.addCard(card);
 
         if(player instanceof Dealer){
-            gameModel.firePropertyChange(new DealerHandUpdateEvent(this, currentHand, this.state));
+            gameModel.firePropertyChange(new DealerHandUpdateEvent(this, currentHand, state));
         }else {
             gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, currentHand));
         }

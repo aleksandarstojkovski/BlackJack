@@ -9,4 +9,9 @@ public class Dealer extends VirtualPlayer {
         this.ai = new DealerAI(this);
     }
 
+    public Dealer(String nickname) {
+        super(nickname, DEFAULT_INITIAL_COINS);
+        this.ai = new DealerAI(this);
+    }
+
 }
