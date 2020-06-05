@@ -2,7 +2,6 @@ package ch.supsi.blackjack.model;
 import ch.supsi.blackjack.model.state.game.InitState;
 import ch.supsi.blackjack.model.state.game.RoundState;
 import ch.supsi.blackjack.model.state.round.*;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
