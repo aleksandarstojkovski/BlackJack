@@ -86,14 +86,15 @@ public class RoundMediator implements RoundHandler {
     }
 
     public void hit(Player player) {
+
         Card card = decksContainer.getCard();
-        Hand currentHand = playerHandMap.get(player);
-        currentHand.addCard(card);
+        Hand hand = playerHandMap.get(player);
+        hand.addCard(card);
 
         if(player instanceof Dealer){
-            gameModel.firePropertyChange(new DealerHandUpdateEvent(this, currentHand, state));
+            gameModel.firePropertyChange(new DealerHandUpdateEvent(this, hand, state));
         }else {
-            gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, currentHand));
+            gameModel.firePropertyChange(new PlayerHandUpdateEvent(this, hand));
         }
 
     }
