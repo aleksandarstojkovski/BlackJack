@@ -11,6 +11,7 @@
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <maven.compiler.plugin>11</maven.compiler.plugin>
+        <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -196,6 +197,12 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.maven.plugin.version}</version>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -220,5 +227,15 @@
             </build>
         </profile>
     </profiles>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.maven.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
