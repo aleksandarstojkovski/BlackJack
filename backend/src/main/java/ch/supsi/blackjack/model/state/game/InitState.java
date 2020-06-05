@@ -8,7 +8,7 @@ public class InitState implements GameState{
     private final GameModel gameModel;
 
     public InitState(GameModel gameModel){
-    this.gameModel = gameModel;
+        this.gameModel = gameModel;
     }
 
     @Override
