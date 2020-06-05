@@ -3,6 +3,7 @@ package ch.supsi.blackjack.command;
 import ch.supsi.blackjack.model.GameHandler;
 import ch.supsi.blackjack.model.MockGameModel;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,16 @@ class NewGameCommandTest {
     }
 
     @Test
+    void constructor() {
+        NewGameCommand command = new NewGameCommand(receiver);
+        assertNotNull(command);
+    }
+
+
+    @Test
     void execute() {
-        assertNotNull(receiver);
+        NewGameCommand command = new NewGameCommand(receiver);
+        command.execute();
+        Mockito.verify(receiver, Mockito.times(1)).newGame();
     }
 }
