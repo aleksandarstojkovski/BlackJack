@@ -1,4 +1,4 @@
-package ch.supsi.blackjack.model.exception;
+package ch.supsi.blackjack.component;
 
 public class InvalidCoinValueException extends Throwable {
     public InvalidCoinValueException(String msg){

@@ -1,11 +1,11 @@
 package ch.supsi.blackjack.controller;
 
-import ch.supsi.blackjack.Coin;
+import ch.supsi.blackjack.component.Coin;
 import ch.supsi.blackjack.CommandCatalog;
 import ch.supsi.blackjack.component.*;
 import ch.supsi.blackjack.event.*;
 import ch.supsi.blackjack.model.*;
-import ch.supsi.blackjack.model.exception.InvalidCoinValueException;
+import ch.supsi.blackjack.component.InvalidCoinValueException;
 import ch.supsi.blackjack.model.state.round.BetState;
 import ch.supsi.blackjack.model.state.round.PlayerDealsState;
 import javafx.beans.property.*;

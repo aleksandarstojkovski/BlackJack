@@ -1,32 +1,19 @@
 package ch.supsi.blackjack;
 
-import ch.supsi.blackjack.model.exception.InvalidCoinValueException;
+import ch.supsi.blackjack.component.Coin;
+import ch.supsi.blackjack.component.InvalidCoinValueException;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
-
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CoinTest extends TestCase {
-
-    private Coin testCoin;
-    private final Random rand = new Random();
-
     @Test
-    public void testGetValidCoinValue() {
-
-        int randomNumberInRange = rand.nextInt(Coin.Values.length);
-        int randomCoinValue = Coin.Values[randomNumberInRange];
-
-        try {
-            testCoin = new Coin(randomCoinValue);
-        } catch (InvalidCoinValueException e) {
-            fail();
+    public void testGetValidCoinValue() throws InvalidCoinValueException {
+        for (int coinvalue : Coin.Values) {
+            Coin coin = new Coin(coinvalue);
+            assertEquals(coinvalue, coin.getValue());
         }
-
-        assertEquals(randomCoinValue,testCoin.getValue());
-
     }
 
     @Test

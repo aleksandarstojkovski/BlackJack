@@ -1,6 +1,5 @@
-package ch.supsi.blackjack;
+package ch.supsi.blackjack.component;
 
-import ch.supsi.blackjack.model.exception.InvalidCoinValueException;
 import java.util.Arrays;
 
 public class Coin {
