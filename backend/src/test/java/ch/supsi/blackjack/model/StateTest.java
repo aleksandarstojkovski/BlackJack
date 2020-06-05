@@ -9,14 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StateTest {
 
-    private GameModel gameModel;
-    private RoundHandler roundMediator;
-
-    @BeforeAll
-    void setup(){
-        gameModel = GameModel.instance();
-        roundMediator = new RoundMediator(gameModel,"player","dealer");
-    }
+    private GameModel gameModel = GameModel.instance();
+    private RoundHandler roundMediator = new RoundMediator(gameModel,"player","dealer");
 
     @Test
     void testInitState(){
