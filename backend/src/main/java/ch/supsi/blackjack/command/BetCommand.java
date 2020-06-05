@@ -8,13 +8,17 @@ public class BetCommand implements Command {
 
     private final GameHandler receiver;
 
-    public BetCommand(GameHandler gameModel, int bet){
+    public BetCommand(GameHandler gameModel, int bet) {
         this.receiver = gameModel;
         this.bet = bet;
     }
 
     @Override
     public void execute() {
+        if (receiver == null) {
+            return;
+        }
+
         receiver.bet(bet);
     }
 
