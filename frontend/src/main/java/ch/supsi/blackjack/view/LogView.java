@@ -24,7 +24,7 @@ public class LogView extends AbstractView {
 
     // Static Factory Method
     public static LogView create(LogController controller, ResourceBundle bundle)
-            throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
+            throws InvocationTargetException, InstantiationException, IllegalAccessException, IOException {
         return AbstractView.create(LogView.class, FXML, controller, bundle);
     }
 

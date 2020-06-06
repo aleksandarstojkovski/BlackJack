@@ -1,13 +1,10 @@
 package ch.supsi.blackjack.view;
 
 import ch.supsi.blackjack.CommandCatalog;
-import ch.supsi.blackjack.controller.AbstractController;
-import ch.supsi.blackjack.controller.ContentAreaController;
-import ch.supsi.blackjack.controller.LogController;
-import ch.supsi.blackjack.controller.MenuController;
-import ch.supsi.blackjack.model.GameHandler;
-import org.junit.Assert;
+import ch.supsi.blackjack.event.GameFinishedEvent;
+import ch.supsi.blackjack.model.GameModel;
 import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -15,105 +12,50 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
-import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 //@Category(UITest.class)
 public class AbstractViewTest extends ApplicationTest {
+    private static final String FakeViewFXML = "FakeView.fxml";
 
     private ResourceBundle bundle;
     private CommandCatalog commandCatalog;
-
-    static class FakeController extends AbstractController {
-        public FakeController(CommandCatalog commandCatalog) {
-            super(commandCatalog);
-        }
-    }
-
-    static class FakeView extends AbstractView {
-        private final static String FXML = "invalid.fxml";
-        private final FakeController controller;
-
-        // Constructor is not public, use Static Factory Method
-        FakeView(FakeController controller) {
-            this.controller = controller;
-        }
-
-        // Static Factory Method
-        public static FakeView create(FakeController controller, ResourceBundle bundle)
-                throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
-            return AbstractView.create(FakeView.class, FXML, controller, bundle);
-        }
-
-    }
+    private GameModel model;
 
     @Before
     @SuppressWarnings("SpellCheckingInspection")
     public void Setup() {
         bundle = ResourceBundle.getBundle("ch/supsi/blackjack/bundles/blackjack");
-        GameHandler model = Mockito.mock(GameHandler.class);
+        model = Mockito.mock(GameModel.class);
         commandCatalog = new CommandCatalog(model);
     }
 
-    @org.junit.Test
+    @Test
+    public void create() throws InstantiationException, IllegalAccessException, IOException, InvocationTargetException {
+        // check create
+        FakeView view = FakeView.create(new FakeController(commandCatalog), bundle, FakeViewFXML);
+
+        // check getComponent
+        assertNotNull(view.getComponent());
+
+        // check propertyChange
+        view.propertyChange(new GameFinishedEvent(this));
+        assertTrue(view.eventHandled);
+    }
+
+    @Test
     public void createViewNullController() {
-        assertThrows(InstantiationException.class, () -> FakeView.create(null, bundle));
+        assertThrows(InstantiationException.class, () -> FakeView.create(null, bundle, FakeViewFXML));
     }
 
-    @org.junit.Test
+    @Test
     public void createViewNullFXML() {
-        assertThrows(InstantiationException.class, () -> FakeView.create(new FakeController(commandCatalog), bundle));
+        assertThrows(InstantiationException.class, () -> FakeView.create(new FakeController(commandCatalog), bundle, "invalid.fxml"));
     }
 
-    @org.junit.Test
-    public void createContentAreaView() {
-//        step("create ContentAreaView", () -> {
-            AbstractView view = null;
-            try {
-                ContentAreaController controller = new ContentAreaController(commandCatalog);
-                view = ContentAreaView.create(controller, bundle);
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IOException e) {
-                e.printStackTrace();
-                fail();
-            }
-
-            Assert.assertNotNull(view);
-//        });
+    @Test
+    public void createViewWrongController() {
+        assertThrows(InstantiationException.class, () -> FakeView.create(new FakeControllerFail(commandCatalog, 1), bundle, FakeViewFXML));
     }
-
-    @org.junit.Test
-    public void createLogView() {
-//        step("create LogView", () -> {
-            AbstractView view = null;
-            try {
-                LogController controller = new LogController(commandCatalog);
-                view = LogView.create(controller, bundle);
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IOException e) {
-                e.printStackTrace();
-                fail();
-            }
-
-            Assert.assertNotNull(view);
-//        });
-    }
-
-    @org.junit.Test
-    public void createMenuView() {
-//        step("create MenuView", () -> {
-            AbstractView view = null;
-            try {
-                MenuController controller = new MenuController(commandCatalog);
-                view = MenuView.create(controller, bundle);
-            } catch (InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException | IOException e) {
-                e.printStackTrace();
-            }
-
-            Assert.assertNotNull(view);
-//        });
-    }
-
-//    private void step(final String step, final Runnable runnable) {
-//        runnable.run();
-//    }
 
 }

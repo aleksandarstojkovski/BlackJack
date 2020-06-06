@@ -22,13 +22,23 @@ public abstract class AbstractView implements PropertyChangeListener {
 
     // Static Factory Method
     protected static <T extends AbstractView> T create(Class<T> clazz, String resource, AbstractController controller, ResourceBundle bundle)
-            throws InstantiationException, IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+            throws InstantiationException, IOException, InvocationTargetException, IllegalAccessException {
         if (controller == null) {
             throw new InstantiationException("view controller cannot be null!");
         }
 
-        // create the View invoking the constructor that expect a controller as parameter
-        T view = clazz.getDeclaredConstructor(controller.getClass()).newInstance(controller);
+        T view = null;
+        for(var ctor : clazz.getDeclaredConstructors()) {
+            if(ctor.getParameterCount() == 1 && ctor.getParameterTypes()[0].isAssignableFrom(controller.getClass())) {
+                // create the View invoking the constructor that expect a controller as parameter
+                view = (T)ctor.newInstance(controller);
+                break;
+            }
+        }
+
+        if(view == null)
+            throw new InstantiationException("view constructor must have 1 parameter of type " + controller.getClass());
+
         view.eventRouter = new EventRouter(view);
 
         // load the FXML associated to that view
@@ -48,7 +58,6 @@ public abstract class AbstractView implements PropertyChangeListener {
 
     /**
      * routing of the PropertyChangeEvent to the proper method (using reflection)
-     * @param event
      */
     @Override
     public void propertyChange(PropertyChangeEvent event) {
