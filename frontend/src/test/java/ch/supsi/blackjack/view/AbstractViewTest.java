@@ -1,10 +1,12 @@
 package ch.supsi.blackjack.view;
 
 import ch.supsi.blackjack.CommandCatalog;
+import ch.supsi.blackjack.UITest;
 import ch.supsi.blackjack.event.GameFinishedEvent;
 import ch.supsi.blackjack.model.GameModel;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.testfx.framework.junit.ApplicationTest;
 
@@ -14,6 +16,7 @@ import java.util.ResourceBundle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Category(UITest.class)
 public class AbstractViewTest extends ApplicationTest {
     private static final String FakeViewFXML = "FakeView.fxml";
 
