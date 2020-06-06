@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Category(UITest.class)
 public class AbstractViewTest extends ApplicationTest {
     private static final String FakeViewFXML = "FakeView.fxml";
 

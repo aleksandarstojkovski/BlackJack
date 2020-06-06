@@ -1,8 +1,10 @@
 package ch.supsi.blackjack.view;
 
+import ch.supsi.blackjack.UITest;
 import ch.supsi.blackjack.controller.LogController;
 import ch.supsi.blackjack.event.AbstractEvent;
 import org.junit.Assert;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import static org.mockito.Mockito.verify;
 
+@Category(UITest.class)
 public class LogViewTest extends BaseViewTest {
     @org.junit.Test
     public void create() throws InstantiationException, IllegalAccessException, IOException, InvocationTargetException {
