@@ -36,7 +36,7 @@ public class DealerDealsState implements RoundState {
     // business logic and state transition
     @Override
     public void updateState() {
-        if(round.getDealerHand().isBusted()){
+        if(round.isDealerHandBusted()){
             round.setState(new DealerBustState(round));
         } else {
             next();

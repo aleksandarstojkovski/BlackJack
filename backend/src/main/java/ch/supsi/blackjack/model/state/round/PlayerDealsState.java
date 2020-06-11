@@ -42,12 +42,11 @@ public class PlayerDealsState implements RoundState {
             round.updateDealer();
             round.computeDealer();
         } else {
-            Hand hand = round.getPlayerHand();
-            if (hand.isBusted()){
+            if (round.isPlayerHandBusted()){
                 round.setState(new PlayerBustState(round));
                 round.updateDealer();
                 round.goNextState();
-            } else if (hand.isBlackJack()) {
+            } else if (round.isPlayerHandBlackjack()) {
                 round.setState(new TwentyOneState(round));
                 round.updateDealer();
                 round.goNextState();

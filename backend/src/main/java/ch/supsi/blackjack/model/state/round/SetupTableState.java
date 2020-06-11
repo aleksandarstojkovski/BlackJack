@@ -34,7 +34,7 @@ public class SetupTableState implements RoundState {
     // business logic and state transition
     @Override
     public void updateState() {
-        if (round.getPlayerHand().isBlackJack()){
+        if (round.isPlayerHandBlackjack()){
             round.setState(new BlackJackState(round));
             round.goNextState();
         } else {

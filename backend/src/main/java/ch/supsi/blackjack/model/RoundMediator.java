@@ -248,6 +248,16 @@ public class RoundMediator implements RoundHandler {
         return getPlayer().hasMoney();
     }
 
+    @Override
+    public boolean isPlayerHandBusted() {
+        return getPlayerHand().isBusted();
+    }
+
+    @Override
+    public boolean isPlayerHandBlackjack() {
+        return getPlayerHand().isBlackJack();
+    }
+
     public boolean isPlayerStand() {
         return playerStand;
     }
@@ -280,13 +290,8 @@ public class RoundMediator implements RoundHandler {
     }
 
     @Override
-    public Hand getPlayerHand(){
-        return getHand(getPlayer());
-    }
-
-    @Override
-    public Hand getDealerHand(){
-        return getHand(getDealer());
+    public boolean isDealerHandBusted(){
+        return getDealerHand().isBusted();
     }
 
     private Player getPlayer(){
@@ -295,6 +300,14 @@ public class RoundMediator implements RoundHandler {
 
     private Player getDealer(){
         return dealer;
+    }
+
+    private Hand getDealerHand(){
+        return getHand(getDealer());
+    }
+
+    private Hand getPlayerHand(){
+        return getHand(getPlayer());
     }
 
 }
