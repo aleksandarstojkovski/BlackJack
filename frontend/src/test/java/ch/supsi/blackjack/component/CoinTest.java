@@ -1,4 +1,4 @@
-package ch.supsi.blackjack;
+package ch.supsi.blackjack.component;
 
 import ch.supsi.blackjack.component.Coin;
 import ch.supsi.blackjack.component.InvalidCoinValueException;
