@@ -9,7 +9,7 @@ public class GameModel extends AbstractModel implements GameHandler {
     // singleton
     private static GameModel instance;
     // game state machine
-    private GameState gameState;
+    GameState gameState;
     private final GameState initState;
     private final GameState roundState;
     private RoundHandler round;
@@ -18,6 +18,13 @@ public class GameModel extends AbstractModel implements GameHandler {
         super();
         initState = new InitState(this);
         roundState= new RoundState(this);
+        setGameState(initState);
+    }
+    GameModel(InitState initState,RoundState roundState,RoundHandler round) {
+        super();
+        this.initState = initState;
+        this.roundState= roundState;
+        this.round = round;
         setGameState(initState);
     }
 
@@ -30,7 +37,7 @@ public class GameModel extends AbstractModel implements GameHandler {
         System.out.println("Current state: " + newGameState.getClass().toString());
     }
 
-    public void startGame(){
+    private void startGame(){
         gameState.startGame();
     }
 
