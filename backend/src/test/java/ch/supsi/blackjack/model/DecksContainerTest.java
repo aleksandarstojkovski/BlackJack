@@ -52,4 +52,12 @@ class DecksContainerTest {
         int size = Value.values().length * Seed.values().length * DecksContainer.DEFAULT_NUMBER_OF_DECKS;
         assertEquals(size, dk.getAvailableCardsCount());
     }
+
+    @Test
+    void seeds() {
+        var decksContainer1 = decksBuilder.build();
+        var decksContainer2 = decksBuilder.build();
+        decksContainer1.shuffle();
+        assertNotEquals(decksContainer1,decksContainer2);
+    }
 }
