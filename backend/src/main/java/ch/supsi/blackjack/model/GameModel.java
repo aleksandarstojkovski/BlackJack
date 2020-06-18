@@ -33,6 +33,7 @@ public class GameModel extends AbstractModel implements GameHandler {
     public void startGame(){
         gameState.startGame();
     }
+
     public void exitGame(){
         gameState.exitGame();
     }
