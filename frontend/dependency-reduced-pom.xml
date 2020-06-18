@@ -91,6 +91,11 @@
           </descriptorRefs>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.maven.plugin.version}</version>
+      </plugin>
     </plugins>
   </build>
   <profiles>
@@ -168,11 +173,41 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.7.0-M1</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>opentest4j</artifactId>
+          <groupId>org.opentest4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>junit-platform-commons</artifactId>
+          <groupId>org.junit.platform</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>apiguardian-api</artifactId>
+          <groupId>org.apiguardian</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.maven.plugin.version}</version>
+      </plugin>
+    </plugins>
+  </reporting>
   <properties>
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.plugin>11</maven.compiler.plugin>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 </project>
