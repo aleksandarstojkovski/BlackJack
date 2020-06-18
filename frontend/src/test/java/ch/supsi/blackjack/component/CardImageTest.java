@@ -16,7 +16,7 @@ public class CardImageTest {
             for (Value val : Value.values()) {
                 Card card = cardBuilder.setValue(val).build();
                 CardImage cardImage = new CardImage(card, false);
-                Assert.assertNotNull(cardImage.getUrl());
+                Assert.assertNotNull(cardImage.getInputStream());
             }
         }
     }

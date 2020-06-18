@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
 import javafx.util.Callback;
 
-import java.net.URL;
+import java.io.InputStream;
 
 public class CardImage implements Drawable {
 
@@ -48,13 +48,12 @@ public class CardImage implements Drawable {
     }
 
     private Image loadImage() {
-        URL url = getUrl();
-        return new Image(url.toString());
+        return new Image(getInputStream());
     }
 
     // package visibility for unit test
-    URL getUrl() {
-        return this.getClass().getResource(getFileName());
+    InputStream getInputStream() {
+        return this.getClass().getResourceAsStream(getFileName());
     }
 
     private Image getImageFront() {

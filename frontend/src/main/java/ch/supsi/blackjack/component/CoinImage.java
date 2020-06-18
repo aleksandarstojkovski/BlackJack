@@ -1,7 +1,8 @@
 package ch.supsi.blackjack.component;
 
 import javafx.scene.image.Image;
-import java.net.URL;
+
+import java.io.InputStream;
 
 public class CoinImage implements Drawable {
 
@@ -20,15 +21,15 @@ public class CoinImage implements Drawable {
     @Override
     public Image getImage() {
         if(image == null) {
-            URL url = getUrl();
-            image = new Image(url.toString());
+            InputStream url = getInputStream();
+            image = new Image(url);
         }
         return image;
     }
 
     // package visibility for unit test
-    URL getUrl() {
-        return this.getClass().getResource(getFileName());
+    InputStream getInputStream() {
+        return this.getClass().getResourceAsStream(getFileName());
     }
 
     public int getValue() {

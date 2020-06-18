@@ -18,7 +18,7 @@ public class CoinImageTest {
                 fail();
             }
             CoinImage img = new CoinImage(coin);
-            Assert.assertNotNull(img.getUrl());
+            Assert.assertNotNull(img.getInputStream());
         }
     }
 
