@@ -218,7 +218,7 @@ public class RoundMediator implements RoundHandler {
                 int bettedCoins = getHand(p).takeBets();
                 p.giveCoins(bettedCoins);
             }
-            mainPlayerResult = RoundResult.WIN;
+            mainPlayerResult = RoundResult.DRAW;
         }
         // removes bets from the dealer
         dealerHand.takeBets();
